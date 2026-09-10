@@ -12,16 +12,16 @@ process_ankom(
 )
 }
 \arguments{
-\item{raw_data}{Raw ANKOM table.}
+\item{raw_data}{Raw ANKOM data table.}
 
 \item{metadata}{Metadata table.}
 
-\item{headspace_ml}{Headspace volume.}
+\item{headspace_ml}{Bottle headspace volume (mL).}
 
-\item{temperature_c}{Incubation temperature.}
+\item{temperature_c}{Incubation temperature (°C).}
 }
 \value{
-Processed data frame.
+A processed rumen_gp data frame.
 }
 \description{
 Converts raw ANKOM RF output into a standardized dataset.
