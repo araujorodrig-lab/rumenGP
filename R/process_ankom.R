@@ -1,7 +1,10 @@
-
 #' Process ANKOM RF data
 #'
 #' Converts raw ANKOM RF output into a standardized dataset.
+#'
+#' Head 0 is reserved by the ANKOM RF system as the
+#' receiver/base station and is automatically removed
+#' during processing.
 #'
 #' @param raw_data Raw ANKOM data table.
 #' @param metadata Metadata table.
@@ -47,16 +50,17 @@ process_ankom <- function(
 
   R_constant <- 8.314472
 
+  psi_to_kpa <- 6.894757293
+
   # ----------------------------
   # Time processing
   # ----------------------------
 
   names(raw_data)[1] <- "time_raw"
 
-  raw_data$Time_h <-
-    parse_ankom_time(
-      raw_data$time_raw
-    )
+  raw_data$Time_h <- parse_ankom_time(
+    raw_data$time_raw
+  )
 
   # ----------------------------
   # Long format conversion
@@ -71,16 +75,25 @@ process_ankom <- function(
       names_to = "Head",
       values_to = "Gas_PSI"
     ) |>
+    dplyr::mutate(
+      Head = as.character(Head)
+    ) |>
+
+    # Remove ANKOM receiver/base station
+    dplyr::filter(
+      Head != "0"
+    ) |>
+
+    # Remove empty channels
     dplyr::filter(
       !is.na(Gas_PSI)
     ) |>
-    dplyr::mutate(
 
-      Head = as.character(Head),
+    dplyr::mutate(
 
       # PSI to kPa
       Gas_kPa =
-        Gas_PSI * 6.894757293,
+        Gas_PSI * psi_to_kpa,
 
       # Ideal gas law
       Gas_moles =
@@ -106,22 +119,42 @@ process_ankom <- function(
 
   if (!is.null(metadata)) {
 
-    if (!"Head" %in% names(metadata)) {
+    required_cols <- c(
+      "Head",
+      "Sample",
+      "Rep"
+    )
+
+    missing_cols <- setdiff(
+      required_cols,
+      names(metadata)
+    )
+
+    if (length(missing_cols) > 0) {
       stop(
-        "Metadata must contain a column called 'Head'."
+        paste(
+          "Metadata is missing required column(s):",
+          paste(missing_cols,
+                collapse = ", ")
+        )
       )
     }
 
-    metadata$Head <-
-      as.character(
-        metadata$Head
-      )
+    metadata$Head <- as.character(
+      metadata$Head
+    )
 
     df <- dplyr::left_join(
       df,
       metadata,
       by = "Head"
     )
+
+    # Keep only bottles present in metadata
+    df <- df |>
+      dplyr::filter(
+        !is.na(Sample)
+      )
   }
 
   # ----------------------------
@@ -130,7 +163,9 @@ process_ankom <- function(
 
   attr(df, "settings") <- list(
     headspace_ml = headspace_ml,
-    temperature_c = temperature_c
+    temperature_c = temperature_c,
+    psi_to_kpa = psi_to_kpa,
+    gas_constant = R_constant
   )
 
   # ----------------------------

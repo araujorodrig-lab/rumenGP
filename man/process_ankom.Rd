@@ -26,3 +26,8 @@ A processed rumen_gp data frame.
 \description{
 Converts raw ANKOM RF output into a standardized dataset.
 }
+\details{
+Head 0 is reserved by the ANKOM RF system as the
+receiver/base station and is automatically removed
+during processing.
+}
