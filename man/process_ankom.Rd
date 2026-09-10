@@ -8,7 +8,8 @@ process_ankom(
   raw_data,
   metadata = NULL,
   headspace_ml = 210,
-  temperature_c = 39
+  temperature_c = 39,
+  zero_negative_pressure = FALSE
 )
 }
 \arguments{
@@ -19,6 +20,10 @@ process_ankom(
 \item{headspace_ml}{Bottle headspace volume (mL).}
 
 \item{temperature_c}{Incubation temperature (°C).}
+
+\item{zero_negative_pressure}{Logical. If TRUE,
+negative pressure values are converted to zero
+before gas-volume calculations.}
 }
 \value{
 A processed rumen_gp data frame.

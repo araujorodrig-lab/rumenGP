@@ -1,3 +1,4 @@
+
 #' Process ANKOM RF data
 #'
 #' Converts raw ANKOM RF output into a standardized dataset.
@@ -10,6 +11,9 @@
 #' @param metadata Metadata table.
 #' @param headspace_ml Bottle headspace volume (mL).
 #' @param temperature_c Incubation temperature (°C).
+#' @param zero_negative_pressure Logical. If TRUE,
+#' negative pressure values are converted to zero
+#' before gas-volume calculations.
 #'
 #' @return A processed rumen_gp data frame.
 #'
@@ -18,7 +22,8 @@ process_ankom <- function(
     raw_data,
     metadata = NULL,
     headspace_ml = 210,
-    temperature_c = 39
+    temperature_c = 39,
+    zero_negative_pressure = FALSE
 ) {
 
   # ----------------------------
@@ -38,6 +43,13 @@ process_ankom <- function(
   if (!is.numeric(temperature_c) ||
       length(temperature_c) != 1) {
     stop("temperature_c must be numeric.")
+  }
+
+  if (!is.logical(zero_negative_pressure) ||
+      length(zero_negative_pressure) != 1) {
+    stop(
+      "zero_negative_pressure must be TRUE or FALSE."
+    )
   }
 
   # ----------------------------
@@ -79,7 +91,7 @@ process_ankom <- function(
       Head = as.character(Head)
     ) |>
 
-    # Remove ANKOM receiver/base station
+    # Remove ANKOM receiver/head 0
     dplyr::filter(
       Head != "0"
     ) |>
@@ -87,8 +99,29 @@ process_ankom <- function(
     # Remove empty channels
     dplyr::filter(
       !is.na(Gas_PSI)
-    ) |>
+    )
 
+  # ----------------------------
+  # Optional pressure correction
+  # ----------------------------
+
+  if (zero_negative_pressure) {
+
+    df <- df |>
+      dplyr::mutate(
+        Gas_PSI = pmax(
+          Gas_PSI,
+          0
+        )
+      )
+
+  }
+
+  # ----------------------------
+  # Gas calculations
+  # ----------------------------
+
+  df <- df |>
     dplyr::mutate(
 
       # PSI to kPa
@@ -131,13 +164,17 @@ process_ankom <- function(
     )
 
     if (length(missing_cols) > 0) {
+
       stop(
         paste(
           "Metadata is missing required column(s):",
-          paste(missing_cols,
-                collapse = ", ")
+          paste(
+            missing_cols,
+            collapse = ", "
+          )
         )
       )
+
     }
 
     metadata$Head <- as.character(
@@ -150,11 +187,12 @@ process_ankom <- function(
       by = "Head"
     )
 
-    # Keep only bottles present in metadata
+    # Keep only valid bottles
     df <- df |>
       dplyr::filter(
         !is.na(Sample)
       )
+
   }
 
   # ----------------------------
@@ -165,7 +203,8 @@ process_ankom <- function(
     headspace_ml = headspace_ml,
     temperature_c = temperature_c,
     psi_to_kpa = psi_to_kpa,
-    gas_constant = R_constant
+    gas_constant = R_constant,
+    zero_negative_pressure = zero_negative_pressure
   )
 
   # ----------------------------

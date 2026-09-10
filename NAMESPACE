@@ -2,4 +2,5 @@
 
 export(parse_ankom_time)
 export(process_ankom)
+export(validate_ankom)
 export(validate_metadata)
