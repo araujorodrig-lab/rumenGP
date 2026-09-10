@@ -6,8 +6,12 @@
 #'
 #' @param data A rumen_gp object.
 #'
-#' @return A list containing parameter estimates,
-#' diagnostics and predictions.
+#' @return A list containing:
+#' \itemize{
+#'   \item parameters
+#'   \item diagnostics
+#'   \item predictions
+#' }
 #'
 #' @export
 fit_gompertz <- function(data) {
@@ -25,9 +29,13 @@ fit_gompertz <- function(data) {
     t <- df$Time_h
     y <- df$Gas_mL
 
+    # ----------------------------
+    # Starting values
+    # ----------------------------
+
     A_start <- max(
-      y,
-      na.rm = TRUE
+      max(y, na.rm = TRUE),
+      1
     )
 
     mu_start <- max(
@@ -35,7 +43,16 @@ fit_gompertz <- function(data) {
       na.rm = TRUE
     )
 
+    mu_start <- max(
+      mu_start,
+      0.1
+    )
+
     lambda_start <- 1
+
+    # ----------------------------
+    # Fit model
+    # ----------------------------
 
     fit <- tryCatch({
 
@@ -77,11 +94,16 @@ fit_gompertz <- function(data) {
       return(
         list(
           model = NULL,
-          converged = FALSE
+          converged = FALSE,
+          status = "FIT_FAILED"
         )
       )
 
     }
+
+    # ----------------------------
+    # Predictions
+    # ----------------------------
 
     preds <- predict(
       fit,
@@ -90,27 +112,52 @@ fit_gompertz <- function(data) {
 
     residuals <- y - preds
 
+    # ----------------------------
+    # Diagnostics
+    # ----------------------------
+
     rss <- sum(
-      residuals^2
+      residuals^2,
+      na.rm = TRUE
     )
 
     tss <- sum(
-      (y - mean(y))^2
+      (y - mean(y, na.rm = TRUE))^2,
+      na.rm = TRUE
     )
 
-    r2 <- 1 - rss/tss
+    r2 <- if (tss > 0) {
+      1 - rss / tss
+    } else {
+      NA_real_
+    }
 
     rmse <- sqrt(
       mean(
-        residuals^2
+        residuals^2,
+        na.rm = TRUE
       )
     )
+
+    coef_fit <- coef(fit)
+
+    lambda_boundary <-
+      coef_fit["lambda"] <= 1e-6
+
+    status <- if (lambda_boundary) {
+      "LAMBDA_AT_BOUNDARY"
+    } else {
+      "OK"
+    }
 
     list(
       model = fit,
       converged = TRUE,
+      status = status,
+      lambda_boundary = lambda_boundary,
       predictions = preds,
       residuals = residuals,
+      rss = rss,
       r2 = r2,
       rmse = rmse,
       aic = AIC(fit),
@@ -118,6 +165,10 @@ fit_gompertz <- function(data) {
     )
 
   }
+
+  # ----------------------------
+  # Split data by bottle
+  # ----------------------------
 
   split_data <- data |>
     dplyr::group_split(
@@ -128,6 +179,10 @@ fit_gompertz <- function(data) {
     split_data,
     fit_one_bottle
   )
+
+  # ----------------------------
+  # Parameters
+  # ----------------------------
 
   parameters <- purrr::map2_dfr(
     split_data,
@@ -142,9 +197,9 @@ fit_gompertz <- function(data) {
             Bottle = unique(df$Bottle),
             Rep = unique(df$Rep),
             Sample = unique(df$Sample),
-            A = NA,
-            mu = NA,
-            lambda = NA
+            A = NA_real_,
+            mu = NA_real_,
+            lambda = NA_real_
           )
         )
 
@@ -167,6 +222,10 @@ fit_gompertz <- function(data) {
     }
   )
 
+  # ----------------------------
+  # Diagnostics
+  # ----------------------------
+
   diagnostics <- purrr::map2_dfr(
     split_data,
     fits,
@@ -174,31 +233,63 @@ fit_gompertz <- function(data) {
 
       data.frame(
         Head = unique(df$Head),
+        Bottle = unique(df$Bottle),
+        Rep = unique(df$Rep),
+        Sample = unique(df$Sample),
+
         Converged = fit$converged,
-        R2 = ifelse(
-          fit$converged,
-          fit$r2,
-          NA
-        ),
-        RMSE = ifelse(
-          fit$converged,
-          fit$rmse,
-          NA
-        ),
-        AIC = ifelse(
-          fit$converged,
-          fit$aic,
-          NA
-        ),
-        BIC = ifelse(
-          fit$converged,
-          fit$bic,
-          NA
-        )
+
+        Status = fit$status,
+
+        Lambda_Boundary =
+          ifelse(
+            fit$converged,
+            fit$lambda_boundary,
+            NA
+          ),
+
+        RSS =
+          ifelse(
+            fit$converged,
+            fit$rss,
+            NA
+          ),
+
+        R2 =
+          ifelse(
+            fit$converged,
+            fit$r2,
+            NA
+          ),
+
+        RMSE =
+          ifelse(
+            fit$converged,
+            fit$rmse,
+            NA
+          ),
+
+        AIC =
+          ifelse(
+            fit$converged,
+            fit$aic,
+            NA
+          ),
+
+        BIC =
+          ifelse(
+            fit$converged,
+            fit$bic,
+            NA
+          )
       )
 
     }
   )
+
+  # ----------------------------
+  # Predictions
+  # ----------------------------
 
   predictions <- purrr::map2_dfr(
     split_data,
@@ -219,6 +310,18 @@ fit_gompertz <- function(data) {
 
     }
   )
+
+  # ----------------------------
+  # Clean row names
+  # ----------------------------
+
+  rownames(parameters) <- NULL
+  rownames(diagnostics) <- NULL
+  rownames(predictions) <- NULL
+
+  # ----------------------------
+  # Output
+  # ----------------------------
 
   out <- list(
     parameters = parameters,

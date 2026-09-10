@@ -10,8 +10,12 @@ fit_gompertz(data)
 \item{data}{A rumen_gp object.}
 }
 \value{
-A list containing parameter estimates,
-diagnostics and predictions.
+A list containing:
+\itemize{
+\item parameters
+\item diagnostics
+\item predictions
+}
 }
 \description{
 Fits the Zwietering-modified Gompertz model
