@@ -2,12 +2,12 @@
 #' Flag potentially problematic Gompertz fits
 #'
 #' Flags bottles with poor convergence,
-#' low R² values or parameter-boundary issues.
+#' low R² values and parameter-boundary issues.
 #'
 #' @param fit A gompertz_fit object.
 #' @param r2_threshold Minimum acceptable R².
 #'
-#' @return Data frame of flagged bottles.
+#' @return Diagnostic table with QC flags.
 #'
 #' @export
 flag_gompertz <- function(
@@ -24,20 +24,49 @@ flag_gompertz <- function(
   flags <- fit$diagnostics |>
     dplyr::mutate(
 
-      Flag = dplyr::case_when(
+      Flag_FitFailed =
+        !Converged,
 
-        !Converged ~
-          "FIT_FAILED",
+      Flag_LowR2 =
+        dplyr::if_else(
+          !is.na(R2) &
+            R2 < r2_threshold,
+          TRUE,
+          FALSE
+        ),
 
-        R2 < r2_threshold ~
-          "LOW_R2",
+      Flag_LambdaBoundary =
+        dplyr::if_else(
+          !is.na(Lambda_Boundary) &
+            Lambda_Boundary,
+          TRUE,
+          FALSE
+        )
 
-        Lambda_Boundary ~
-          "LAMBDA_AT_BOUNDARY",
+    ) |>
 
-        TRUE ~
-          "OK"
-      )
+    dplyr::mutate(
+
+      Overall_Flag =
+        dplyr::case_when(
+
+          Flag_FitFailed ~
+            "FIT_FAILED",
+
+          Flag_LowR2 &
+            Flag_LambdaBoundary ~
+            "LOW_R2 + LAMBDA_AT_BOUNDARY",
+
+          Flag_LowR2 ~
+            "LOW_R2",
+
+          Flag_LambdaBoundary ~
+            "LAMBDA_AT_BOUNDARY",
+
+          TRUE ~
+            "OK"
+
+        )
 
     )
 

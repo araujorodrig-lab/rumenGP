@@ -12,9 +12,9 @@ flag_gompertz(fit, r2_threshold = 0.9)
 \item{r2_threshold}{Minimum acceptable R².}
 }
 \value{
-Data frame of flagged bottles.
+Diagnostic table with QC flags.
 }
 \description{
 Flags bottles with poor convergence,
-low R² values or parameter-boundary issues.
+low R² values and parameter-boundary issues.
 }
