@@ -5,7 +5,7 @@
 #'
 #' Required columns:
 #' - Head
-#' - Sample
+#' - Treatment
 #' - Rep
 #'
 #' @param metadata Metadata table.
@@ -25,7 +25,7 @@ validate_metadata <- function(metadata) {
 
   required_cols <- c(
     "Head",
-    "Sample",
+    "Treatment",
     "Rep"
   )
 
@@ -81,13 +81,13 @@ validate_metadata <- function(metadata) {
   }
 
   # ----------------------------
-  # Sample validation
+  # Treatment validation
   # ----------------------------
 
-  if (any(is.na(metadata$Sample))) {
+  if (any(is.na(metadata$Treatment))) {
 
     stop(
-      "Metadata contains missing Sample values."
+      "Metadata contains missing Treatment values."
     )
 
   }
@@ -112,8 +112,8 @@ validate_metadata <- function(metadata) {
     metadata$Head
   )
 
-  metadata$Sample <- as.character(
-    metadata$Sample
+  metadata$Treatment <- as.character(
+    metadata$Treatment
   )
 
   # ----------------------------
@@ -123,7 +123,7 @@ validate_metadata <- function(metadata) {
   message(
     "Metadata validation passed.",
     "\nHeads: ", nrow(metadata),
-    "\nSamples: ", length(unique(metadata$Sample))
+    "\nTreatment: ", length(unique(metadata$Treatment))
   )
 
   metadata

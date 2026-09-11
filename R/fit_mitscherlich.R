@@ -1,15 +1,15 @@
 
-#' Fit Logistic model
+#' Fit Mitscherlich model
 #'
-#' Fits a Logistic gas-production model
+#' Fits the Mitscherlich gas-production model
 #' to each ANKOM bottle.
 #'
 #' @param data A rumen_gp object.
 #'
-#' @return A logistic_fit object.
+#' @return A mitscherlich_fit object.
 #'
 #' @export
-fit_logistic <- function(data) {
+fit_mitscherlich <- function(data) {
 
   if (!inherits(data, "rumen_gp")) {
     stop(
@@ -29,30 +29,33 @@ fit_logistic <- function(data) {
       1
     )
 
-    k_start <- max(
-      diff(y) / diff(t),
-      na.rm = TRUE
-    )
+    k_start <- 0.05
 
-    k_start <- max(
-      k_start / A_start,
-      0.001
-    )
+    d_start <- 0.05
 
-    lambda_start <- 1
+    lambda_start <- 0.5
 
     fit <- tryCatch({
 
       minpack.lm::nlsLM(
 
         Gas_mL ~
-          A /
+
+          A *
+
           (
-            1 +
+            1 -
               exp(
-                2 +
-                  4 * k *
-                  (lambda - Time_h)
+                -k *
+                  (Time_h - lambda)
+
+                -
+
+                  d *
+                  (
+                    sqrt(Time_h + 0.001) -
+                      sqrt(lambda + 0.001)
+                  )
               )
           ),
 
@@ -61,12 +64,14 @@ fit_logistic <- function(data) {
         start = list(
           A = A_start,
           k = k_start,
+          d = d_start,
           lambda = lambda_start
         ),
 
         lower = c(
           A = 0,
           k = 0,
+          d = 0,
           lambda = 0
         ),
 
@@ -104,7 +109,7 @@ fit_logistic <- function(data) {
     )
 
     tss <- sum(
-      (y - mean(y, na.rm = TRUE))^2,
+      (y - mean(y))^2,
       na.rm = TRUE
     )
 
@@ -158,6 +163,10 @@ fit_logistic <- function(data) {
     fit_one_bottle
   )
 
+  # ----------------------------
+  # Parameters
+  # ----------------------------
+
   parameters <- purrr::map2_dfr(
     split_data,
     fits,
@@ -171,9 +180,10 @@ fit_logistic <- function(data) {
             Bottle = unique(df$Bottle),
             Rep = unique(df$Rep),
             Treatment = unique(df$Treatment),
-            A = NA,
-            k = NA,
-            lambda = NA
+            A = NA_real_,
+            k = NA_real_,
+            d = NA_real_,
+            lambda = NA_real_
           )
         )
 
@@ -188,13 +198,19 @@ fit_logistic <- function(data) {
         Bottle = unique(df$Bottle),
         Rep = unique(df$Rep),
         Treatment = unique(df$Treatment),
+
         A = coef_fit["A"],
         k = coef_fit["k"],
+        d = coef_fit["d"],
         lambda = coef_fit["lambda"]
       )
 
     }
   )
+
+  # ----------------------------
+  # Diagnostics
+  # ----------------------------
 
   diagnostics <- purrr::map2_dfr(
     split_data,
@@ -208,7 +224,13 @@ fit_logistic <- function(data) {
         Treatment = unique(df$Treatment),
 
         Converged = fit$converged,
-        Status = fit$status,
+
+        Status =
+          ifelse(
+            fit$converged,
+            fit$status,
+            "FIT_FAILED"
+          ),
 
         Lambda_Boundary =
           ifelse(
@@ -251,10 +273,15 @@ fit_logistic <- function(data) {
             fit$bic,
             NA
           )
+
       )
 
     }
   )
+
+  # ----------------------------
+  # Predictions
+  # ----------------------------
 
   predictions <- purrr::map2_dfr(
     split_data,
@@ -279,9 +306,17 @@ fit_logistic <- function(data) {
     }
   )
 
+  # ----------------------------
+  # Clean row names
+  # ----------------------------
+
   rownames(parameters) <- NULL
   rownames(diagnostics) <- NULL
   rownames(predictions) <- NULL
+
+  # ----------------------------
+  # Output
+  # ----------------------------
 
   out <- list(
     parameters = parameters,
@@ -290,7 +325,7 @@ fit_logistic <- function(data) {
   )
 
   class(out) <- c(
-    "logistic_fit",
+    "mitscherlich_fit",
     class(out)
   )
 

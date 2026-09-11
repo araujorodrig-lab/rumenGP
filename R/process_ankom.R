@@ -154,7 +154,7 @@ process_ankom <- function(
 
     required_cols <- c(
       "Head",
-      "Sample",
+      "Treatment",
       "Rep"
     )
 
@@ -190,7 +190,7 @@ process_ankom <- function(
     # Keep only valid bottles
     df <- df |>
       dplyr::filter(
-        !is.na(Sample)
+        !is.na(Treatment)
       )
 
   }

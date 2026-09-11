@@ -1,7 +1,10 @@
 
-#' Plot residuals from Gompertz fit
+#' Plot model residuals
 #'
-#' @param fit A gompertz_fit object.
+#' Plots residuals for an individual bottle.
+#'
+#' @param fit A fitted model object containing a
+#' predictions element.
 #' @param head Head identifier.
 #'
 #' @return A ggplot object.
@@ -12,11 +15,15 @@ plot_residuals <- function(
     head
 ) {
 
-  if (!inherits(fit, "gompertz_fit")) {
+  if (!"predictions" %in% names(fit)) {
+
     stop(
-      "Input must be a gompertz_fit object."
+      "Fit object does not contain predictions."
     )
+
   }
+
+  model_name <- class(fit)[1]
 
   df <- fit$predictions |>
     dplyr::filter(
@@ -45,18 +52,29 @@ plot_residuals <- function(
     ggplot2::geom_hline(
       yintercept = 0,
       linetype = 2,
-      colour = "red"
+      colour = "black"
     ) +
 
     ggplot2::geom_point(
       size = 2
     ) +
 
-    ggplot2::geom_line() +
+    ggplot2::geom_line(
+      linewidth = 0.5
+    ) +
+
+    ggplot2::geom_smooth(
+      method = "loess",
+      se = FALSE,
+      colour = "red",
+      linewidth = 1
+    ) +
 
     ggplot2::labs(
       title = paste(
-        "Residual plot - Head",
+        "Residual plot -",
+        model_name,
+        "- Head",
         head
       ),
       x = "Time (h)",

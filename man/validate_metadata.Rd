@@ -19,7 +19,7 @@ Validates ANKOM metadata before analysis.
 Required columns:
 \itemize{
 \item Head
-\item Sample
+\item Treatment
 \item Rep
 }
 }

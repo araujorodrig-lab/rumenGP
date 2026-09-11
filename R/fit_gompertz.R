@@ -196,7 +196,7 @@ fit_gompertz <- function(data) {
             Head = unique(df$Head),
             Bottle = unique(df$Bottle),
             Rep = unique(df$Rep),
-            Sample = unique(df$Sample),
+            Treatment = unique(df$Treatment),
             A = NA_real_,
             mu = NA_real_,
             lambda = NA_real_
@@ -213,7 +213,7 @@ fit_gompertz <- function(data) {
         Head = unique(df$Head),
         Bottle = unique(df$Bottle),
         Rep = unique(df$Rep),
-        Sample = unique(df$Sample),
+        Treatment = unique(df$Treatment),
         A = coef_fit["A"],
         mu = coef_fit["mu"],
         lambda = coef_fit["lambda"]
@@ -235,7 +235,7 @@ fit_gompertz <- function(data) {
         Head = unique(df$Head),
         Bottle = unique(df$Bottle),
         Rep = unique(df$Rep),
-        Sample = unique(df$Sample),
+        Treatment = unique(df$Treatment),
 
         Converged = fit$converged,
 
@@ -302,6 +302,9 @@ fit_gompertz <- function(data) {
 
       data.frame(
         Head = df$Head,
+        Bottle = df$Bottle,
+        Rep = df$Rep,
+        Treatment = df$Treatment,
         Time_h = df$Time_h,
         Observed = df$Gas_mL,
         Predicted = fit$predictions,

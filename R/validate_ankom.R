@@ -29,7 +29,7 @@ validate_ankom <- function(data) {
     "Head",
     "Gas_PSI",
     "Gas_mL",
-    "Sample",
+    "Treatment",
     "Rep"
   )
 
@@ -140,14 +140,14 @@ validate_ankom <- function(data) {
   }
 
   # ----------------------------
-  # Sample-level summary
+  # Treatment-level summary
   # ----------------------------
 
   message(
     "ANKOM data validation passed.",
     "\nObservations: ", nrow(data),
     "\nHeads: ", dplyr::n_distinct(data$Head),
-    "\nSamples: ", dplyr::n_distinct(data$Sample)
+    "\nTreatments: ", dplyr::n_distinct(data$Treatment)
   )
 
   data

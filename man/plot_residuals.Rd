@@ -2,12 +2,13 @@
 % Please edit documentation in R/plot_residuals.R
 \name{plot_residuals}
 \alias{plot_residuals}
-\title{Plot residuals from Gompertz fit}
+\title{Plot model residuals}
 \usage{
 plot_residuals(fit, head)
 }
 \arguments{
-\item{fit}{A gompertz_fit object.}
+\item{fit}{A fitted model object containing a
+predictions element.}
 
 \item{head}{Head identifier.}
 }
@@ -15,5 +16,5 @@ plot_residuals(fit, head)
 A ggplot object.
 }
 \description{
-Plot residuals from Gompertz fit
+Plots residuals for an individual bottle.
 }
