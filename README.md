@@ -232,7 +232,7 @@ plot_gp(
 ### Plot a Gompertz fit
 
 ``` r
-plot_gompertz_fit(
+plot_fit(
   gompertz_fit,
   head = "1"
 )
@@ -267,7 +267,7 @@ gp_clean <- exclude_heads(
 - ✅ `fit_gompertz()`
 - ✅ `flag_model()`
 - ✅ `plot_gp()`
-- ✅ `plot_gompertz_fit()`
+- ✅ `plot_fit()`
 - ✅ `plot_residuals()`
 - ✅ `exclude_heads()`
 
