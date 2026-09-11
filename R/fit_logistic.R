@@ -1,0 +1,296 @@
+
+#' Fit Logistic model
+#'
+#' Fits a Logistic gas-production model
+#' to each ANKOM bottle.
+#'
+#' @param data A rumen_gp object.
+#'
+#' @return A logistic_fit object.
+#'
+#' @export
+fit_logistic <- function(data) {
+
+  if (!inherits(data, "rumen_gp")) {
+    stop(
+      "Input must be a rumen_gp object."
+    )
+  }
+
+  validate_ankom(data)
+
+  fit_one_bottle <- function(df) {
+
+    t <- df$Time_h
+    y <- df$Gas_mL
+
+    A_start <- max(
+      max(y, na.rm = TRUE),
+      1
+    )
+
+    k_start <- max(
+      diff(y) / diff(t),
+      na.rm = TRUE
+    )
+
+    k_start <- max(
+      k_start / A_start,
+      0.001
+    )
+
+    lambda_start <- 1
+
+    fit <- tryCatch({
+
+      minpack.lm::nlsLM(
+
+        Gas_mL ~
+          A /
+          (
+            1 +
+              exp(
+                2 +
+                  4 * k *
+                  (lambda - Time_h)
+              )
+          ),
+
+        data = df,
+
+        start = list(
+          A = A_start,
+          k = k_start,
+          lambda = lambda_start
+        ),
+
+        lower = c(
+          A = 0,
+          k = 0,
+          lambda = 0
+        ),
+
+        control =
+          minpack.lm::nls.lm.control(
+            maxiter = 500
+          )
+
+      )
+
+    }, error = function(e) NULL)
+
+    if (is.null(fit)) {
+
+      return(
+        list(
+          model = NULL,
+          converged = FALSE,
+          status = "FIT_FAILED"
+        )
+      )
+
+    }
+
+    preds <- predict(
+      fit,
+      newdata = df
+    )
+
+    residuals <- y - preds
+
+    rss <- sum(
+      residuals^2,
+      na.rm = TRUE
+    )
+
+    tss <- sum(
+      (y - mean(y, na.rm = TRUE))^2,
+      na.rm = TRUE
+    )
+
+    r2 <- if (tss > 0) {
+      1 - rss/tss
+    } else {
+      NA_real_
+    }
+
+    rmse <- sqrt(
+      mean(
+        residuals^2,
+        na.rm = TRUE
+      )
+    )
+
+    coef_fit <- coef(fit)
+
+    lambda_boundary <-
+      coef_fit["lambda"] <= 1e-6
+
+    status <- if (lambda_boundary) {
+      "LAMBDA_AT_BOUNDARY"
+    } else {
+      "OK"
+    }
+
+    list(
+      model = fit,
+      converged = TRUE,
+      status = status,
+      lambda_boundary = lambda_boundary,
+      predictions = preds,
+      residuals = residuals,
+      rss = rss,
+      r2 = r2,
+      rmse = rmse,
+      aic = AIC(fit),
+      bic = BIC(fit)
+    )
+
+  }
+
+  split_data <- data |>
+    dplyr::group_split(
+      Head
+    )
+
+  fits <- purrr::map(
+    split_data,
+    fit_one_bottle
+  )
+
+  parameters <- purrr::map2_dfr(
+    split_data,
+    fits,
+    function(df, fit) {
+
+      if (!fit$converged) {
+
+        return(
+          data.frame(
+            Head = unique(df$Head),
+            Bottle = unique(df$Bottle),
+            Rep = unique(df$Rep),
+            Sample = unique(df$Sample),
+            A = NA,
+            k = NA,
+            lambda = NA
+          )
+        )
+
+      }
+
+      coef_fit <- coef(
+        fit$model
+      )
+
+      data.frame(
+        Head = unique(df$Head),
+        Bottle = unique(df$Bottle),
+        Rep = unique(df$Rep),
+        Sample = unique(df$Sample),
+        A = coef_fit["A"],
+        k = coef_fit["k"],
+        lambda = coef_fit["lambda"]
+      )
+
+    }
+  )
+
+  diagnostics <- purrr::map2_dfr(
+    split_data,
+    fits,
+    function(df, fit) {
+
+      data.frame(
+        Head = unique(df$Head),
+        Bottle = unique(df$Bottle),
+        Rep = unique(df$Rep),
+        Sample = unique(df$Sample),
+
+        Converged = fit$converged,
+        Status = fit$status,
+
+        Lambda_Boundary =
+          ifelse(
+            fit$converged,
+            fit$lambda_boundary,
+            NA
+          ),
+
+        RSS =
+          ifelse(
+            fit$converged,
+            fit$rss,
+            NA
+          ),
+
+        R2 =
+          ifelse(
+            fit$converged,
+            fit$r2,
+            NA
+          ),
+
+        RMSE =
+          ifelse(
+            fit$converged,
+            fit$rmse,
+            NA
+          ),
+
+        AIC =
+          ifelse(
+            fit$converged,
+            fit$aic,
+            NA
+          ),
+
+        BIC =
+          ifelse(
+            fit$converged,
+            fit$bic,
+            NA
+          )
+      )
+
+    }
+  )
+
+  predictions <- purrr::map2_dfr(
+    split_data,
+    fits,
+    function(df, fit) {
+
+      if (!fit$converged) {
+        return(NULL)
+      }
+
+      data.frame(
+        Head = df$Head,
+        Time_h = df$Time_h,
+        Observed = df$Gas_mL,
+        Predicted = fit$predictions,
+        Residual = fit$residuals
+      )
+
+    }
+  )
+
+  rownames(parameters) <- NULL
+  rownames(diagnostics) <- NULL
+  rownames(predictions) <- NULL
+
+  out <- list(
+    parameters = parameters,
+    diagnostics = diagnostics,
+    predictions = predictions
+  )
+
+  class(out) <- c(
+    "logistic_fit",
+    class(out)
+  )
+
+  out
+
+}
