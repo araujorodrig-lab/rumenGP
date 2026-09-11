@@ -123,7 +123,7 @@ summary(gompertz_fit)
 ### Flag potentially problematic bottles
 
 ```{r}
-flags <- flag_gompertz(
+flags <- flag_model(
   gompertz_fit
 )
 
@@ -175,7 +175,7 @@ gp_clean <- exclude_heads(
 ### Gompertz modeling
 
 - ✅ `fit_gompertz()`
-- ✅ `flag_gompertz()`
+- ✅ `flag_model()`
 - ✅ `plot_gp()`
 - ✅ `plot_gompertz_fit()`
 - ✅ `plot_residuals()`

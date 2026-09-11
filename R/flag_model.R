@@ -1,27 +1,30 @@
 
-#' Flag potentially problematic Gompertz fits
+#' Flag potentially problematic model fits
 #'
 #' Flags bottles with poor convergence,
 #' low R² values and parameter-boundary issues.
 #'
-#' @param fit A gompertz_fit object.
+#' @param fit A fitted model object.
 #' @param r2_threshold Minimum acceptable R².
 #'
 #' @return Diagnostic table with QC flags.
 #'
 #' @export
-flag_gompertz <- function(
+flag_model <- function(
     fit,
     r2_threshold = 0.90
 ) {
 
-  if (!inherits(fit, "gompertz_fit")) {
+  if (!"diagnostics" %in% names(fit)) {
+
     stop(
-      "Input must be a gompertz_fit object."
+      "Fit object does not contain diagnostics."
     )
+
   }
 
   flags <- fit$diagnostics |>
+
     dplyr::mutate(
 
       Flag_FitFailed =

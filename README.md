@@ -56,10 +56,10 @@ files <- example_data()
 
 files
 #> $ankom
-#> [1] "C:/Users/Arlan/AppData/Local/Temp/RtmpMxwjUM/temp_libpath5aa852195930/rumenGP/extdata/example_ankom.xlsx"
+#> [1] "C:/Users/Arlan/AppData/Local/Temp/RtmpMxwjUM/temp_libpath5aa836c252f2/rumenGP/extdata/example_ankom.xlsx"
 #> 
 #> $metadata
-#> [1] "C:/Users/Arlan/AppData/Local/Temp/RtmpMxwjUM/temp_libpath5aa852195930/rumenGP/extdata/example_metadata.xlsx"
+#> [1] "C:/Users/Arlan/AppData/Local/Temp/RtmpMxwjUM/temp_libpath5aa836c252f2/rumenGP/extdata/example_metadata.xlsx"
 ```
 
 ### Import ANKOM data
@@ -82,7 +82,7 @@ metadata <- validate_metadata(
 )
 #> Metadata validation passed.
 #> Heads: 24
-#> Samples: 5
+#> Treatment: 5
 ```
 
 ### Process ANKOM data
@@ -106,7 +106,7 @@ gp <- validate_ankom(
 #> ANKOM data validation passed.
 #> Observations: 1752
 #> Heads: 24
-#> Samples: 5
+#> Treatments: 5
 ```
 
 ### Fit Gompertz model
@@ -118,7 +118,7 @@ gompertz_fit <- fit_gompertz(
 #> ANKOM data validation passed.
 #> Observations: 1752
 #> Heads: 24
-#> Samples: 5
+#> Treatments: 5
 ```
 
 ### Summarize fit results
@@ -138,36 +138,36 @@ summary(gompertz_fit)
 ### Flag potentially problematic bottles
 
 ``` r
-flags <- flag_gompertz(
+flags <- flag_model(
   gompertz_fit
 )
 
 flags
-#>    Head Bottle Rep  Sample Converged             Status Lambda_Boundary
-#> 1     1      1   1 Plant_A      TRUE LAMBDA_AT_BOUNDARY            TRUE
-#> 2    10     10   4 Plant_B     FALSE         FIT_FAILED              NA
-#> 3    11     11   5 Plant_B      TRUE                 OK           FALSE
-#> 4    12     12   6 Plant_B      TRUE                 OK           FALSE
-#> 5    13     13   1 Plant_C      TRUE                 OK           FALSE
-#> 6    14     14   2 Plant_C      TRUE                 OK           FALSE
-#> 7    15     15   3 Plant_C      TRUE LAMBDA_AT_BOUNDARY            TRUE
-#> 8    16     16   4 Plant_C      TRUE                 OK           FALSE
-#> 9    17     17   5 Plant_C      TRUE LAMBDA_AT_BOUNDARY            TRUE
-#> 10   18     18   6 Plant_C      TRUE                 OK           FALSE
-#> 11   19     19   1     TMR      TRUE                 OK           FALSE
-#> 12    2      2   2 Plant_A      TRUE                 OK           FALSE
-#> 13   21     21   3     TMR      TRUE                 OK           FALSE
-#> 14   22     22   1   BLANK      TRUE                 OK           FALSE
-#> 15   23     24   3   BLANK      TRUE LAMBDA_AT_BOUNDARY            TRUE
-#> 16   24     23   2   BLANK      TRUE                 OK           FALSE
-#> 17   26     20   2     TMR      TRUE LAMBDA_AT_BOUNDARY            TRUE
-#> 18    3      3   3 Plant_A      TRUE                 OK           FALSE
-#> 19    4      4   4 Plant_A      TRUE                 OK           FALSE
-#> 20    5      5   5 Plant_A      TRUE LAMBDA_AT_BOUNDARY            TRUE
-#> 21    6      6   6 Plant_A      TRUE                 OK           FALSE
-#> 22    7      7   1 Plant_B      TRUE LAMBDA_AT_BOUNDARY            TRUE
-#> 23    8      8   2 Plant_B      TRUE LAMBDA_AT_BOUNDARY            TRUE
-#> 24    9      9   3 Plant_B      TRUE                 OK           FALSE
+#>    Head Bottle Rep Treatment Converged             Status Lambda_Boundary
+#> 1     1      1   1   Plant_A      TRUE LAMBDA_AT_BOUNDARY            TRUE
+#> 2    10     10   4   Plant_B     FALSE         FIT_FAILED              NA
+#> 3    11     11   5   Plant_B      TRUE                 OK           FALSE
+#> 4    12     12   6   Plant_B      TRUE                 OK           FALSE
+#> 5    13     13   1   Plant_C      TRUE                 OK           FALSE
+#> 6    14     14   2   Plant_C      TRUE                 OK           FALSE
+#> 7    15     15   3   Plant_C      TRUE LAMBDA_AT_BOUNDARY            TRUE
+#> 8    16     16   4   Plant_C      TRUE                 OK           FALSE
+#> 9    17     17   5   Plant_C      TRUE LAMBDA_AT_BOUNDARY            TRUE
+#> 10   18     18   6   Plant_C      TRUE                 OK           FALSE
+#> 11   19     19   1       TMR      TRUE                 OK           FALSE
+#> 12    2      2   2   Plant_A      TRUE                 OK           FALSE
+#> 13   21     21   3       TMR      TRUE                 OK           FALSE
+#> 14   22     22   1     BLANK      TRUE                 OK           FALSE
+#> 15   23     24   3     BLANK      TRUE LAMBDA_AT_BOUNDARY            TRUE
+#> 16   24     23   2     BLANK      TRUE                 OK           FALSE
+#> 17   26     20   2       TMR      TRUE LAMBDA_AT_BOUNDARY            TRUE
+#> 18    3      3   3   Plant_A      TRUE                 OK           FALSE
+#> 19    4      4   4   Plant_A      TRUE                 OK           FALSE
+#> 20    5      5   5   Plant_A      TRUE LAMBDA_AT_BOUNDARY            TRUE
+#> 21    6      6   6   Plant_A      TRUE                 OK           FALSE
+#> 22    7      7   1   Plant_B      TRUE LAMBDA_AT_BOUNDARY            TRUE
+#> 23    8      8   2   Plant_B      TRUE LAMBDA_AT_BOUNDARY            TRUE
+#> 24    9      9   3   Plant_B      TRUE                 OK           FALSE
 #>           RSS        R2     RMSE      AIC      BIC Flag_FitFailed Flag_LowR2
 #> 1  3578.62676 0.9100326 7.001592 499.3011 508.4629          FALSE      FALSE
 #> 2          NA        NA       NA       NA       NA           TRUE      FALSE
@@ -265,7 +265,7 @@ gp_clean <- exclude_heads(
 ### Gompertz modeling
 
 - ✅ `fit_gompertz()`
-- ✅ `flag_gompertz()`
+- ✅ `flag_model()`
 - ✅ `plot_gp()`
 - ✅ `plot_gompertz_fit()`
 - ✅ `plot_residuals()`
