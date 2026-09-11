@@ -6,13 +6,15 @@
 #'
 #' @param ... Fitted model objects.
 #' @param treatment Treatment name.
+#' @param show_se Logical. Show observed ± SE ribbon.
 #'
 #' @return A ggplot object.
 #'
 #' @export
 plot_treatment_mean <- function(
     ...,
-    treatment
+    treatment,
+    show_se = TRUE
 ) {
 
   fits <- list(...)
@@ -44,7 +46,9 @@ plot_treatment_mean <- function(
 
   }
 
-  # observed means
+  # ----------------------------
+  # Observed means
+  # ----------------------------
 
   observed_mean <- prediction_list |>
     dplyr::group_by(
@@ -58,7 +62,9 @@ plot_treatment_mean <- function(
       .groups = "drop"
     )
 
-  # model means
+  # ----------------------------
+  # Predicted means
+  # ----------------------------
 
   predicted_mean <- prediction_list |>
     dplyr::group_by(
@@ -70,20 +76,30 @@ plot_treatment_mean <- function(
       .groups = "drop"
     )
 
-  ggplot2::ggplot() +
+  p <- ggplot2::ggplot()
 
-    # observed mean ± SE
+  # ----------------------------
+  # Observed SE ribbon
+  # ----------------------------
 
-    ggplot2::geom_ribbon(
-      data = observed_mean,
-      ggplot2::aes(
-        x = Time_h,
-        ymin = Mean_Observed - SE_Observed,
-        ymax = Mean_Observed + SE_Observed
-      ),
-      alpha = 0.2,
-      fill = "grey70"
-    ) +
+  if (show_se) {
+
+    p <- p +
+
+      ggplot2::geom_ribbon(
+        data = observed_mean,
+        ggplot2::aes(
+          x = Time_h,
+          ymin = Mean_Observed - SE_Observed,
+          ymax = Mean_Observed + SE_Observed
+        ),
+        alpha = 0.2,
+        fill = "grey70"
+      )
+
+  }
+
+  p +
 
     ggplot2::geom_point(
       data = observed_mean,
@@ -91,8 +107,8 @@ plot_treatment_mean <- function(
         x = Time_h,
         y = Mean_Observed
       ),
-      size = 2,
-      colour = "black"
+      colour = "black",
+      size = 2
     ) +
 
     ggplot2::geom_line(

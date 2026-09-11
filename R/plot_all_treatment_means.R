@@ -5,11 +5,15 @@
 #' across multiple fitted models.
 #'
 #' @param ... Fitted model objects.
+#' @param show_se Logical. Show observed ± SE ribbon.
 #'
 #' @return A ggplot object.
 #'
 #' @export
-plot_all_treatment_means <- function(...) {
+plot_all_treatment_means <- function(
+    ...,
+    show_se = TRUE
+) {
 
   fits <- list(...)
 
@@ -25,9 +29,17 @@ plot_all_treatment_means <- function(...) {
     }
   )
 
-  # Observed means by treatment
+  # ----------------------------
+  # Observed treatment means
+  # ----------------------------
 
   observed_mean <- prediction_list |>
+    dplyr::distinct(
+      Treatment,
+      Head,
+      Time_h,
+      Observed
+    ) |>
     dplyr::group_by(
       Treatment,
       Time_h
@@ -40,7 +52,9 @@ plot_all_treatment_means <- function(...) {
       .groups = "drop"
     )
 
-  # Predicted means by treatment and model
+  # ----------------------------
+  # Predicted treatment means
+  # ----------------------------
 
   predicted_mean <- prediction_list |>
     dplyr::group_by(
@@ -53,18 +67,44 @@ plot_all_treatment_means <- function(...) {
       .groups = "drop"
     )
 
-  ggplot2::ggplot() +
+  p <- ggplot2::ggplot()
 
-    ggplot2::geom_ribbon(
+  # ----------------------------
+  # Observed SE ribbon
+  # ----------------------------
+
+  if (show_se) {
+
+    p <- p +
+
+      ggplot2::geom_ribbon(
+        data = observed_mean,
+        ggplot2::aes(
+          x = Time_h,
+          ymin = Mean_Observed - SE_Observed,
+          ymax = Mean_Observed + SE_Observed
+        ),
+        fill = "grey75",
+        alpha = 0.25
+      )
+
+  }
+
+  p +
+
+    # Observed mean line
+
+    ggplot2::geom_line(
       data = observed_mean,
       ggplot2::aes(
         x = Time_h,
-        ymin = Mean_Observed - SE_Observed,
-        ymax = Mean_Observed + SE_Observed
+        y = Mean_Observed
       ),
-      fill = "grey70",
-      alpha = 0.2
+      colour = "black",
+      linewidth = 0.8
     ) +
+
+    # Observed mean points
 
     ggplot2::geom_point(
       data = observed_mean,
@@ -72,8 +112,11 @@ plot_all_treatment_means <- function(...) {
         x = Time_h,
         y = Mean_Observed
       ),
-      size = 1
+      colour = "black",
+      size = 1.5
     ) +
+
+    # Model predictions
 
     ggplot2::geom_line(
       data = predicted_mean,
@@ -91,11 +134,23 @@ plot_all_treatment_means <- function(...) {
     ) +
 
     ggplot2::labs(
-      title = "Treatment mean comparison",
+      title = "Observed vs predicted treatment means",
+      subtitle = "Comparison of fitted gas production models",
       x = "Time (h)",
-      y = "Gas production (mL)"
+      y = "Gas production (mL)",
+      colour = "Model"
     ) +
 
-    ggplot2::theme_minimal()
+    ggplot2::theme_minimal() +
+
+    ggplot2::theme(
+      legend.position = "bottom",
+      strip.text = ggplot2::element_text(
+        face = "bold"
+      ),
+      plot.title = ggplot2::element_text(
+        face = "bold"
+      )
+    )
 
 }

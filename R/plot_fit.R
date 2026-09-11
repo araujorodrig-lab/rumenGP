@@ -1,25 +1,29 @@
 
-#' Plot Gompertz fit
+#' Plot fitted model
 #'
 #' Plots observed and predicted gas production
 #' for an individual bottle.
 #'
-#' @param fit A gompertz_fit object.
+#' @param fit A fitted model object.
 #' @param head Head identifier.
 #'
 #' @return A ggplot object.
 #'
 #' @export
-plot_gompertz_fit <- function(
+plot_fit <- function(
     fit,
     head
 ) {
 
-  if (!inherits(fit, "gompertz_fit")) {
+  if (!"predictions" %in% names(fit)) {
+
     stop(
-      "Input must be a gompertz_fit object."
+      "Fit object does not contain predictions."
     )
+
   }
+
+  model_name <- class(fit)[1]
 
   df <- fit$predictions |>
     dplyr::filter(
@@ -39,7 +43,7 @@ plot_gompertz_fit <- function(
         paste(
           "Head",
           head,
-          "has no predictions because the fit status is:",
+          "has no predictions because fit status is:",
           diagnostic$Status
         )
       )
@@ -74,13 +78,15 @@ plot_gompertz_fit <- function(
       ggplot2::aes(
         y = Predicted
       ),
-      linewidth = 1,
-      colour = "blue"
+      colour = "blue",
+      linewidth = 1
     ) +
 
     ggplot2::labs(
       title = paste(
-        "Gompertz fit - Head",
+        "Model fit -",
+        model_name,
+        "- Head",
         head
       ),
       x = "Time (h)",

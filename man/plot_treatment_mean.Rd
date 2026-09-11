@@ -4,12 +4,14 @@
 \alias{plot_treatment_mean}
 \title{Plot treatment means across models}
 \usage{
-plot_treatment_mean(..., treatment)
+plot_treatment_mean(..., treatment, show_se = TRUE)
 }
 \arguments{
 \item{...}{Fitted model objects.}
 
 \item{treatment}{Treatment name.}
+
+\item{show_se}{Logical. Show observed ± SE ribbon.}
 }
 \value{
 A ggplot object.
