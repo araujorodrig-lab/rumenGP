@@ -4,10 +4,14 @@
 \alias{fit_mm}
 \title{Fit Michaelis-Menten model}
 \usage{
-fit_mm(data)
+fit_mm(data, start = NULL)
 }
 \arguments{
 \item{data}{A rumen_gp object.}
+
+\item{start}{Optional list of starting values.
+May contain any of:
+A, K, and c.}
 }
 \value{
 A mm_fit object.

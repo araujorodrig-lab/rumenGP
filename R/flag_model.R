@@ -2,10 +2,10 @@
 #' Flag potentially problematic model fits
 #'
 #' Flags bottles with poor convergence,
-#' low R² values and parameter-boundary issues.
+#' low R-squared values and parameter-boundary issues.
 #'
 #' @param fit A fitted model object.
-#' @param r2_threshold Minimum acceptable R².
+#' @param r2_threshold Minimum acceptable R-squared.
 #'
 #' @return Diagnostic table with QC flags.
 #'

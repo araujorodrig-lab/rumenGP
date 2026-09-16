@@ -2,17 +2,21 @@
 % Please edit documentation in R/fit_orskov.R
 \name{fit_orskov}
 \alias{fit_orskov}
-\title{Fit Ørskov and McDonald model}
+\title{Fit Orskov and McDonald model}
 \usage{
-fit_orskov(data)
+fit_orskov(data, start = NULL)
 }
 \arguments{
 \item{data}{A rumen_gp object.}
+
+\item{start}{Optional list of starting values.
+May contain any of:
+VF, b, and k.}
 }
 \value{
 An orskov_fit object.
 }
 \description{
-Fits the Ørskov and McDonald gas
+Fits the Orskov and McDonald gas
 production model to each ANKOM bottle.
 }

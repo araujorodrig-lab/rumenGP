@@ -5,11 +5,17 @@
 #' rapidly and slowly degradable fractions.
 #'
 #' @param data A rumen_gp object.
+#' @param start Optional list of starting values.
+#' May contain any of:
+#' V1F, V2F, k1, k2, and lambda.
 #'
 #' @return A dual_logistic_fit object.
 #'
 #' @export
-fit_dual_logistic <- function(data) {
+fit_dual_logistic <- function(
+    data,
+    start = NULL
+) {
 
   if (!inherits(data, "rumen_gp")) {
 
@@ -28,15 +34,64 @@ fit_dual_logistic <- function(data) {
       na.rm = TRUE
     )
 
-    V1F_start <- vmax * 0.30
+    # ----------------------------------
+    # Default starting values
+    # ----------------------------------
 
-    V2F_start <- vmax * 0.70
+    default_start <- list(
 
-    k1_start <- 0.20
+      V1F = vmax * 0.30,
 
-    k2_start <- 0.05
+      V2F = vmax * 0.70,
 
-    lambda_start <- 0.50
+      k1 = 0.20,
+
+      k2 = 0.05,
+
+      lambda = 0.50
+
+    )
+
+    fit_start <- default_start
+
+    # ----------------------------------
+    # User-defined overrides
+    # ----------------------------------
+
+    if (!is.null(start)) {
+
+      valid_names <- c(
+        "V1F",
+        "V2F",
+        "k1",
+        "k2",
+        "lambda"
+      )
+
+      invalid_names <- setdiff(
+        names(start),
+        valid_names
+      )
+
+      if (length(invalid_names) > 0) {
+
+        stop(
+          paste(
+            "Invalid start parameter(s):",
+            paste(
+              invalid_names,
+              collapse = ", "
+            )
+          )
+        )
+
+      }
+
+      fit_start[
+        names(start)
+      ] <- start
+
+    }
 
     fit <- tryCatch({
 
@@ -68,13 +123,7 @@ fit_dual_logistic <- function(data) {
 
         data = df,
 
-        start = list(
-          V1F = V1F_start,
-          V2F = V2F_start,
-          k1 = k1_start,
-          k2 = k2_start,
-          lambda = lambda_start
-        ),
+        start = fit_start,
 
         lower = c(
           V1F = 0,
@@ -237,6 +286,10 @@ fit_dual_logistic <- function(data) {
     }
   )
 
+  # ----------------------------
+  # Diagnostics
+  # ----------------------------
+
   diagnostics <- purrr::map2_dfr(
     split_data,
     fits,
@@ -249,6 +302,7 @@ fit_dual_logistic <- function(data) {
         Treatment = unique(df$Treatment),
 
         Converged = fit$converged,
+
         Status =
           ifelse(
             fit$converged,
@@ -303,6 +357,10 @@ fit_dual_logistic <- function(data) {
     }
   )
 
+  # ----------------------------
+  # Predictions
+  # ----------------------------
+
   predictions <- purrr::map2_dfr(
     split_data,
     fits,
@@ -320,7 +378,9 @@ fit_dual_logistic <- function(data) {
         Time_h = df$Time_h,
 
         Observed = df$Gas_mL,
+
         Predicted = fit$predictions,
+
         Residual = fit$residuals
       )
 

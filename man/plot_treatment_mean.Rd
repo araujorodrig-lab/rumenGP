@@ -11,7 +11,7 @@ plot_treatment_mean(..., treatment, show_se = TRUE)
 
 \item{treatment}{Treatment name.}
 
-\item{show_se}{Logical. Show observed ± SE ribbon.}
+\item{show_se}{Logical. Show observed +/- SE ribbon.}
 }
 \value{
 A ggplot object.

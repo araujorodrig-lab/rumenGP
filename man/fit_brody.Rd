@@ -4,10 +4,14 @@
 \alias{fit_brody}
 \title{Fit Brody model}
 \usage{
-fit_brody(data)
+fit_brody(data, start = NULL)
 }
 \arguments{
 \item{data}{A rumen_gp object.}
+
+\item{start}{Optional list of starting values.
+May contain any of:
+A, b, and k.}
 }
 \value{
 A brody_fit object.

@@ -10,7 +10,7 @@
 #' @param raw_data Raw ANKOM data table.
 #' @param metadata Metadata table.
 #' @param headspace_ml Bottle headspace volume (mL).
-#' @param temperature_c Incubation temperature (°C).
+#' @param temperature_c Incubation temperature (degC).
 #' @param zero_negative_pressure Logical. If TRUE,
 #' negative pressure values are converted to zero
 #' before gas-volume calculations.

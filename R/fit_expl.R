@@ -5,11 +5,17 @@
 #' with an explicit lag phase.
 #'
 #' @param data A rumen_gp object.
+#' @param start Optional list of starting values.
+#' May contain any of:
+#' Vf, k, and lambda.
 #'
 #' @return An expl_fit object.
 #'
 #' @export
-fit_expl <- function(data) {
+fit_expl <- function(
+    data,
+    start = NULL
+) {
 
   if (!inherits(data, "rumen_gp")) {
     stop(
@@ -21,14 +27,61 @@ fit_expl <- function(data) {
 
   fit_one_bottle <- function(df) {
 
-    Vf_start <- max(
-      df$Gas_mL,
-      na.rm = TRUE
+    # ----------------------------------
+    # Default starting values
+    # ----------------------------------
+
+    default_start <- list(
+
+      Vf = max(
+        df$Gas_mL,
+        na.rm = TRUE
+      ),
+
+      k = 0.05,
+
+      lambda = 0.5
+
     )
 
-    k_start <- 0.05
+    fit_start <- default_start
 
-    lambda_start <- 0.5
+    # ----------------------------------
+    # User-defined overrides
+    # ----------------------------------
+
+    if (!is.null(start)) {
+
+      valid_names <- c(
+        "Vf",
+        "k",
+        "lambda"
+      )
+
+      invalid_names <- setdiff(
+        names(start),
+        valid_names
+      )
+
+      if (length(invalid_names) > 0) {
+
+        stop(
+          paste(
+            "Invalid start parameter(s):",
+            paste(
+              invalid_names,
+              collapse = ", "
+            )
+          )
+        )
+
+      }
+
+      fit_start[
+        names(start)
+      ] <- start
+
+    }
 
     fit <- tryCatch({
 
@@ -47,11 +100,7 @@ fit_expl <- function(data) {
 
         data = df,
 
-        start = list(
-          Vf = Vf_start,
-          k = k_start,
-          lambda = lambda_start
-        ),
+        start = fit_start,
 
         lower = c(
           Vf = 0,

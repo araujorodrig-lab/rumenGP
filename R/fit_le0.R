@@ -5,11 +5,17 @@
 #' an explicit lag phase.
 #'
 #' @param data A rumen_gp object.
+#' @param start Optional list of starting values.
+#' May contain any of:
+#' A, k, and d.
 #'
 #' @return A le0_fit object.
 #'
 #' @export
-fit_le0 <- function(data) {
+fit_le0 <- function(
+    data,
+    start = NULL
+) {
 
   if (!inherits(data, "rumen_gp")) {
     stop(
@@ -21,14 +27,61 @@ fit_le0 <- function(data) {
 
   fit_one_bottle <- function(df) {
 
-    A_start <- max(
-      df$Gas_mL,
-      na.rm = TRUE
+    # ----------------------------------
+    # Default starting values
+    # ----------------------------------
+
+    default_start <- list(
+
+      A = max(
+        df$Gas_mL,
+        na.rm = TRUE
+      ),
+
+      k = 0.05,
+
+      d = 0.5
+
     )
 
-    k_start <- 0.05
+    fit_start <- default_start
 
-    d_start <- 0.5
+    # ----------------------------------
+    # User-defined overrides
+    # ----------------------------------
+
+    if (!is.null(start)) {
+
+      valid_names <- c(
+        "A",
+        "k",
+        "d"
+      )
+
+      invalid_names <- setdiff(
+        names(start),
+        valid_names
+      )
+
+      if (length(invalid_names) > 0) {
+
+        stop(
+          paste(
+            "Invalid start parameter(s):",
+            paste(
+              invalid_names,
+              collapse = ", "
+            )
+          )
+        )
+
+      }
+
+      fit_start[
+        names(start)
+      ] <- start
+
+    }
 
     fit <- tryCatch({
 
@@ -56,11 +109,7 @@ fit_le0 <- function(data) {
 
         data = df,
 
-        start = list(
-          A = A_start,
-          k = k_start,
-          d = d_start
-        ),
+        start = fit_start,
 
         lower = c(
           A = 0,
@@ -147,7 +196,9 @@ fit_le0 <- function(data) {
     fit_one_bottle
   )
 
-  # ---- PARAMETERS ----
+  # ----------------------------
+  # Parameters
+  # ----------------------------
 
   parameters <- purrr::map2_dfr(
     split_data,
@@ -162,6 +213,7 @@ fit_le0 <- function(data) {
             Bottle = unique(df$Bottle),
             Rep = unique(df$Rep),
             Treatment = unique(df$Treatment),
+
             A = NA_real_,
             k = NA_real_,
             d = NA_real_
@@ -270,6 +322,7 @@ fit_le0 <- function(data) {
         Bottle = df$Bottle,
         Rep = df$Rep,
         Treatment = df$Treatment,
+
         Time_h = df$Time_h,
 
         Observed = df$Gas_mL,
@@ -308,4 +361,3 @@ fit_le0 <- function(data) {
   out
 
 }
-

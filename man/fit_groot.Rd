@@ -4,10 +4,14 @@
 \alias{fit_groot}
 \title{Fit Groot model}
 \usage{
-fit_groot(data)
+fit_groot(data, start = NULL)
 }
 \arguments{
 \item{data}{A rumen_gp object.}
+
+\item{start}{Optional list of starting values.
+May contain any of:
+VF, b, and k.}
 }
 \value{
 A groot_fit object.

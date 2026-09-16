@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.orskov_fit.R
 \name{summary.orskov_fit}
 \alias{summary.orskov_fit}
-\title{Summary of Ørskov and McDonald fits}
+\title{Summary of Orskov and McDonald fits}
 \usage{
 \method{summary}{orskov_fit}(object, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{Additional arguments.}
 }
 \description{
-Summary of Ørskov and McDonald fits
+Summary of Orskov and McDonald fits
 }

@@ -1,15 +1,21 @@
 
-#' Fit Ørskov and McDonald model
+#' Fit Orskov and McDonald model
 #'
-#' Fits the Ørskov and McDonald gas
+#' Fits the Orskov and McDonald gas
 #' production model to each ANKOM bottle.
 #'
 #' @param data A rumen_gp object.
+#' @param start Optional list of starting values.
+#' May contain any of:
+#' VF, b, and k.
 #'
 #' @return An orskov_fit object.
 #'
 #' @export
-fit_orskov <- function(data) {
+fit_orskov <- function(
+    data,
+    start = NULL
+) {
 
   if (!inherits(data, "rumen_gp")) {
     stop(
@@ -21,17 +27,69 @@ fit_orskov <- function(data) {
 
   fit_one_bottle <- function(df) {
 
-    VF_start <- min(
-      df$Gas_mL,
-      na.rm = TRUE
+    # ----------------------------------
+    # Default starting values
+    # ----------------------------------
+
+    default_start <- list(
+
+      VF = min(
+        df$Gas_mL,
+        na.rm = TRUE
+      ),
+
+      b =
+        max(
+          df$Gas_mL,
+          na.rm = TRUE
+        ) -
+        min(
+          df$Gas_mL,
+          na.rm = TRUE
+        ),
+
+      k = 0.05
+
     )
 
-    b_start <- max(
-      df$Gas_mL,
-      na.rm = TRUE
-    ) - VF_start
+    fit_start <- default_start
 
-    k_start <- 0.05
+    # ----------------------------------
+    # User-defined overrides
+    # ----------------------------------
+
+    if (!is.null(start)) {
+
+      valid_names <- c(
+        "VF",
+        "b",
+        "k"
+      )
+
+      invalid_names <- setdiff(
+        names(start),
+        valid_names
+      )
+
+      if (length(invalid_names) > 0) {
+
+        stop(
+          paste(
+            "Invalid start parameter(s):",
+            paste(
+              invalid_names,
+              collapse = ", "
+            )
+          )
+        )
+
+      }
+
+      fit_start[
+        names(start)
+      ] <- start
+
+    }
 
     fit <- tryCatch({
 
@@ -51,11 +109,7 @@ fit_orskov <- function(data) {
 
         data = df,
 
-        start = list(
-          VF = VF_start,
-          b = b_start,
-          k = k_start
-        ),
+        start = fit_start,
 
         lower = c(
           VF = 0,
@@ -99,7 +153,10 @@ fit_orskov <- function(data) {
     tss <- sum(
       (
         df$Gas_mL -
-          mean(df$Gas_mL)
+          mean(
+            df$Gas_mL,
+            na.rm = TRUE
+          )
       )^2,
       na.rm = TRUE
     )
@@ -179,8 +236,8 @@ fit_orskov <- function(data) {
         Treatment = unique(df$Treatment),
 
         VF = coef_fit["VF"],
-        b  = coef_fit["b"],
-        k  = coef_fit["k"]
+        b = coef_fit["b"],
+        k = coef_fit["k"]
       )
 
     }
@@ -268,6 +325,7 @@ fit_orskov <- function(data) {
         Bottle = df$Bottle,
         Rep = df$Rep,
         Treatment = df$Treatment,
+
         Time_h = df$Time_h,
 
         Observed = df$Gas_mL,

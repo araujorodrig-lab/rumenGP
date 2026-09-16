@@ -6,7 +6,7 @@
 #'
 #' @param ... Fitted model objects.
 #' @param treatment Treatment name.
-#' @param show_se Logical. Show observed ± SE ribbon.
+#' @param show_se Logical. Show observed +/- SE ribbon.
 #'
 #' @return A ggplot object.
 #'

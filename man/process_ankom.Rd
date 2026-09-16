@@ -19,7 +19,7 @@ process_ankom(
 
 \item{headspace_ml}{Bottle headspace volume (mL).}
 
-\item{temperature_c}{Incubation temperature (°C).}
+\item{temperature_c}{Incubation temperature (degC).}
 
 \item{zero_negative_pressure}{Logical. If TRUE,
 negative pressure values are converted to zero

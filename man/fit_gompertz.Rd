@@ -4,10 +4,14 @@
 \alias{fit_gompertz}
 \title{Fit Gompertz model}
 \usage{
-fit_gompertz(data)
+fit_gompertz(data, start = NULL)
 }
 \arguments{
 \item{data}{A rumen_gp object.}
+
+\item{start}{Optional list of starting values.
+May contain any of:
+A, mu, and lambda.}
 }
 \value{
 A list containing:

@@ -1,10 +1,37 @@
 Package: rumenGP
-Title: What the Package Does (One Line, Title Case)
+Title: Rumen Gas Production Kinetic Modeling and Model Comparison
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R:
+    c(
+      person(
+        "Arlan",
+        "Araujo Rodrigues",
+        email = "arlan.rodrigues@wisc.edu",
+        role = c("aut", "cre")
+      ),
+      person(
+        "Hilario",
+        "Cuquetto Mantovani",
+        role = "aut"
+      )
+    )
+Description: Tools for importing, processing, visualizing,
+    fitting, comparing, and interpreting in vitro rumen gas
+    production data from ANKOM systems. The package provides
+    multiple kinetic models, model comparison workflows,
+    treatment-level summaries, diagnostic tools, and
+    visualization functions for rumen fermentation studies.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+Depends:
+    R (>= 4.1.0)
+Imports:
+    dplyr,
+    ggplot2,
+    lubridate,
+    minpack.lm,
+    purrr,
+    readxl,
+    tidyr

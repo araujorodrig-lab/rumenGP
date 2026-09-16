@@ -5,11 +5,17 @@
 #' to each ANKOM bottle.
 #'
 #' @param data A rumen_gp object.
+#' @param start Optional list of starting values.
+#' May contain any of:
+#' A, b, and k.
 #'
 #' @return A brody_fit object.
 #'
 #' @export
-fit_brody <- function(data) {
+fit_brody <- function(
+    data,
+    start = NULL
+) {
 
   if (!inherits(data, "rumen_gp")) {
     stop(
@@ -21,14 +27,61 @@ fit_brody <- function(data) {
 
   fit_one_bottle <- function(df) {
 
-    A_start <- max(
-      df$Gas_mL,
-      na.rm = TRUE
+    # ----------------------------------
+    # Default starting values
+    # ----------------------------------
+
+    default_start <- list(
+
+      A = max(
+        df$Gas_mL,
+        na.rm = TRUE
+      ),
+
+      b = 0.9,
+
+      k = 0.05
+
     )
 
-    b_start <- 0.9
+    fit_start <- default_start
 
-    k_start <- 0.05
+    # ----------------------------------
+    # User-defined overrides
+    # ----------------------------------
+
+    if (!is.null(start)) {
+
+      valid_names <- c(
+        "A",
+        "b",
+        "k"
+      )
+
+      invalid_names <- setdiff(
+        names(start),
+        valid_names
+      )
+
+      if (length(invalid_names) > 0) {
+
+        stop(
+          paste(
+            "Invalid start parameter(s):",
+            paste(
+              invalid_names,
+              collapse = ", "
+            )
+          )
+        )
+
+      }
+
+      fit_start[
+        names(start)
+      ] <- start
+
+    }
 
     fit <- tryCatch({
 
@@ -47,11 +100,7 @@ fit_brody <- function(data) {
 
         data = df,
 
-        start = list(
-          A = A_start,
-          b = b_start,
-          k = k_start
-        ),
+        start = fit_start,
 
         lower = c(
           A = 0,
@@ -173,6 +222,7 @@ fit_brody <- function(data) {
             Bottle = unique(df$Bottle),
             Rep = unique(df$Rep),
             Treatment = unique(df$Treatment),
+
             A = NA_real_,
             b = NA_real_,
             k = NA_real_

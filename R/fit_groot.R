@@ -5,11 +5,17 @@
 #' to each ANKOM bottle.
 #'
 #' @param data A rumen_gp object.
+#' @param start Optional list of starting values.
+#' May contain any of:
+#' VF, b, and k.
 #'
 #' @return A groot_fit object.
 #'
 #' @export
-fit_groot <- function(data) {
+fit_groot <- function(
+    data,
+    start = NULL
+) {
 
   if (!inherits(data, "rumen_gp")) {
 
@@ -28,17 +34,64 @@ fit_groot <- function(data) {
         Time_h > 0
       )
 
-    VF_start <- max(
-      df_fit$Gas_mL,
-      na.rm = TRUE
+    # ----------------------------------
+    # Default starting values
+    # ----------------------------------
+
+    default_start <- list(
+
+      VF = max(
+        df_fit$Gas_mL,
+        na.rm = TRUE
+      ),
+
+      b = median(
+        df_fit$Time_h,
+        na.rm = TRUE
+      ),
+
+      k = 2
+
     )
 
-    b_start <- median(
-      df_fit$Time_h,
-      na.rm = TRUE
-    )
+    fit_start <- default_start
 
-    k_start <- 2
+    # ----------------------------------
+    # User-defined overrides
+    # ----------------------------------
+
+    if (!is.null(start)) {
+
+      valid_names <- c(
+        "VF",
+        "b",
+        "k"
+      )
+
+      invalid_names <- setdiff(
+        names(start),
+        valid_names
+      )
+
+      if (length(invalid_names) > 0) {
+
+        stop(
+          paste(
+            "Invalid start parameter(s):",
+            paste(
+              invalid_names,
+              collapse = ", "
+            )
+          )
+        )
+
+      }
+
+      fit_start[
+        names(start)
+      ] <- start
+
+    }
 
     fit <- tryCatch({
 
@@ -54,11 +107,7 @@ fit_groot <- function(data) {
 
         data = df_fit,
 
-        start = list(
-          VF = VF_start,
-          b = b_start,
-          k = k_start
-        ),
+        start = fit_start,
 
         lower = c(
           VF = 0,
@@ -282,6 +331,7 @@ fit_groot <- function(data) {
         Bottle = df_pred$Bottle,
         Rep = df_pred$Rep,
         Treatment = df_pred$Treatment,
+
         Time_h = df_pred$Time_h,
 
         Observed = df_pred$Gas_mL,

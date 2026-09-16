@@ -35,7 +35,7 @@ summary.brody_fit <- function(
     "Total bottles: ", n_total, "\n",
     "Successful fits: ", n_success, "\n",
     "Failed fits: ", n_failed, "\n",
-    "Low R² (< 0.90): ", n_low_r2, "\n\n",
+    "Low R-squared (< 0.90): ", n_low_r2, "\n\n",
     sep = ""
   )
 

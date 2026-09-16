@@ -4,10 +4,14 @@
 \alias{fit_dual_logistic}
 \title{Fit dual-pool logistic model}
 \usage{
-fit_dual_logistic(data)
+fit_dual_logistic(data, start = NULL)
 }
 \arguments{
 \item{data}{A rumen_gp object.}
+
+\item{start}{Optional list of starting values.
+May contain any of:
+V1F, V2F, k1, k2, and lambda.}
 }
 \value{
 A dual_logistic_fit object.

@@ -5,11 +5,17 @@
 #' to each ANKOM bottle.
 #'
 #' @param data A rumen_gp object.
+#' @param start Optional list of starting values.
+#' May contain any of:
+#' A, k, and lambda.
 #'
 #' @return A logistic_fit object.
 #'
 #' @export
-fit_logistic <- function(data) {
+fit_logistic <- function(
+    data,
+    start = NULL
+) {
 
   if (!inherits(data, "rumen_gp")) {
     stop(
@@ -24,45 +30,92 @@ fit_logistic <- function(data) {
     t <- df$Time_h
     y <- df$Gas_mL
 
-    A_start <- max(
-      max(y, na.rm = TRUE),
-      1
+    # ----------------------------------
+    # Default starting values
+    # ----------------------------------
+
+    default_start <- list(
+
+      A = max(
+        max(y, na.rm = TRUE),
+        1
+      ),
+
+      k = max(
+        max(
+          diff(y) / diff(t),
+          na.rm = TRUE
+        ) /
+          max(
+            max(y, na.rm = TRUE),
+            1
+          ),
+        0.001
+      ),
+
+      lambda = 1
+
     )
 
-    k_start <- max(
-      diff(y) / diff(t),
-      na.rm = TRUE
-    )
+    fit_start <- default_start
 
-    k_start <- max(
-      k_start / A_start,
-      0.001
-    )
+    # ----------------------------------
+    # User-defined overrides
+    # ----------------------------------
 
-    lambda_start <- 1
+    if (!is.null(start)) {
+
+      valid_names <- c(
+        "A",
+        "k",
+        "lambda"
+      )
+
+      invalid_names <- setdiff(
+        names(start),
+        valid_names
+      )
+
+      if (length(invalid_names) > 0) {
+
+        stop(
+          paste(
+            "Invalid start parameter(s):",
+            paste(
+              invalid_names,
+              collapse = ", "
+            )
+          )
+        )
+
+      }
+
+      fit_start[
+        names(start)
+      ] <- start
+
+    }
 
     fit <- tryCatch({
 
       minpack.lm::nlsLM(
 
         Gas_mL ~
+
           A /
           (
             1 +
               exp(
                 2 +
-                  4 * k *
+                  4 *
+                  k *
                   (lambda - Time_h)
               )
           ),
 
         data = df,
 
-        start = list(
-          A = A_start,
-          k = k_start,
-          lambda = lambda_start
-        ),
+        start = fit_start,
 
         lower = c(
           A = 0,
@@ -104,12 +157,18 @@ fit_logistic <- function(data) {
     )
 
     tss <- sum(
-      (y - mean(y, na.rm = TRUE))^2,
+      (
+        y -
+          mean(
+            y,
+            na.rm = TRUE
+          )
+      )^2,
       na.rm = TRUE
     )
 
     r2 <- if (tss > 0) {
-      1 - rss/tss
+      1 - rss / tss
     } else {
       NA_real_
     }
@@ -158,6 +217,10 @@ fit_logistic <- function(data) {
     fit_one_bottle
   )
 
+  # ----------------------------
+  # Parameters
+  # ----------------------------
+
   parameters <- purrr::map2_dfr(
     split_data,
     fits,
@@ -171,9 +234,10 @@ fit_logistic <- function(data) {
             Bottle = unique(df$Bottle),
             Rep = unique(df$Rep),
             Treatment = unique(df$Treatment),
-            A = NA,
-            k = NA,
-            lambda = NA
+
+            A = NA_real_,
+            k = NA_real_,
+            lambda = NA_real_
           )
         )
 
@@ -188,6 +252,7 @@ fit_logistic <- function(data) {
         Bottle = unique(df$Bottle),
         Rep = unique(df$Rep),
         Treatment = unique(df$Treatment),
+
         A = coef_fit["A"],
         k = coef_fit["k"],
         lambda = coef_fit["lambda"]
@@ -195,6 +260,10 @@ fit_logistic <- function(data) {
 
     }
   )
+
+  # ----------------------------
+  # Diagnostics
+  # ----------------------------
 
   diagnostics <- purrr::map2_dfr(
     split_data,
@@ -208,7 +277,13 @@ fit_logistic <- function(data) {
         Treatment = unique(df$Treatment),
 
         Converged = fit$converged,
-        Status = fit$status,
+
+        Status =
+          ifelse(
+            fit$converged,
+            fit$status,
+            "FIT_FAILED"
+          ),
 
         Lambda_Boundary =
           ifelse(
@@ -251,10 +326,15 @@ fit_logistic <- function(data) {
             fit$bic,
             NA
           )
+
       )
 
     }
   )
+
+  # ----------------------------
+  # Predictions
+  # ----------------------------
 
   predictions <- purrr::map2_dfr(
     split_data,
@@ -270,9 +350,13 @@ fit_logistic <- function(data) {
         Bottle = df$Bottle,
         Rep = df$Rep,
         Treatment = df$Treatment,
+
         Time_h = df$Time_h,
+
         Observed = df$Gas_mL,
+
         Predicted = fit$predictions,
+
         Residual = fit$residuals
       )
 

@@ -4,10 +4,14 @@
 \alias{fit_le0}
 \title{Fit Logistic-Exponential model (LE0)}
 \usage{
-fit_le0(data)
+fit_le0(data, start = NULL)
 }
 \arguments{
 \item{data}{A rumen_gp object.}
+
+\item{start}{Optional list of starting values.
+May contain any of:
+A, k, and d.}
 }
 \value{
 A le0_fit object.

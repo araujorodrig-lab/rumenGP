@@ -38,7 +38,7 @@ plot_model_performance <- function(
 
       Metric = dplyr::recode(
         Metric,
-        Mean_R2   = "Mean R² (%)",
+        Mean_R2   = "Mean R-squared (%)",
         Mean_RMSE = "Mean RMSE",
         Mean_AIC  = "Mean AIC",
         Mean_BIC  = "Mean BIC"
@@ -69,7 +69,7 @@ plot_model_performance <- function(
       title = "Model performance comparison",
       subtitle =
         paste(
-          "Higher R² is better;",
+          "Higher R-squared is better;",
           "lower RMSE, AIC and BIC are better"
         ),
       x = NULL,

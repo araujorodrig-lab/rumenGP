@@ -9,12 +9,12 @@ flag_model(fit, r2_threshold = 0.9)
 \arguments{
 \item{fit}{A fitted model object.}
 
-\item{r2_threshold}{Minimum acceptable R².}
+\item{r2_threshold}{Minimum acceptable R-squared.}
 }
 \value{
 Diagnostic table with QC flags.
 }
 \description{
 Flags bottles with poor convergence,
-low R² values and parameter-boundary issues.
+low R-squared values and parameter-boundary issues.
 }

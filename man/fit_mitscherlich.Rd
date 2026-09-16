@@ -4,10 +4,14 @@
 \alias{fit_mitscherlich}
 \title{Fit Mitscherlich model}
 \usage{
-fit_mitscherlich(data)
+fit_mitscherlich(data, start = NULL)
 }
 \arguments{
 \item{data}{A rumen_gp object.}
+
+\item{start}{Optional list of starting values.
+May contain any of:
+A, k, d, and lambda.}
 }
 \value{
 A mitscherlich_fit object.

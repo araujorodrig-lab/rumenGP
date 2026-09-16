@@ -4,10 +4,14 @@
 \alias{fit_logistic}
 \title{Fit Logistic model}
 \usage{
-fit_logistic(data)
+fit_logistic(data, start = NULL)
 }
 \arguments{
 \item{data}{A rumen_gp object.}
+
+\item{start}{Optional list of starting values.
+May contain any of:
+A, k, and lambda.}
 }
 \value{
 A logistic_fit object.

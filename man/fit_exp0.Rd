@@ -4,10 +4,14 @@
 \alias{fit_exp0}
 \title{Fit exponential model without lag (EXP0)}
 \usage{
-fit_exp0(data)
+fit_exp0(data, start = NULL)
 }
 \arguments{
 \item{data}{A rumen_gp object.}
+
+\item{start}{Optional list of starting values.
+May contain any of:
+Vf and k.}
 }
 \value{
 An exp0_fit object.

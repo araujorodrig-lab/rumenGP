@@ -24,7 +24,7 @@ summary.exp0_fit <- function(
     "Failed fits: ",
     sum(!diagnostics$Converged),
     "\n",
-    "Low R² (< 0.90): ",
+    "Low R-squared (< 0.90): ",
     sum(
       diagnostics$R2 < 0.90,
       na.rm = TRUE

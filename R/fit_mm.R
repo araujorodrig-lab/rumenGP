@@ -5,16 +5,24 @@
 #' to each ANKOM bottle.
 #'
 #' @param data A rumen_gp object.
+#' @param start Optional list of starting values.
+#' May contain any of:
+#' A, K, and c.
 #'
 #' @return A mm_fit object.
 #'
 #' @export
-fit_mm <- function(data) {
+fit_mm <- function(
+    data,
+    start = NULL
+) {
 
   if (!inherits(data, "rumen_gp")) {
+
     stop(
       "Input must be a rumen_gp object."
     )
+
   }
 
   validate_ankom(data)
@@ -24,17 +32,64 @@ fit_mm <- function(data) {
     t <- df$Time_h
     y <- df$Gas_mL
 
-    A_start <- max(
-      max(y, na.rm = TRUE),
-      1
+    # ----------------------------------
+    # Default starting values
+    # ----------------------------------
+
+    default_start <- list(
+
+      A = max(
+        max(y, na.rm = TRUE),
+        1
+      ),
+
+      K = median(
+        t,
+        na.rm = TRUE
+      ),
+
+      c = 1
+
     )
 
-    K_start <- median(
-      t,
-      na.rm = TRUE
-    )
+    fit_start <- default_start
 
-    c_start <- 1
+    # ----------------------------------
+    # User-defined overrides
+    # ----------------------------------
+
+    if (!is.null(start)) {
+
+      valid_names <- c(
+        "A",
+        "K",
+        "c"
+      )
+
+      invalid_names <- setdiff(
+        names(start),
+        valid_names
+      )
+
+      if (length(invalid_names) > 0) {
+
+        stop(
+          paste(
+            "Invalid start parameter(s):",
+            paste(
+              invalid_names,
+              collapse = ", "
+            )
+          )
+        )
+
+      }
+
+      fit_start[
+        names(start)
+      ] <- start
+
+    }
 
     fit <- tryCatch({
 
@@ -53,11 +108,7 @@ fit_mm <- function(data) {
 
         data = df,
 
-        start = list(
-          A = A_start,
-          K = K_start,
-          c = c_start
-        ),
+        start = fit_start,
 
         lower = c(
           A = 0,
@@ -99,12 +150,18 @@ fit_mm <- function(data) {
     )
 
     tss <- sum(
-      (y - mean(y))^2,
+      (
+        y -
+          mean(
+            y,
+            na.rm = TRUE
+          )
+      )^2,
       na.rm = TRUE
     )
 
     r2 <- if (tss > 0) {
-      1 - rss/tss
+      1 - rss / tss
     } else {
       NA_real_
     }
@@ -141,6 +198,10 @@ fit_mm <- function(data) {
     fit_one_bottle
   )
 
+  # ----------------------------
+  # Parameters
+  # ----------------------------
+
   parameters <- purrr::map2_dfr(
     split_data,
     fits,
@@ -154,6 +215,7 @@ fit_mm <- function(data) {
             Bottle = unique(df$Bottle),
             Rep = unique(df$Rep),
             Treatment = unique(df$Treatment),
+
             A = NA_real_,
             K = NA_real_,
             c = NA_real_
@@ -179,6 +241,10 @@ fit_mm <- function(data) {
 
     }
   )
+
+  # ----------------------------
+  # Diagnostics
+  # ----------------------------
 
   diagnostics <- purrr::map2_dfr(
     split_data,
@@ -240,6 +306,10 @@ fit_mm <- function(data) {
     }
   )
 
+  # ----------------------------
+  # Predictions
+  # ----------------------------
+
   predictions <- purrr::map2_dfr(
     split_data,
     fits,
@@ -254,6 +324,7 @@ fit_mm <- function(data) {
         Bottle = df$Bottle,
         Rep = df$Rep,
         Treatment = df$Treatment,
+
         Time_h = df$Time_h,
 
         Observed = df$Gas_mL,

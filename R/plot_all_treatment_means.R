@@ -5,7 +5,7 @@
 #' across multiple fitted models.
 #'
 #' @param ... Fitted model objects.
-#' @param show_se Logical. Show observed ± SE ribbon.
+#' @param show_se Logical. Show observed +/- SE ribbon.
 #'
 #' @return A ggplot object.
 #'

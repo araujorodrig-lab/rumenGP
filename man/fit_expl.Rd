@@ -4,10 +4,14 @@
 \alias{fit_expl}
 \title{Fit exponential model with lag (EXPL)}
 \usage{
-fit_expl(data)
+fit_expl(data, start = NULL)
 }
 \arguments{
 \item{data}{A rumen_gp object.}
+
+\item{start}{Optional list of starting values.
+May contain any of:
+Vf, k, and lambda.}
 }
 \value{
 An expl_fit object.

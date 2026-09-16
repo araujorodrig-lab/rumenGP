@@ -1,5 +1,5 @@
 
-#' Summary of Ørskov and McDonald fits
+#' Summary of Orskov and McDonald fits
 #'
 #' @param object An orskov_fit object.
 #' @param ... Additional arguments.
@@ -30,12 +30,12 @@ summary.orskov_fit <- function(
   )
 
   cat(
-    "\nØrskov and McDonald model summary\n",
+    "\nOrskov and McDonald model summary\n",
     "---------------------------------\n",
     "Total bottles: ", n_total, "\n",
     "Successful fits: ", n_success, "\n",
     "Failed fits: ", n_failed, "\n",
-    "Low R² (< 0.90): ", n_low_r2, "\n\n",
+    "Low R-squared (< 0.90): ", n_low_r2, "\n\n",
     sep = ""
   )
 

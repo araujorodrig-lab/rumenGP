@@ -5,6 +5,9 @@
 #' to each ANKOM bottle.
 #'
 #' @param data A rumen_gp object.
+#' @param start Optional list of starting values.
+#' May contain any of:
+#' A, mu, and lambda.
 #'
 #' @return A list containing:
 #' \itemize{
@@ -14,7 +17,10 @@
 #' }
 #'
 #' @export
-fit_gompertz <- function(data) {
+fit_gompertz <- function(
+    data,
+    start = NULL
+) {
 
   if (!inherits(data, "rumen_gp")) {
     stop(
@@ -30,25 +36,66 @@ fit_gompertz <- function(data) {
     y <- df$Gas_mL
 
     # ----------------------------
-    # Starting values
+    # Default starting values
     # ----------------------------
 
-    A_start <- max(
-      max(y, na.rm = TRUE),
-      1
+    default_start <- list(
+
+      A = max(
+        max(y, na.rm = TRUE),
+        1
+      ),
+
+      mu = max(
+        max(
+          diff(y) / diff(t),
+          na.rm = TRUE
+        ),
+        0.1
+      ),
+
+      lambda = 1
+
     )
 
-    mu_start <- max(
-      diff(y) / diff(t),
-      na.rm = TRUE
-    )
+    fit_start <- default_start
 
-    mu_start <- max(
-      mu_start,
-      0.1
-    )
+    # ----------------------------
+    # User-defined overrides
+    # ----------------------------
 
-    lambda_start <- 1
+    if (!is.null(start)) {
+
+      valid_names <- c(
+        "A",
+        "mu",
+        "lambda"
+      )
+
+      invalid_names <- setdiff(
+        names(start),
+        valid_names
+      )
+
+      if (length(invalid_names) > 0) {
+
+        stop(
+          paste(
+            "Invalid start parameter(s):",
+            paste(
+              invalid_names,
+              collapse = ", "
+            )
+          )
+        )
+
+      }
+
+      fit_start[
+        names(start)
+      ] <- start
+
+    }
 
     # ----------------------------
     # Fit model
@@ -59,7 +106,9 @@ fit_gompertz <- function(data) {
       minpack.lm::nlsLM(
 
         Gas_mL ~
-          A * exp(
+
+          A *
+          exp(
             -exp(
               ((mu * exp(1)) / A) *
                 (lambda - Time_h) + 1
@@ -68,11 +117,7 @@ fit_gompertz <- function(data) {
 
         data = df,
 
-        start = list(
-          A = A_start,
-          mu = mu_start,
-          lambda = lambda_start
-        ),
+        start = fit_start,
 
         lower = c(
           A = 0,
@@ -122,14 +167,24 @@ fit_gompertz <- function(data) {
     )
 
     tss <- sum(
-      (y - mean(y, na.rm = TRUE))^2,
+      (
+        y -
+          mean(
+            y,
+            na.rm = TRUE
+          )
+      )^2,
       na.rm = TRUE
     )
 
     r2 <- if (tss > 0) {
+
       1 - rss / tss
+
     } else {
+
       NA_real_
+
     }
 
     rmse <- sqrt(
@@ -145,9 +200,13 @@ fit_gompertz <- function(data) {
       coef_fit["lambda"] <= 1e-6
 
     status <- if (lambda_boundary) {
+
       "LAMBDA_AT_BOUNDARY"
+
     } else {
+
       "OK"
+
     }
 
     list(
@@ -197,6 +256,7 @@ fit_gompertz <- function(data) {
             Bottle = unique(df$Bottle),
             Rep = unique(df$Rep),
             Treatment = unique(df$Treatment),
+
             A = NA_real_,
             mu = NA_real_,
             lambda = NA_real_
@@ -214,6 +274,7 @@ fit_gompertz <- function(data) {
         Bottle = unique(df$Bottle),
         Rep = unique(df$Rep),
         Treatment = unique(df$Treatment),
+
         A = coef_fit["A"],
         mu = coef_fit["mu"],
         lambda = coef_fit["lambda"]
@@ -239,7 +300,12 @@ fit_gompertz <- function(data) {
 
         Converged = fit$converged,
 
-        Status = fit$status,
+        Status =
+          ifelse(
+            fit$converged,
+            fit$status,
+            "FIT_FAILED"
+          ),
 
         Lambda_Boundary =
           ifelse(
@@ -282,6 +348,7 @@ fit_gompertz <- function(data) {
             fit$bic,
             NA
           )
+
       )
 
     }
@@ -305,9 +372,13 @@ fit_gompertz <- function(data) {
         Bottle = df$Bottle,
         Rep = df$Rep,
         Treatment = df$Treatment,
+
         Time_h = df$Time_h,
+
         Observed = df$Gas_mL,
+
         Predicted = fit$predictions,
+
         Residual = fit$residuals
       )
 
