@@ -1,0 +1,13 @@
+citHeader("To cite rumenGP, use:")
+
+citEntry(
+  entry = "Manual",
+  title = "rumenGP: An R Package for Rumen Gas Production Modeling, Comparison, and Visualization",
+  author = personList(
+    person("Arlan", "Araujo Rodrigues"),
+    person("Hilario", "Cuquetto Mantovani")
+  ),
+  year = "2026",
+  note = "R package version 0.1.0",
+  url = "https://araujorodrig-lab.github.io/rumenGP/"
+)
