@@ -1,4 +1,3 @@
-
 Package: rumenGP
 Title: Rumen Gas Production Modeling, Comparison, and Visualization
 Version: 0.1.0
@@ -46,6 +45,8 @@ Imports:
 Suggests:
     knitr,
     rmarkdown,
-    pkgdown
+    pkgdown,
+    spelling
 VignetteBuilder:
     knitr
+Language: en-US
