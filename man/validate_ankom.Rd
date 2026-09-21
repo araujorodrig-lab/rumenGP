@@ -2,26 +2,76 @@
 % Please edit documentation in R/validate_ankom.R
 \name{validate_ankom}
 \alias{validate_ankom}
-\title{Validate processed rumen gas production data}
+\title{Validate Processed Rumen Gas Production Data}
 \usage{
 validate_ankom(data)
 }
 \arguments{
-\item{data}{A rumen_gp object.}
+\item{data}{A \code{rumen_gp} object.}
 }
 \value{
-The validated rumen_gp object.
+The validated \code{rumen_gp} object.
 }
 \description{
-Performs quality-control checks on a rumen_gp object.
+Performs quality-control checks on a
+\code{rumen_gp} object.
 }
 \details{
-Supports datasets created by either:
+Supported data sources include datasets
+created by:
+
 \itemize{
-\item process_ankom()
-\item as_rumen_gp()
+\item \code{process_ankom()}
+\item \code{as_rumen_gp()}
+}
+
+Validation checks may include:
+
+\itemize{
+\item Required columns
+\item Missing values
+\item Duplicate observations
+\item Time ordering
+\item Gas production values
+\item ANKOM-specific pressure checks
 }
 
 ANKOM-specific checks are performed only when
-Gas_PSI is available.
+\code{Gas_PSI} is available.
+
+This function is useful for confirming that a
+dataset is suitable for downstream modeling,
+visualization, and model comparison workflows.
+}
+\examples{
+
+files <- example_data()
+
+raw_data <- read_ankom(
+  files$ankom
+)
+
+metadata <- read_metadata(
+  files$metadata
+)
+
+gp <- process_ankom(
+  raw_data,
+  metadata,
+  headspace_ml = 210,
+  temperature_c = 39
+)
+
+validate_ankom(
+  gp
+)
+
+# Validation also supports datasets
+# created using as_rumen_gp()
+
+}
+\seealso{
+\code{\link{process_ankom}},
+\code{\link{as_rumen_gp}},
+\code{\link{validate_metadata}}
 }

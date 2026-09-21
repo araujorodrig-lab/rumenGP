@@ -1,10 +1,75 @@
 
-#' Summary of Logistic fits
+#' Summary of Logistic Fits
 #'
-#' Summarizes Logistic model fitting results.
+#' Summarizes parameter estimates and goodness-of-fit
+#' statistics for a fitted Logistic model.
 #'
-#' @param object A logistic_fit object.
-#' @param ... Additional arguments.
+#' The summary typically includes:
+#'
+#' \itemize{
+#'   \item Asymptotic gas production (\code{A})
+#'   \item Fractional rate constant (\code{k})
+#'   \item Lag time (\code{lambda})
+#'   \item Residual Sum of Squares (RSS)
+#'   \item Root Mean Squared Error (RMSE)
+#'   \item R-squared (R²)
+#'   \item Akaike Information Criterion (AIC)
+#'   \item Bayesian Information Criterion (BIC)
+#' }
+#'
+#' The Logistic model describes gas production
+#' using a sigmoidal curve characterized by:
+#'
+#' \itemize{
+#'   \item An initial lag phase
+#'   \item A rapid fermentation phase
+#'   \item A plateau approaching asymptotic gas production
+#' }
+#'
+#' The lag parameter (\code{lambda}) determines
+#' the position of the sigmoid along the time axis,
+#' while \code{k} controls curve steepness.
+#'
+#' @param object A \code{logistic_fit} object.
+#'
+#' @param ... Additional arguments passed to methods.
+#'
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' fit <- fit_logistic(
+#'   gp
+#' )
+#'
+#' summary(
+#'   fit
+#' )
+#'
+#' @return A data frame containing parameter estimates
+#' and model diagnostics for each fitted bottle.
+#'
+#' @seealso
+#' \code{\link{fit_logistic}},
+#' \code{\link{fit_gompertz}},
+#' \code{\link{plot_fit}},
+#' \code{\link{plot_residuals}},
+#' \code{\link{compare_models}}
 #'
 #' @export
 summary.logistic_fit <- function(

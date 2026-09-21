@@ -2,7 +2,7 @@
 % Please edit documentation in R/compare_models.R
 \name{compare_models}
 \alias{compare_models}
-\title{Compare fitted kinetic models}
+\title{Compare Fitted Kinetic Models}
 \usage{
 compare_models(...)
 }
@@ -10,9 +10,74 @@ compare_models(...)
 \item{...}{Named fitted model objects.}
 }
 \value{
-A data frame summarizing model performance.
+A data frame summarizing model
+performance metrics for each fitted model.
 }
 \description{
-Compares model performance metrics across
-multiple fitted models.
+Compares performance metrics across multiple
+fitted kinetic models.
+}
+\details{
+Model comparison metrics typically include:
+
+\itemize{
+\item R-squared (R²)
+\item Root Mean Squared Error (RMSE)
+\item Residual Sum of Squares (RSS)
+\item Akaike Information Criterion (AIC)
+\item Bayesian Information Criterion (BIC)
+}
+
+This function helps researchers identify models
+that provide the best balance between goodness
+of fit and model complexity.
+
+The resulting comparison table can be used with:
+
+\itemize{
+\item \code{rank_models()}
+\item \code{plot_model_performance()}
+\item \code{plot_model_rankings()}
+}
+}
+\examples{
+
+files <- example_data()
+
+raw_data <- read_ankom(
+  files$ankom
+)
+
+metadata <- read_metadata(
+  files$metadata
+)
+
+gp <- process_ankom(
+  raw_data,
+  metadata,
+  headspace_ml = 210,
+  temperature_c = 39
+)
+
+groot_fit <- fit_groot(
+  gp
+)
+
+gompertz_fit <- fit_gompertz(
+  gp
+)
+
+comparison <- compare_models(
+  Groot = groot_fit,
+  Gompertz = gompertz_fit
+)
+
+comparison
+
+}
+\seealso{
+\code{\link{rank_models}},
+\code{\link{compare_models_by_treatment}},
+\code{\link{plot_model_performance}},
+\code{\link{plot_model_rankings}}
 }

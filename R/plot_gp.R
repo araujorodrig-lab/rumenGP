@@ -1,12 +1,54 @@
 
-#' Plot raw gas production curve
+#' Plot Raw Gas Production Curve
 #'
-#' Plots observed gas production for a bottle.
+#' Plots observed gas production measurements
+#' for an individual bottle.
 #'
-#' @param data A rumen_gp object.
-#' @param head Head identifier.
+#' This visualization displays the raw gas
+#' production profile prior to model fitting and
+#' is useful for:
 #'
-#' @return A ggplot object.
+#' \itemize{
+#'   \item Inspecting fermentation dynamics
+#'   \item Identifying unusual observations
+#'   \item Evaluating data quality
+#'   \item Comparing individual bottle profiles
+#' }
+#'
+#' @param data A \code{rumen_gp} object.
+#'
+#' @param head Bottle identifier to plot.
+#'
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' plot_gp(
+#'   gp,
+#'   head = 1
+#' )
+#'
+#' @return A \code{ggplot2} object.
+#'
+#' @seealso
+#' \code{\link{plot_fit}},
+#' \code{\link{plot_residuals}},
+#' \code{\link{process_ankom}}
 #'
 #' @export
 plot_gp <- function(

@@ -79,7 +79,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#'
 #'
 #' files <- example_data()
 #'
@@ -118,7 +118,7 @@
 #'
 #' summary(fit_custom_start)
 #'
-#' }
+#'
 #'
 #' @return A \code{mitscherlich_fit} object containing:
 #' \itemize{

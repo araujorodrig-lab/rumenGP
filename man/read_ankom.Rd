@@ -2,16 +2,65 @@
 % Please edit documentation in R/read_ankom.R
 \name{read_ankom}
 \alias{read_ankom}
-\title{Import ANKOM RF output}
+\title{Import ANKOM RF Output}
 \usage{
 read_ankom(file)
 }
 \arguments{
-\item{file}{Path to ANKOM Excel file.}
+\item{file}{Path to an ANKOM Excel file.}
 }
 \value{
-A data frame containing raw ANKOM data.
+A data frame containing raw ANKOM RF data.
 }
 \description{
-Reads a raw ANKOM RF export file.
+Reads a raw ANKOM RF export file and returns
+the contents as a data frame.
+}
+\details{
+This function is typically the first step in
+the ANKOM workflow:
+
+\itemize{
+\item Import ANKOM data
+\item Import metadata
+\item Process data
+\item Fit kinetic models
+}
+
+The imported data can subsequently be processed
+using \code{process_ankom()}.
+}
+\examples{
+
+files <- example_data()
+
+raw_data <- read_ankom(
+  files$ankom
+)
+
+head(
+  raw_data
+)
+
+# Typical workflow
+metadata <- read_metadata(
+  files$metadata
+)
+
+gp <- process_ankom(
+  raw_data,
+  metadata,
+  headspace_ml = 210,
+  temperature_c = 39
+)
+
+head(
+  gp
+)
+
+}
+\seealso{
+\code{\link{read_metadata}},
+\code{\link{process_ankom}},
+\code{\link{example_data}}
 }

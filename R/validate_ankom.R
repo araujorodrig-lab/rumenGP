@@ -1,18 +1,69 @@
 
-#' Validate processed rumen gas production data
+#' Validate Processed Rumen Gas Production Data
 #'
-#' Performs quality-control checks on a rumen_gp object.
+#' Performs quality-control checks on a
+#' \code{rumen_gp} object.
 #'
-#' Supports datasets created by either:
-#' - process_ankom()
-#' - as_rumen_gp()
+#' Supported data sources include datasets
+#' created by:
+#'
+#' \itemize{
+#'   \item \code{process_ankom()}
+#'   \item \code{as_rumen_gp()}
+#' }
+#'
+#' Validation checks may include:
+#'
+#' \itemize{
+#'   \item Required columns
+#'   \item Missing values
+#'   \item Duplicate observations
+#'   \item Time ordering
+#'   \item Gas production values
+#'   \item ANKOM-specific pressure checks
+#' }
 #'
 #' ANKOM-specific checks are performed only when
-#' Gas_PSI is available.
+#' \code{Gas_PSI} is available.
 #'
-#' @param data A rumen_gp object.
+#' This function is useful for confirming that a
+#' dataset is suitable for downstream modeling,
+#' visualization, and model comparison workflows.
 #'
-#' @return The validated rumen_gp object.
+#' @param data A \code{rumen_gp} object.
+#'
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' validate_ankom(
+#'   gp
+#' )
+#'
+#' # Validation also supports datasets
+#' # created using as_rumen_gp()
+#'
+#' @return The validated \code{rumen_gp} object.
+#'
+#' @seealso
+#' \code{\link{process_ankom}},
+#' \code{\link{as_rumen_gp}},
+#' \code{\link{validate_metadata}}
 #'
 #' @export
 validate_ankom <- function(data) {

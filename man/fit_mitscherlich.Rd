@@ -100,7 +100,7 @@ biologically
 }
 }
 \examples{
-\dontrun{
+
 
 files <- example_data()
 
@@ -139,6 +139,6 @@ fit_custom_start <- fit_mitscherlich(
 
 summary(fit_custom_start)
 
-}
+
 
 }

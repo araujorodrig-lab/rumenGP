@@ -96,7 +96,7 @@ with its own rate constant.
 }
 }
 \examples{
-\dontrun{
+
 
 files <- example_data()
 
@@ -136,6 +136,6 @@ fit_custom_start <- fit_dual_logistic(
 
 summary(fit_custom_start)
 
-}
+
 
 }

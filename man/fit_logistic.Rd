@@ -91,7 +91,7 @@ models
 }
 }
 \examples{
-\dontrun{
+
 
 files <- example_data()
 
@@ -129,6 +129,6 @@ fit_custom_start <- fit_logistic(
 
 summary(fit_custom_start)
 
-}
+
 
 }

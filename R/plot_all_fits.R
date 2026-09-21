@@ -1,12 +1,56 @@
 
-#' Plot all fitted curves
+#' Plot All Fitted Curves
 #'
-#' Displays observed and predicted values
-#' for all bottles.
+#' Displays observed and predicted gas production
+#' values for all bottles in a fitted model.
 #'
-#' @param fit A fitted model object.
+#' Each panel corresponds to a single bottle and
+#' shows:
 #'
-#' @return A ggplot object.
+#' \itemize{
+#'   \item Observed gas production values
+#'   \item Model predictions
+#' }
+#'
+#' This plot is useful for quickly evaluating
+#' model performance across all bottles in a dataset.
+#'
+#' @param fit A fitted model object produced by one
+#' of the rumenGP model-fitting functions.
+#'
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' fit <- fit_groot(
+#'   gp
+#' )
+#'
+#' plot_all_fits(
+#'   fit
+#' )
+#'
+#' @return A \code{ggplot2} object.
+#'
+#' @seealso
+#' \code{\link{plot_fit}},
+#' \code{\link{plot_residuals}},
+#' \code{\link{fit_groot}}
 #'
 #' @export
 plot_all_fits <- function(fit) {

@@ -1,11 +1,72 @@
 
-#' Parse ANKOM timestamps
+#' Parse ANKOM Timestamps
 #'
-#' Converts ANKOM RF timestamps into elapsed incubation time (hours).
+#' Converts ANKOM RF timestamps into elapsed
+#' incubation time expressed in hours.
 #'
-#' @param time_raw Character vector containing ANKOM timestamps.
+#' ANKOM RF systems record measurements using
+#' timestamps. This function converts those
+#' timestamps into elapsed incubation time,
+#' measured relative to the first observation.
 #'
-#' @return Numeric vector of elapsed incubation time in hours.
+#' The resulting values are used throughout
+#' rumenGP for:
+#'
+#' \itemize{
+#'   \item Data processing
+#'   \item Model fitting
+#'   \item Visualization
+#'   \item Model comparison
+#' }
+#'
+#' In most workflows, this function is called
+#' automatically by \code{process_ankom()} and
+#' does not need to be used directly.
+#'
+#' @param time_raw Character vector containing
+#' ANKOM timestamps.
+#'
+#' @examples
+#'
+#' timestamps <- c(
+#'   "2024-01-01 08:00:00",
+#'   "2024-01-01 12:00:00",
+#'   "2024-01-01 20:00:00"
+#' )
+#'
+#' parse_ankom_time(
+#'   timestamps
+#' )
+#'
+#' # Typical workflow
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' head(
+#'   gp$Time_h
+#' )
+#'
+#' @return A numeric vector containing elapsed
+#' incubation time in hours.
+#'
+#' @seealso
+#' \code{\link{read_ankom}},
+#' \code{\link{process_ankom}},
+#' \code{\link{example_data}}
 #'
 #' @export
 parse_ankom_time <- function(time_raw) {

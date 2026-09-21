@@ -98,7 +98,7 @@ profiles well
 }
 }
 \examples{
-\dontrun{
+
 
 files <- example_data()
 
@@ -137,6 +137,6 @@ fit_custom_start <- fit_lel(
 
 summary(fit_custom_start)
 
-}
+
 
 }

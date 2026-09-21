@@ -1,12 +1,64 @@
 
-#' Compare models for all bottles
+#' Compare Models for All Bottles
 #'
-#' Displays observed and predicted values for
-#' multiple fitted models across all bottles.
+#' Displays observed and predicted gas production
+#' values for multiple fitted models across all bottles.
+#'
+#' Observed values are shown alongside model
+#' predictions, allowing visual comparison of
+#' competing kinetic models across the entire dataset.
+#'
+#' This visualization is useful for:
+#'
+#' \itemize{
+#'   \item Comparing model performance
+#'   \item Evaluating agreement between models
+#'   \item Identifying systematic deviations
+#'   \item Exploring treatment responses
+#' }
 #'
 #' @param ... Fitted model objects.
 #'
-#' @return A ggplot object.
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' groot_fit <- fit_groot(
+#'   gp
+#' )
+#'
+#' gompertz_fit <- fit_gompertz(
+#'   gp
+#' )
+#'
+#' plot_model_comparison_all(
+#'   Groot = groot_fit,
+#'   Gompertz = gompertz_fit
+#' )
+#'
+#' @return A \code{ggplot2} object.
+#'
+#' @seealso
+#' \code{\link{compare_models}},
+#' \code{\link{plot_model_comparison}},
+#' \code{\link{plot_model_comparison_treatment}},
+#' \code{\link{fit_groot}},
+#' \code{\link{fit_gompertz}}
 #'
 #' @export
 plot_model_comparison_all <- function(...) {

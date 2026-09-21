@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_diagnostics.R
 \name{plot_diagnostics}
 \alias{plot_diagnostics}
-\title{Plot diagnostic summaries}
+\title{Plot Diagnostic Summaries}
 \usage{
 plot_diagnostics(fit)
 }
@@ -10,8 +10,56 @@ plot_diagnostics(fit)
 \item{fit}{A fitted model object.}
 }
 \value{
-A list of ggplots.
+A named list of \code{ggplot2} objects.
 }
 \description{
-Diagnostic histograms for a fitted model.
+Creates diagnostic histograms for a fitted model.
+}
+\details{
+Diagnostic plots can be used to assess:
+
+\itemize{
+\item Residual distributions
+\item Parameter estimates
+\item Model fit quality
+\item Potential outliers
+}
+
+These plots are useful for evaluating whether
+model assumptions appear reasonable and for
+identifying problematic fits.
+}
+\examples{
+
+files <- example_data()
+
+raw_data <- read_ankom(
+  files$ankom
+)
+
+metadata <- read_metadata(
+  files$metadata
+)
+
+gp <- process_ankom(
+  raw_data,
+  metadata,
+  headspace_ml = 210,
+  temperature_c = 39
+)
+
+fit <- fit_groot(
+  gp
+)
+
+plot_diagnostics(
+  fit
+)
+
+}
+\seealso{
+\code{\link{plot_fit}},
+\code{\link{plot_residuals}},
+\code{\link{flag_model}},
+\code{\link{fit_groot}}
 }

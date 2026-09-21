@@ -1,14 +1,72 @@
 
-#' Plot dual-pool logistic decomposition
+#' Plot Dual-Pool Logistic Decomposition
 #'
 #' Visualizes the rapid pool, slow pool,
-#' total prediction, and observed data.
+#' total predicted gas production, and
+#' observed gas production for a fitted
+#' dual-pool logistic model.
 #'
-#' @param fit A dual_logistic_fit object.
-#' @param head Optional bottle head identifier.
+#' The plot helps interpret the relative
+#' contributions of rapidly and slowly
+#' fermentable fractions through time.
+#'
+#' Components displayed include:
+#'
+#' \itemize{
+#'   \item Observed gas production
+#'   \item Predicted total gas production
+#'   \item Rapid fermentation pool
+#'   \item Slow fermentation pool
+#' }
+#'
+#' This visualization is useful for
+#' understanding substrate heterogeneity
+#' and fermentation dynamics.
+#'
+#' @param fit A \code{dual_logistic_fit} object.
+#'
+#' @param head Optional bottle identifier.
+#' If supplied, only that bottle will
+#' be plotted.
+#'
 #' @param treatment Optional treatment name.
+#' If supplied, a representative bottle
+#' from that treatment will be plotted.
 #'
-#' @return A ggplot object.
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' fit <- fit_dual_logistic(
+#'   gp
+#' )
+#'
+#' plot_dual_pools(
+#'   fit,
+#'   head = 1
+#' )
+#'
+#' @return A \code{ggplot2} object.
+#'
+#' @seealso
+#' \code{\link{fit_dual_logistic}},
+#' \code{\link{plot_fit}},
+#' \code{\link{plot_residuals}}
 #'
 #' @export
 plot_dual_pools <- function(

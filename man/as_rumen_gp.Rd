@@ -72,7 +72,7 @@ estimated using the same conversion used
 by process_ankom().
 }
 \examples{
-\dontrun{
+
 
 # ----------------------------
 # Example 1: Gas volume data
@@ -150,6 +150,6 @@ fit <- fit_groot(gp)
 
 summary(fit)
 
-}
+
 
 }

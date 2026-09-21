@@ -35,7 +35,7 @@
 #' calculations.
 #'
 #' @examples
-#' \dontrun{
+#'
 #'
 #' # ----------------------------
 #' # Example 1: Gas volume data
@@ -113,7 +113,7 @@
 #'
 #' summary(fit)
 #'
-#' }
+#'
 #'
 #' @return A rumen_gp object.
 #'

@@ -92,7 +92,7 @@ parameter correlation
 }
 }
 \examples{
-\dontrun{
+
 
 files <- example_data()
 
@@ -130,6 +130,6 @@ fit_custom_start <- fit_le0(
 
 summary(fit_custom_start)
 
-}
+
 
 }

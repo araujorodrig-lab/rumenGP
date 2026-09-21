@@ -144,7 +144,7 @@ biologically unrealistic parameter estimates.
 }
 }
 \examples{
-\dontrun{
+
 
 files <- example_data()
 
@@ -210,7 +210,7 @@ compare_models(
   Hyperbolic = custom_fit
 )
 
-}
+
 
 }
 \seealso{

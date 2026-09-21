@@ -1,9 +1,72 @@
 
-#' Rank models within each treatment
+#' Rank Models Within Each Treatment
 #'
-#' @param comparison Output from compare_models_by_treatment().
+#' Ranks fitted models within each treatment
+#' using performance metrics produced by
+#' \code{compare_models_by_treatment()}.
 #'
-#' @return Ranked data frame.
+#' Rankings can be based on metrics such as:
+#'
+#' \itemize{
+#'   \item R-squared (R²)
+#'   \item Root Mean Squared Error (RMSE)
+#'   \item Residual Sum of Squares (RSS)
+#'   \item Akaike Information Criterion (AIC)
+#'   \item Bayesian Information Criterion (BIC)
+#' }
+#'
+#' This function is useful for identifying
+#' the best-performing model within each treatment
+#' and for evaluating whether model performance
+#' varies among treatments.
+#'
+#' @param comparison Output from
+#' \code{compare_models_by_treatment()}.
+#'
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' groot_fit <- fit_groot(
+#'   gp
+#' )
+#'
+#' gompertz_fit <- fit_gompertz(
+#'   gp
+#' )
+#'
+#' comparison <- compare_models_by_treatment(
+#'   Groot = groot_fit,
+#'   Gompertz = gompertz_fit
+#' )
+#'
+#' rank_models_by_treatment(
+#'   comparison
+#' )
+#'
+#' @return A data frame containing model rankings
+#' for each treatment and performance metric.
+#'
+#' @seealso
+#' \code{\link{compare_models_by_treatment}},
+#' \code{\link{best_model_by_treatment}},
+#' \code{\link{model_win_frequency}},
+#' \code{\link{rank_models}}
 #'
 #' @export
 rank_models_by_treatment <- function(comparison) {

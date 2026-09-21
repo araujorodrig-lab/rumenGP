@@ -1,16 +1,70 @@
 
-#' Validate metadata
+#' Validate Metadata
 #'
-#' Validates ANKOM metadata before analysis.
+#' Validates experimental metadata prior to analysis.
+#'
+#' Metadata are required for linking bottles to
+#' treatments and biological replicates during
+#' data processing and model fitting.
 #'
 #' Required columns:
-#' - Head
-#' - Treatment
-#' - Rep
+#'
+#' \itemize{
+#'   \item \code{Head}
+#'   \item \code{Treatment}
+#'   \item \code{Rep}
+#' }
+#'
+#' Validation checks may include:
+#'
+#' \itemize{
+#'   \item Presence of required columns
+#'   \item Missing values
+#'   \item Duplicate bottle identifiers
+#'   \item Invalid treatment assignments
+#' }
+#'
+#' This function is typically used before
+#' \code{process_ankom()} to ensure metadata
+#' are suitable for downstream analyses.
 #'
 #' @param metadata Metadata table.
 #'
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' validate_metadata(
+#'   metadata
+#' )
+#'
+#' # Typical workflow
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' head(
+#'   gp
+#' )
+#'
 #' @return The validated metadata table.
+#'
+#' @seealso
+#' \code{\link{read_metadata}},
+#' \code{\link{validate_ankom}},
+#' \code{\link{process_ankom}},
+#' \code{\link{example_data}}
 #'
 #' @export
 validate_metadata <- function(metadata) {

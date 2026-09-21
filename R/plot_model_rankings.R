@@ -1,13 +1,72 @@
 
-#' Plot model rankings
+#' Plot Model Rankings
 #'
-#' Visualizes model ranks across
+#' Visualizes model rankings across multiple
 #' performance metrics.
 #'
-#' @param ranking Output from
-#' rank_models().
+#' Rankings are typically based on metrics such as:
 #'
-#' @return A ggplot object.
+#' \itemize{
+#'   \item R-squared (R²)
+#'   \item Root Mean Squared Error (RMSE)
+#'   \item Residual Sum of Squares (RSS)
+#'   \item Akaike Information Criterion (AIC)
+#'   \item Bayesian Information Criterion (BIC)
+#' }
+#'
+#' This visualization helps identify models that
+#' consistently perform well across several
+#' evaluation criteria.
+#'
+#' @param ranking Output from
+#' \code{rank_models()}.
+#'
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' groot_fit <- fit_groot(
+#'   gp
+#' )
+#'
+#' gompertz_fit <- fit_gompertz(
+#'   gp
+#' )
+#'
+#' comparison <- compare_models(
+#'   Groot = groot_fit,
+#'   Gompertz = gompertz_fit
+#' )
+#'
+#' ranking <- rank_models(
+#'   comparison
+#' )
+#'
+#' plot_model_rankings(
+#'   ranking
+#' )
+#'
+#' @return A \code{ggplot2} object.
+#'
+#' @seealso
+#' \code{\link{rank_models}},
+#' \code{\link{compare_models}},
+#' \code{\link{plot_model_performance}}
 #'
 #' @export
 plot_model_rankings <- function(

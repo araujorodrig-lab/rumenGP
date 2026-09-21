@@ -1,13 +1,61 @@
 
-#' Plot treatment means for all treatments
+#' Plot Treatment Means for All Treatments
 #'
 #' Compares observed and predicted treatment means
 #' across multiple fitted models.
 #'
-#' @param ... Fitted model objects.
-#' @param show_se Logical. Show observed +/- SE ribbon.
+#' The observed treatment mean is shown as a black line
+#' with optional standard-error bands. Predicted treatment
+#' means from each fitted model are overlaid for comparison.
 #'
-#' @return A ggplot object.
+#' This visualization is useful for evaluating model
+#' performance at the treatment level rather than at the
+#' individual bottle level.
+#'
+#' @param ... Fitted model objects.
+#'
+#' @param show_se Logical. If \code{TRUE}, displays a
+#' standard-error ribbon around the observed treatment mean.
+#'
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' groot_fit <- fit_groot(
+#'   gp
+#' )
+#'
+#' gompertz_fit <- fit_gompertz(
+#'   gp
+#' )
+#'
+#' plot_all_treatment_means(
+#'   Groot = groot_fit,
+#'   Gompertz = gompertz_fit
+#' )
+#'
+#' @return A \code{ggplot2} object.
+#'
+#' @seealso
+#' \code{\link{plot_treatment_mean}},
+#' \code{\link{compare_models}},
+#' \code{\link{fit_groot}},
+#' \code{\link{fit_gompertz}}
 #'
 #' @export
 plot_all_treatment_means <- function(

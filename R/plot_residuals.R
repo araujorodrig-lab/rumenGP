@@ -1,15 +1,68 @@
 
-#' Plot model residuals
+#' Plot Model Residuals
 #'
 #' Plots residuals for an individual bottle.
 #'
+#' Residuals are calculated as:
+#'
+#' \deqn{
+#' Residual = Observed - Predicted
+#' }
+#'
+#' Residual plots are useful for:
+#'
+#' \itemize{
+#'   \item Identifying systematic model bias
+#'   \item Detecting outliers
+#'   \item Evaluating model assumptions
+#'   \item Assessing goodness of fit
+#' }
+#'
+#' Ideally, residuals should be randomly distributed
+#' around zero with no obvious trend through time.
+#'
 #' @param fit A fitted model object containing a
 #' predictions element.
+#'
 #' @param head Optional Head identifier.
 #' If omitted and only one bottle is present,
 #' that bottle is plotted automatically.
 #'
-#' @return A ggplot object.
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' fit <- fit_groot(
+#'   gp
+#' )
+#'
+#' plot_residuals(
+#'   fit,
+#'   head = 1
+#' )
+#'
+#' @return A \code{ggplot2} object.
+#'
+#' @seealso
+#' \code{\link{plot_fit}},
+#' \code{\link{plot_residual_comparison}},
+#' \code{\link{plot_diagnostics}},
+#' \code{\link{fit_groot}}
 #'
 #' @export
 plot_residuals <- function(

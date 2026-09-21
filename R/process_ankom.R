@@ -1,21 +1,82 @@
 
-#' Process ANKOM RF data
+#' Process ANKOM RF Data
 #'
-#' Converts raw ANKOM RF output into a standardized dataset.
+#' Converts raw ANKOM RF output into a standardized
+#' dataset suitable for rumenGP analyses.
+#'
+#' The function:
+#'
+#' \itemize{
+#'   \item Merges ANKOM measurements with metadata
+#'   \item Removes Head 0 (the ANKOM receiver/base station)
+#'   \item Converts pressure measurements to gas volumes
+#'   \item Applies headspace and temperature corrections
+#'   \item Produces a standardized \code{rumen_gp} object
+#' }
 #'
 #' Head 0 is reserved by the ANKOM RF system as the
 #' receiver/base station and is automatically removed
 #' during processing.
 #'
 #' @param raw_data Raw ANKOM data table.
-#' @param metadata Metadata table.
-#' @param headspace_ml Bottle headspace volume (mL).
-#' @param temperature_c Incubation temperature (degC).
-#' @param zero_negative_pressure Logical. If TRUE,
-#' negative pressure values are converted to zero
-#' before gas-volume calculations.
 #'
-#' @return A processed rumen_gp data frame.
+#' @param metadata Metadata table.
+#'
+#' @param headspace_ml Bottle headspace volume (mL).
+#'
+#' @param temperature_c Incubation temperature (°C).
+#'
+#' @param zero_negative_pressure Logical. If \code{TRUE},
+#' negative pressure values are converted to zero before
+#' gas-volume calculations.
+#'
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' head(gp)
+#'
+#' # Alternative behavior:
+#' # convert negative pressures to zero
+#' gp_zeroed <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39,
+#'   zero_negative_pressure = TRUE
+#' )
+#'
+#' head(gp_zeroed)
+#'
+#' @return A \code{rumen_gp} object containing:
+#' \itemize{
+#'   \item Time points
+#'   \item Gas production values
+#'   \item Bottle identifiers
+#'   \item Treatment assignments
+#'   \item Additional metadata
+#' }
+#'
+#' @seealso
+#' \code{\link{read_ankom}},
+#' \code{\link{read_metadata}},
+#' \code{\link{as_rumen_gp}},
+#' \code{\link{plot_gp}}
 #'
 #' @export
 process_ankom <- function(

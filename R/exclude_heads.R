@@ -1,14 +1,70 @@
 
-#' Exclude problematic ANKOM heads
+#' Exclude Problematic ANKOM Heads
 #'
-#' Removes specified bottles while recording
-#' the exclusion information.
+#' Removes one or more bottles from a
+#' \code{rumen_gp} object while recording
+#' exclusion information.
 #'
-#' @param data A rumen_gp object.
-#' @param heads Character vector of heads to remove.
-#' @param reason Character vector of exclusion reasons.
+#' This function is useful for excluding:
 #'
-#' @return A filtered rumen_gp object.
+#' \itemize{
+#'   \item Leaking bottles
+#'   \item Sensor failures
+#'   \item Damaged bottles
+#'   \item Biologically implausible observations
+#'   \item Other quality-control issues
+#' }
+#'
+#' Exclusion information is retained to support
+#' transparent reporting and reproducible analyses.
+#'
+#' @param data A \code{rumen_gp} object.
+#'
+#' @param heads Character vector of bottle
+#' identifiers to remove.
+#'
+#' @param reason Character vector containing the
+#' reason for each exclusion.
+#'
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' gp_filtered <- exclude_heads(
+#'   data = gp,
+#'   heads = c(
+#'     "12",
+#'     "18"
+#'   ),
+#'   reason = c(
+#'     "Bottle leak",
+#'     "Sensor malfunction"
+#'   )
+#' )
+#'
+#' gp_filtered
+#'
+#' @return A filtered \code{rumen_gp} object.
+#'
+#' @seealso
+#' \code{\link{validate_ankom}},
+#' \code{\link{flag_model}},
+#' \code{\link{process_ankom}}
 #'
 #' @export
 exclude_heads <- function(

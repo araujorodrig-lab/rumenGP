@@ -56,7 +56,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#'
 #'
 #' files <- example_data()
 #'
@@ -94,7 +94,7 @@
 #'
 #' summary(fit_custom_start)
 #'
-#' }
+#'
 #'
 #' @return A \code{brody_fit} object containing:
 #' \itemize{

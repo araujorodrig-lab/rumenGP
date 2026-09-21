@@ -75,7 +75,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#'
 #'
 #' files <- example_data()
 #'
@@ -113,7 +113,7 @@
 #'
 #' summary(fit_custom_start)
 #'
-#' }
+#'
 #'
 #' @return An \code{orskov_fit} object containing:
 #' \itemize{

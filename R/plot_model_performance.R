@@ -1,11 +1,70 @@
 
-#' Plot model performance
+#' Plot Model Performance
 #'
-#' Visualizes model performance metrics.
+#' Visualizes model performance metrics produced by
+#' \code{compare_models()}.
 #'
-#' @param comparison Output from compare_models().
+#' This plot provides a graphical comparison of
+#' competing models using goodness-of-fit statistics.
 #'
-#' @return A ggplot object.
+#' Typical metrics include:
+#'
+#' \itemize{
+#'   \item R-squared (R²)
+#'   \item Root Mean Squared Error (RMSE)
+#'   \item Residual Sum of Squares (RSS)
+#'   \item Akaike Information Criterion (AIC)
+#'   \item Bayesian Information Criterion (BIC)
+#' }
+#'
+#' The visualization helps identify models that
+#' balance goodness of fit and model complexity.
+#'
+#' @param comparison Output from
+#' \code{compare_models()}.
+#'
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' groot_fit <- fit_groot(
+#'   gp
+#' )
+#'
+#' gompertz_fit <- fit_gompertz(
+#'   gp
+#' )
+#'
+#' comparison <- compare_models(
+#'   Groot = groot_fit,
+#'   Gompertz = gompertz_fit
+#' )
+#'
+#' plot_model_performance(
+#'   comparison
+#' )
+#'
+#' @return A \code{ggplot2} object.
+#'
+#' @seealso
+#' \code{\link{compare_models}},
+#' \code{\link{rank_models}},
+#' \code{\link{plot_model_rankings}}
 #'
 #' @export
 plot_model_performance <- function(

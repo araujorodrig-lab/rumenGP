@@ -1,15 +1,63 @@
 
-#' Plot fitted model
+#' Plot Fitted Model
 #'
 #' Plots observed and predicted gas production
-#' for an individual bottle.
+#' values for an individual bottle.
+#'
+#' Observed measurements are displayed alongside
+#' the fitted model curve, allowing visual
+#' assessment of model performance.
+#'
+#' This visualization is useful for:
+#'
+#' \itemize{
+#'   \item Evaluating model fit
+#'   \item Identifying systematic deviations
+#'   \item Inspecting individual fermentation profiles
+#'   \item Comparing observed and predicted values
+#' }
 #'
 #' @param fit A fitted model object.
+#'
 #' @param head Optional Head identifier.
 #' If omitted and only one bottle is present,
 #' that bottle is plotted automatically.
 #'
-#' @return A ggplot object.
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' fit <- fit_groot(
+#'   gp
+#' )
+#'
+#' # Plot a specific bottle
+#' plot_fit(
+#'   fit,
+#'   head = 1
+#' )
+#'
+#' @return A \code{ggplot2} object.
+#'
+#' @seealso
+#' \code{\link{plot_all_fits}},
+#' \code{\link{plot_residuals}},
+#' \code{\link{fit_groot}}
 #'
 #' @export
 plot_fit <- function(

@@ -111,7 +111,7 @@
 #' to label the fitted model.
 #'
 #' @examples
-#' \dontrun{
+#'
 #'
 #' files <- example_data()
 #'
@@ -177,7 +177,7 @@
 #'   Hyperbolic = custom_fit
 #' )
 #'
-#' }
+#'
 #'
 #' @return A \code{custom_fit} object containing:
 #' \itemize{

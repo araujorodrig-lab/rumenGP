@@ -2,7 +2,7 @@
 % Please edit documentation in R/compare_models_by_treatment.R
 \name{compare_models_by_treatment}
 \alias{compare_models_by_treatment}
-\title{Compare models by treatment}
+\title{Compare Models by Treatment}
 \usage{
 compare_models_by_treatment(...)
 }
@@ -10,9 +10,69 @@ compare_models_by_treatment(...)
 \item{...}{Fitted model objects.}
 }
 \value{
-A data frame.
+A data frame containing treatment-level
+performance metrics for each fitted model.
 }
 \description{
 Calculates model performance separately
 for each treatment.
+}
+\details{
+Performance metrics are computed using
+treatment-level predictions and observations,
+allowing direct comparison of competing models
+within each treatment.
+
+Typical metrics include:
+
+\itemize{
+\item R-squared (R²)
+\item Root Mean Squared Error (RMSE)
+\item Residual Sum of Squares (RSS)
+\item Akaike Information Criterion (AIC)
+\item Bayesian Information Criterion (BIC)
+}
+
+This function is useful for determining whether
+different treatments are best described by
+different kinetic models.
+}
+\examples{
+
+files <- example_data()
+
+raw_data <- read_ankom(
+  files$ankom
+)
+
+metadata <- read_metadata(
+  files$metadata
+)
+
+gp <- process_ankom(
+  raw_data,
+  metadata,
+  headspace_ml = 210,
+  temperature_c = 39
+)
+
+groot_fit <- fit_groot(
+  gp
+)
+
+gompertz_fit <- fit_gompertz(
+  gp
+)
+
+compare_models_by_treatment(
+  Groot = groot_fit,
+  Gompertz = gompertz_fit
+)
+
+}
+\seealso{
+\code{\link{compare_models}},
+\code{\link{rank_models_by_treatment}},
+\code{\link{best_model_by_treatment}},
+\code{\link{model_win_frequency}}
 }

@@ -1,12 +1,83 @@
 
-#' Summary of custom model fits
+#' Summary of Custom Model Fits
 #'
-#' Summarizes a custom_fit object.
+#' Summarizes a fitted custom nonlinear model.
 #'
-#' @param object A custom_fit object.
+#' The summary typically reports:
+#'
+#' \itemize{
+#'   \item Model name
+#'   \item Model formula
+#'   \item Parameter estimates
+#'   \item Residual Sum of Squares (RSS)
+#'   \item Root Mean Squared Error (RMSE)
+#'   \item R-squared (R²)
+#'   \item Akaike Information Criterion (AIC)
+#'   \item Bayesian Information Criterion (BIC)
+#' }
+#'
+#' This method provides a concise overview of
+#' parameter estimates and model performance for
+#' user-defined nonlinear equations fitted with
+#' \code{fit_custom()}.
+#'
+#' @param object A \code{custom_fit} object.
+#'
 #' @param ... Not used.
 #'
-#' @return Invisibly returns the input object.
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' custom_fit <- fit_custom(
+#'   data = gp,
+#'   formula =
+#'     Gas_mL ~
+#'       A *
+#'       (
+#'         Time_h /
+#'         (
+#'           Time_h + K
+#'         )
+#'       ),
+#'   start = list(
+#'     A = 150,
+#'     K = 10
+#'   ),
+#'   lower = c(
+#'     A = 0,
+#'     K = 0
+#'   ),
+#'   model_name = "Hyperbolic"
+#' )
+#'
+#' summary(
+#'   custom_fit
+#' )
+#'
+#' @return Invisibly returns the input
+#' \code{custom_fit} object.
+#'
+#' @seealso
+#' \code{\link{fit_custom}},
+#' \code{\link{plot_fit}},
+#' \code{\link{plot_residuals}},
+#' \code{\link{compare_models}}
 #'
 #' @export
 summary.custom_fit <- function(

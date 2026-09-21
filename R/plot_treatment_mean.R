@@ -1,14 +1,74 @@
 
-#' Plot treatment means across models
+#' Plot Treatment Means Across Models
 #'
 #' Compares observed and predicted treatment means
-#' across multiple fitted models.
+#' across multiple fitted models for a selected
+#' treatment.
+#'
+#' The observed treatment mean is displayed as a
+#' black line with optional standard-error bands.
+#' Predicted treatment means from each fitted model
+#' are overlaid for visual comparison.
+#'
+#' This visualization is useful for:
+#'
+#' \itemize{
+#'   \item Comparing competing kinetic models
+#'   \item Evaluating treatment-level model performance
+#'   \item Assessing agreement between observations
+#'         and predictions
+#'   \item Comparing fermentation dynamics among models
+#' }
 #'
 #' @param ... Fitted model objects.
-#' @param treatment Treatment name.
-#' @param show_se Logical. Show observed +/- SE ribbon.
 #'
-#' @return A ggplot object.
+#' @param treatment Treatment name.
+#'
+#' @param show_se Logical. If \code{TRUE}, displays a
+#' standard-error ribbon around the observed treatment mean.
+#'
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' groot_fit <- fit_groot(
+#'   gp
+#' )
+#'
+#' gompertz_fit <- fit_gompertz(
+#'   gp
+#' )
+#'
+#' plot_treatment_mean(
+#'   Groot = groot_fit,
+#'   Gompertz = gompertz_fit,
+#'   treatment = unique(
+#'     gp$Treatment
+#'   )[1]
+#' )
+#'
+#' @return A \code{ggplot2} object.
+#'
+#' @seealso
+#' \code{\link{plot_all_treatment_means}},
+#' \code{\link{compare_models_by_treatment}},
+#' \code{\link{fit_groot}},
+#' \code{\link{fit_gompertz}}
 #'
 #' @export
 plot_treatment_mean <- function(

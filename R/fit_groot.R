@@ -83,7 +83,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#'
 #'
 #' files <- example_data()
 #'
@@ -121,7 +121,7 @@
 #'
 #' summary(fit_custom_start)
 #'
-#' }
+#'
 #'
 #' @return A \code{groot_fit} object containing:
 #' \itemize{
