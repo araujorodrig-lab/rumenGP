@@ -11,7 +11,7 @@ Tools for rumen gas production modeling.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://araujorodrig-lab.github.io/rumenGP}
+  \item \url{https://araujorodrig-lab.github.io/rumenGP/}
   \item \url{https://github.com/araujorodrig-lab/rumenGP}
   \item Report bugs at \url{https://github.com/araujorodrig-lab/rumenGP/issues}
 }
