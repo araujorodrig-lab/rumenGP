@@ -1,29 +1,34 @@
 
 Package: rumenGP
-Title: Rumen Gas Production Kinetic Modeling and Model Comparison
-Version: 0.0.0.9000
+Title: Rumen Gas Production Modeling, Comparison, and Visualization
+Version: 0.1.0
 Authors@R:
     c(
       person(
         "Arlan",
         "Araujo Rodrigues",
-        email = "arlan.rodrigues@wisc.edu",
+        email = "araujorodrig@wisc.edu",
         role = c("aut", "cre")
       ),
       person(
         "Hilario",
         "Cuquetto Mantovani",
+        email = "hcmantovani@wisc.edu",
         role = "aut"
       )
     )
-Description: Tools for importing, processing, visualizing,
-    fitting, comparing, and interpreting in vitro rumen gas
-    production data from ANKOM systems. The package provides
-    multiple kinetic models, model comparison workflows,
-    treatment-level summaries, diagnostic tools, and
-    visualization functions for rumen fermentation studies.
+Description: Provides tools for importing, processing,
+    visualizing, fitting, comparing, and interpreting
+    in vitro rumen gas production data. Supports ANKOM RF
+    workflows, generic gas production datasets, and
+    pressure-based measurements. Includes multiple kinetic
+    models, custom nonlinear models, model comparison
+    workflows, treatment-level ranking, diagnostic tools,
+    and visualization functions for rumen fermentation
+    studies.
 License: MIT + file LICENSE
-URL: https://araujorodrig-lab.github.io/rumenGP
+URL: https://araujorodrig-lab.github.io/rumenGP,
+    https://github.com/araujorodrig-lab/rumenGP
 BugReports: https://github.com/araujorodrig-lab/rumenGP/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
