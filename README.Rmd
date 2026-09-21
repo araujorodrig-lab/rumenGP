@@ -520,27 +520,28 @@ Parameter correspondence:
 
 ---
 
-## Development Status
-
 ### Completed
 
-- ✅ ANKOM data workflow
+- ✅ ANKOM RF workflow
 - ✅ Generic data import
-- ✅ Pressure-based import
+- ✅ Pressure-based workflows
 - ✅ Twelve kinetic models
-- ✅ Custom models
+- ✅ Custom model framework
 - ✅ Model comparison framework
-- ✅ Treatment-level ranking
+- ✅ Treatment-level model ranking
 - ✅ Diagnostic workflows
 - ✅ Visualization tools
+- ✅ Five package vignettes
+- ✅ pkgdown website
+- ✅ Clean R CMD check
 
-### Future Development
+### Development Status
 
-- ⏳ Package website
-- ⏳ Predict methods for custom models
-- ⏳ Equation extraction utilities
-- ⏳ Custom derived parameters
-- ⏳ Mixed-effects workflows
+rumenGP is currently maintained and developed
+as an open-source framework for rumen gas
+production analysis. Future releases may include
+additional modeling, reporting, and statistical
+workflows.
 
 ---
 

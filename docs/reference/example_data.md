@@ -42,10 +42,10 @@ files <- example_data()
 
 files
 #> $ankom
-#> [1] "C:/Users/Arlan/AppData/Local/Temp/RtmpAtUG72/temp_libpath59dca776359/rumenGP/extdata/example_ankom.xlsx"
+#> [1] "C:/Users/Arlan/AppData/Local/Temp/RtmpAtUG72/temp_libpath59dc554d1ec4/rumenGP/extdata/example_ankom.xlsx"
 #> 
 #> $metadata
-#> [1] "C:/Users/Arlan/AppData/Local/Temp/RtmpAtUG72/temp_libpath59dca776359/rumenGP/extdata/example_metadata.xlsx"
+#> [1] "C:/Users/Arlan/AppData/Local/Temp/RtmpAtUG72/temp_libpath59dc554d1ec4/rumenGP/extdata/example_metadata.xlsx"
 #> 
 
 raw_data <- read_ankom(
