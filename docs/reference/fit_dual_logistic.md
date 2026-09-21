@@ -99,7 +99,7 @@ constant.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+
 
 files <- example_data()
 
@@ -122,8 +122,22 @@ gp <- process_ankom(
 fit_default <- fit_dual_logistic(
   gp
 )
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
 
 summary(fit_default)
+#> 
+#> Dual-pool Logistic model summary
+#> --------------------------------
+#> Total bottles: 24
+#> Successful fits: 20
+#> Failed fits: 4
+#> Low R-squared (< 0.90): 0
+#> Lambda at boundary: 1
+#> 
 
 # Fit using custom starting values
 fit_custom_start <- fit_dual_logistic(
@@ -136,8 +150,22 @@ fit_custom_start <- fit_dual_logistic(
     lambda = 0.50
   )
 )
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
 
 summary(fit_custom_start)
+#> 
+#> Dual-pool Logistic model summary
+#> --------------------------------
+#> Total bottles: 24
+#> Successful fits: 20
+#> Failed fits: 4
+#> Low R-squared (< 0.90): 0
+#> Lambda at boundary: 1
+#> 
 
-} # }
+
 ```

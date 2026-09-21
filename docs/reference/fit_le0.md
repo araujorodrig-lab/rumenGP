@@ -82,7 +82,7 @@ flexibility in curve shape without requiring an explicit lag parameter.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+
 
 files <- example_data()
 
@@ -105,8 +105,21 @@ gp <- process_ankom(
 fit_default <- fit_le0(
   gp
 )
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
 
 summary(fit_default)
+#> 
+#> Logistic-Exponential (LE0) model summary
+#> ----------------------------------------
+#> Total bottles: 24
+#> Successful fits: 23
+#> Failed fits: 1
+#> Low R-squared (< 0.90): 2
+#> 
 
 # Fit using custom starting values
 fit_custom_start <- fit_le0(
@@ -117,8 +130,21 @@ fit_custom_start <- fit_le0(
     d = 0.50
   )
 )
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
 
 summary(fit_custom_start)
+#> 
+#> Logistic-Exponential (LE0) model summary
+#> ----------------------------------------
+#> Total bottles: 24
+#> Successful fits: 24
+#> Failed fits: 0
+#> Low R-squared (< 0.90): 3
+#> 
 
-} # }
+
 ```

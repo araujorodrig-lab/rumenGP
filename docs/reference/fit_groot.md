@@ -101,7 +101,7 @@ commonly used in their field.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+
 
 files <- example_data()
 
@@ -124,8 +124,21 @@ gp <- process_ankom(
 fit_default <- fit_groot(
   gp
 )
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
 
 summary(fit_default)
+#> 
+#> Groot model summary
+#> -------------------
+#> Total bottles: 24
+#> Successful fits: 23
+#> Failed fits: 1
+#> Low R-squared (< 0.90): 2
+#> 
 
 # Fit using custom starting values
 fit_custom_start <- fit_groot(
@@ -136,8 +149,21 @@ fit_custom_start <- fit_groot(
     k = 2
   )
 )
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
 
 summary(fit_custom_start)
+#> 
+#> Groot model summary
+#> -------------------
+#> Total bottles: 24
+#> Successful fits: 24
+#> Failed fits: 0
+#> Low R-squared (< 0.90): 3
+#> 
 
-} # }
+
 ```

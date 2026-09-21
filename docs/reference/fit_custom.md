@@ -159,7 +159,7 @@ parameter estimates.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+
 
 files <- example_data()
 
@@ -206,24 +206,59 @@ custom_fit <- fit_custom(
   model_name = "Hyperbolic"
 
 )
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
 
 summary(custom_fit)
+#> 
+#> Custom model summary
+#> --------------------
+#> Model name: Hyperbolic
+#> 
+#> Formula:
+#> Gas_mL ~ A * (Time_h/(Time_h + K))
+#> 
+#> Total bottles: 24
+#> Successful fits: 23
+#> Failed fits: 1
+#> Mean R-squared: 0.8911
+#> Mean RMSE: 3.6575
+#> Mean AIC: 393.3084
+#> Mean BIC: 400.1798
+#> 
 
 plot_fit(
   custom_fit,
   head = 1
 )
 
+
 plot_residuals(
   custom_fit,
   head = 1
 )
+#> `geom_smooth()` using formula = 'y ~ x'
+
 
 # Compare with built-in models
 compare_models(
   Groot = fit_groot(gp),
   Hyperbolic = custom_fit
 )
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
+#>        Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS
+#> 1      Groot      24              23           1 0.9768621  2.230506  518.1984
+#> 2 Hyperbolic      24              23           1 0.8911079  3.657539 1108.4600
+#>   Mean_AIC Mean_BIC Lambda_Boundary
+#> 1 302.3719 311.4785               0
+#> 2 393.3084 400.1798               0
 
-} # }
+
 ```

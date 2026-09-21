@@ -153,7 +153,7 @@ profiles well</p></li>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="example_data.html">example_data</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -176,8 +176,22 @@ profiles well</p></li>
 <span class="r-in"><span><span class="va">fit_default</span> <span class="op">&lt;-</span> <span class="fu">fit_lel</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">gp</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> rumenGP data validation passed.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 1752</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 24</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Treatments: 5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_default</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Logistic-Exponential (LEL) model summary</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total bottles: 24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Successful fits: 23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Failed fits: 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Low R-squared (&lt; 0.90): 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Lambda at boundary: 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Fit using custom starting values</span></span></span>
 <span class="r-in"><span><span class="va">fit_custom_start</span> <span class="op">&lt;-</span> <span class="fu">fit_lel</span><span class="op">(</span></span></span>
@@ -189,10 +203,24 @@ profiles well</p></li>
 <span class="r-in"><span>    lambda <span class="op">=</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> rumenGP data validation passed.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 1752</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 24</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Treatments: 5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_custom_start</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Logistic-Exponential (LEL) model summary</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total bottles: 24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Successful fits: 24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Failed fits: 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Low R-squared (&lt; 0.90): 13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Lambda at boundary: 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

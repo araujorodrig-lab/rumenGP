@@ -94,7 +94,6 @@ reference:
   - title: Advanced Visualization
     contents:
       - plot_all_fits
-      - plot_all_gompertz_fits
       - plot_all_treatment_means
       - plot_diagnostics
       - plot_dual_pools

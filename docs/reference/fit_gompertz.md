@@ -92,7 +92,7 @@ making it biologically informative and easy to interpret.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+
 
 files <- example_data()
 
@@ -115,8 +115,22 @@ gp <- process_ankom(
 fit_default <- fit_gompertz(
   gp
 )
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
 
 summary(fit_default)
+#> 
+#> Gompertz model summary
+#> ----------------------
+#> Total bottles: 24
+#> Successful fits: 24
+#> Failed fits: 0
+#> Low R-squared (< 0.90): 3
+#> Lambda at boundary: 8
+#> 
 
 # Fit using custom starting values
 fit_custom_start <- fit_gompertz(
@@ -127,8 +141,22 @@ fit_custom_start <- fit_gompertz(
     lambda = 1
   )
 )
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
 
 summary(fit_custom_start)
+#> 
+#> Gompertz model summary
+#> ----------------------
+#> Total bottles: 24
+#> Successful fits: 24
+#> Failed fits: 0
+#> Low R-squared (< 0.90): 12
+#> Lambda at boundary: 12
+#> 
 
-} # }
+
 ```

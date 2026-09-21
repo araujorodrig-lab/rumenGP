@@ -717,23 +717,23 @@ and visualization.
 ## Data Import
 
 - [`example_data()`](https://araujorodrig-lab.github.io/rumenGP/reference/example_data.md)
-  : Example ANKOM data
+  : Example ANKOM Data
 - [`read_ankom()`](https://araujorodrig-lab.github.io/rumenGP/reference/read_ankom.md)
-  : Import ANKOM RF output
+  : Import ANKOM RF Output
 - [`read_metadata()`](https://araujorodrig-lab.github.io/rumenGP/reference/read_metadata.md)
-  : Import metadata
+  : Import Metadata
 - [`parse_ankom_time()`](https://araujorodrig-lab.github.io/rumenGP/reference/parse_ankom_time.md)
-  : Parse ANKOM timestamps
+  : Parse ANKOM Timestamps
 - [`process_ankom()`](https://araujorodrig-lab.github.io/rumenGP/reference/process_ankom.md)
-  : Process ANKOM RF data
+  : Process ANKOM RF Data
 - [`pressure_to_volume()`](https://araujorodrig-lab.github.io/rumenGP/reference/pressure_to_volume.md)
   : Convert Pressure to Gas Volume
 - [`as_rumen_gp()`](https://araujorodrig-lab.github.io/rumenGP/reference/as_rumen_gp.md)
   : Convert data to a rumen_gp object
 - [`validate_ankom()`](https://araujorodrig-lab.github.io/rumenGP/reference/validate_ankom.md)
-  : Validate processed rumen gas production data
+  : Validate Processed Rumen Gas Production Data
 - [`validate_metadata()`](https://araujorodrig-lab.github.io/rumenGP/reference/validate_metadata.md)
-  : Validate metadata
+  : Validate Metadata
 
 ## Model Fitting
 
@@ -767,89 +767,87 @@ and visualization.
 ## Model Comparison
 
 - [`compare_models()`](https://araujorodrig-lab.github.io/rumenGP/reference/compare_models.md)
-  : Compare fitted kinetic models
+  : Compare Fitted Kinetic Models
 - [`compare_models_by_treatment()`](https://araujorodrig-lab.github.io/rumenGP/reference/compare_models_by_treatment.md)
-  : Compare models by treatment
+  : Compare Models by Treatment
 - [`rank_models()`](https://araujorodrig-lab.github.io/rumenGP/reference/rank_models.md)
-  : Rank models
+  : Rank Models
 - [`rank_models_by_treatment()`](https://araujorodrig-lab.github.io/rumenGP/reference/rank_models_by_treatment.md)
-  : Rank models within each treatment
+  : Rank Models Within Each Treatment
 - [`best_model_by_treatment()`](https://araujorodrig-lab.github.io/rumenGP/reference/best_model_by_treatment.md)
-  : Identify the best model for each treatment
+  : Identify the Best Model for Each Treatment
 - [`model_win_frequency()`](https://araujorodrig-lab.github.io/rumenGP/reference/model_win_frequency.md)
-  : Model win frequency
+  : Model Win Frequency
 
 ## Diagnostics and Quality Control
 
 - [`flag_model()`](https://araujorodrig-lab.github.io/rumenGP/reference/flag_model.md)
   : Flag potentially problematic model fits
 - [`exclude_heads()`](https://araujorodrig-lab.github.io/rumenGP/reference/exclude_heads.md)
-  : Exclude problematic ANKOM heads
+  : Exclude Problematic ANKOM Heads
 
 ## Visualization
 
 - [`plot_gp()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_gp.md)
-  : Plot raw gas production curve
+  : Plot Raw Gas Production Curve
 - [`plot_fit()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_fit.md)
-  : Plot fitted model
+  : Plot Fitted Model
 - [`plot_residuals()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_residuals.md)
-  : Plot model residuals
+  : Plot Model Residuals
 - [`plot_treatment_mean()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_treatment_mean.md)
-  : Plot treatment means across models
+  : Plot Treatment Means Across Models
 - [`plot_model_comparison()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_comparison.md)
-  : Compare model fits
+  : Compare Model Fits
 - [`plot_model_rankings()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_rankings.md)
-  : Plot model rankings
+  : Plot Model Rankings
 
 ## Advanced Visualization
 
 - [`plot_all_fits()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_all_fits.md)
-  : Plot all fitted curves
-- [`plot_all_gompertz_fits()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_all_gompertz_fits.md)
-  : Plot all Gompertz fits
+  : Plot All Fitted Curves
 - [`plot_all_treatment_means()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_all_treatment_means.md)
-  : Plot treatment means for all treatments
+  : Plot Treatment Means for All Treatments
 - [`plot_diagnostics()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_diagnostics.md)
-  : Plot diagnostic summaries
+  : Plot Diagnostic Summaries
 - [`plot_dual_pools()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_dual_pools.md)
-  : Plot dual-pool logistic decomposition
+  : Plot Dual-Pool Logistic Decomposition
 - [`plot_model_comparison_all()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_comparison_all.md)
-  : Compare models for all bottles
+  : Compare Models for All Bottles
 - [`plot_model_comparison_treatment()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_comparison_treatment.md)
-  : Compare models for a treatment
+  : Compare Models for a Treatment
 - [`plot_model_performance()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_performance.md)
-  : Plot model performance
+  : Plot Model Performance
 - [`plot_residual_comparison()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_residual_comparison.md)
-  : Compare residuals across models
+  : Compare Residuals Across Models
 
 ## Summary Methods
 
 - [`summary(`*`<brody_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.brody_fit.md)
-  : Summary of Brody fits
+  : Summary of Brody Fits
 - [`summary(`*`<custom_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.custom_fit.md)
-  : Summary of custom model fits
+  : Summary of Custom Model Fits
 - [`summary(`*`<dual_logistic_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.dual_logistic_fit.md)
-  : Summary of dual logistic fits
+  : Summary of Dual Logistic Fits
 - [`summary(`*`<exp0_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.exp0_fit.md)
-  : Summary of EXP0 fits
+  : Summary of EXP0 Fits
 - [`summary(`*`<expl_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.expl_fit.md)
-  : Summary of EXPL fits
+  : Summary of EXPL Fits
 - [`summary(`*`<gompertz_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.gompertz_fit.md)
-  : Summary of Gompertz fits
+  : Summary of Gompertz Fits
 - [`summary(`*`<groot_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.groot_fit.md)
-  : Summary of Groot fits
+  : Summary of Groot Fits
 - [`summary(`*`<le0_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.le0_fit.md)
-  : Summary of LE0 fits
+  : Summary of LE0 Fits
 - [`summary(`*`<lel_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.lel_fit.md)
-  : Summary of LEL fits
+  : Summary of LEL Fits
 - [`summary(`*`<logistic_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.logistic_fit.md)
-  : Summary of Logistic fits
+  : Summary of Logistic Fits
 - [`summary(`*`<mitscherlich_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.mitscherlich_fit.md)
-  : Summary of Mitscherlich fits
+  : Summary of Mitscherlich Fits
 - [`summary(`*`<mm_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.mm_fit.md)
-  : Summary of Michaelis-Menten fits
+  : Summary of Michaelis-Menten Fits
 - [`summary(`*`<orskov_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.orskov_fit.md)
-  : Summary of Orskov and McDonald fits
+  : Summary of Orskov and McDonald Fits
 
 # Articles
 

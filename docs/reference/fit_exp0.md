@@ -70,7 +70,7 @@ toward an asymptotic value without an explicit lag phase.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+
 
 files <- example_data()
 
@@ -93,8 +93,21 @@ gp <- process_ankom(
 fit_default <- fit_exp0(
   gp
 )
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
 
 summary(fit_default)
+#> 
+#> Exponential model (EXP0) summary
+#> --------------------------------
+#> Total bottles: 24
+#> Successful fits: 24
+#> Failed fits: 0
+#> Low R-squared (< 0.90): 4
+#> 
 
 # Fit using user-defined starting values
 fit_custom_start <- fit_exp0(
@@ -104,8 +117,21 @@ fit_custom_start <- fit_exp0(
     k = 0.05
   )
 )
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
 
 summary(fit_custom_start)
+#> 
+#> Exponential model (EXP0) summary
+#> --------------------------------
+#> Total bottles: 24
+#> Successful fits: 24
+#> Failed fits: 0
+#> Low R-squared (< 0.90): 4
+#> 
 
-} # }
+
 ```

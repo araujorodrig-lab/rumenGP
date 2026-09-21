@@ -90,7 +90,7 @@ dynamics over time.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+
 
 files <- example_data()
 
@@ -113,8 +113,22 @@ gp <- process_ankom(
 fit_default <- fit_mitscherlich(
   gp
 )
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
 
 summary(fit_default)
+#> 
+#> Mitscherlich model summary
+#> ---------------------------
+#> Total bottles: 24
+#> Successful fits: 23
+#> Failed fits: 1
+#> Low R-squared (< 0.90): 3
+#> Lambda at boundary: 2
+#> 
 
 # Fit using custom starting values
 fit_custom_start <- fit_mitscherlich(
@@ -126,8 +140,22 @@ fit_custom_start <- fit_mitscherlich(
     lambda = 0.50
   )
 )
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
 
 summary(fit_custom_start)
+#> 
+#> Mitscherlich model summary
+#> ---------------------------
+#> Total bottles: 24
+#> Successful fits: 24
+#> Failed fits: 0
+#> Low R-squared (< 0.90): 4
+#> Lambda at boundary: 2
+#> 
 
-} # }
+
 ```
