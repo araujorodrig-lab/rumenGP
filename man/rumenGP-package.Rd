@@ -12,16 +12,17 @@ Tools for rumen gas production modeling.
 Useful links:
 \itemize{
   \item \url{https://araujorodrig-lab.github.io/rumenGP}
+  \item \url{https://github.com/araujorodrig-lab/rumenGP}
   \item Report bugs at \url{https://github.com/araujorodrig-lab/rumenGP/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Arlan Araujo Rodrigues \email{arlan.rodrigues@wisc.edu}
+\strong{Maintainer}: Arlan Araujo Rodrigues \email{araujorodrig@wisc.edu}
 
 Authors:
 \itemize{
-  \item Hilario Cuquetto Mantovani
+  \item Hilario Cuquetto Mantovani \email{hcmantovani@wisc.edu}
 }
 
 }
