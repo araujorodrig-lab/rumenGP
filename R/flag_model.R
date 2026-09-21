@@ -15,6 +15,10 @@ flag_model <- function(
     r2_threshold = 0.90
 ) {
 
+  # ----------------------------
+  # Validation
+  # ----------------------------
+
   if (!"diagnostics" %in% names(fit)) {
 
     stop(
@@ -23,7 +27,26 @@ flag_model <- function(
 
   }
 
-  flags <- fit$diagnostics |>
+  diagnostics <- fit$diagnostics
+
+  # ----------------------------
+  # Lambda boundary support
+  # ----------------------------
+
+  if (
+    !"Lambda_Boundary" %in%
+    names(diagnostics)
+  ) {
+
+    diagnostics$Lambda_Boundary <- FALSE
+
+  }
+
+  # ----------------------------
+  # QC flags
+  # ----------------------------
+
+  flags <- diagnostics |>
 
     dplyr::mutate(
 

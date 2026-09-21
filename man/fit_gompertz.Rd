@@ -11,17 +11,132 @@ fit_gompertz(data, start = NULL)
 
 \item{start}{Optional list of starting values.
 May contain any of:
-A, mu, and lambda.}
+\itemize{
+\item \code{A}
+\item \code{mu}
+\item \code{lambda}
+}}
 }
 \value{
-A list containing:
+A \code{gompertz_fit} object containing:
 \itemize{
-\item parameters
-\item diagnostics
-\item predictions
+\item Parameter estimates
+\item Model diagnostics
+\item Predicted values
+\item Residuals
 }
 }
 \description{
 Fits the Zwietering-modified Gompertz model
-to each ANKOM bottle.
+to each bottle in a rumen_gp dataset.
+}
+\details{
+\subsection{Equation}{
+
+\deqn{
+V(t)=
+A
+\exp
+\left[
+-
+\exp
+\left(
+\frac{\mu e}{A}
+(\lambda-t)
++
+1
+\right)
+\right]
+}
+
+where:
+
+\itemize{
+\item \eqn{V(t)} is cumulative gas production at time \eqn{t}
+\item \eqn{A} is asymptotic gas production
+\item \eqn{\mu} is the maximum gas production rate
+\item \eqn{\lambda} is lag time
+\item \eqn{e} is Euler's number
+}
+}
+
+\subsection{Interpretation}{
+
+The modified Gompertz model is one of the most
+commonly used models for gas production kinetics.
+
+It explicitly estimates:
+
+\itemize{
+\item Final gas production potential (\eqn{A})
+\item Maximum gas production rate (\eqn{\mu})
+\item Lag time (\eqn{\lambda})
+}
+
+making it biologically informative and easy to
+interpret.
+}
+
+\subsection{Advantages}{
+
+\itemize{
+\item Explicit lag parameter
+\item Explicit maximum gas production rate
+\item Excellent flexibility
+\item Widely used in gas production studies
+\item Strong biological interpretation
+}
+}
+
+\subsection{Limitations}{
+
+\itemize{
+\item More computationally demanding than
+simple exponential models
+\item Parameters may exhibit correlation
+in some datasets
+}
+}
+}
+\examples{
+\dontrun{
+
+files <- example_data()
+
+raw_data <- read_ankom(
+  files$ankom
+)
+
+metadata <- read_metadata(
+  files$metadata
+)
+
+gp <- process_ankom(
+  raw_data,
+  metadata,
+  headspace_ml = 210,
+  temperature_c = 39
+)
+
+# Fit using package default starting values
+fit_default <- fit_gompertz(
+  gp
+)
+
+summary(fit_default)
+
+# Fit using custom starting values
+fit_custom_start <- fit_gompertz(
+  gp,
+  start = list(
+    A = 120,
+    mu = 5,
+    lambda = 1
+  )
+)
+
+summary(fit_custom_start)
+
+}
+
 }

@@ -4,12 +4,120 @@
 #' Fits the Logistic-Exponential model without
 #' an explicit lag phase.
 #'
+#' ## Equation
+#'
+#' \deqn{
+#' V(t)
+#' =
+#' \frac{
+#' A
+#' \left(
+#' 1-e^{-kt}
+#' \right)
+#' }
+#' {
+#' 1+\exp
+#' \left[
+#' \ln\left(\frac{1}{d}\right)-kt
+#' \right]
+#' }
+#' }
+#'
+#' where:
+#'
+#' \itemize{
+#'   \item \eqn{V(t)} is cumulative gas production at time \eqn{t}
+#'   \item \eqn{A} is asymptotic gas production
+#'   \item \eqn{k} is the fractional rate constant
+#'   \item \eqn{d} is a shape parameter
+#' }
+#'
+#' ## Interpretation
+#'
+#' The LE0 model combines an exponential
+#' fermentation component with a logistic component.
+#'
+#' Compared with simple exponential models, LE0
+#' provides additional flexibility in curve shape
+#' without requiring an explicit lag parameter.
+#'
+#' ## Advantages
+#'
+#' \itemize{
+#'   \item Flexible sigmoidal behavior
+#'   \item More adaptable than simple exponential models
+#'   \item No lag parameter required
+#'   \item Can accommodate gradual changes in fermentation rate
+#' }
+#'
+#' ## Limitations
+#'
+#' \itemize{
+#'   \item More complex than EXP0
+#'   \item Shape parameter may be less intuitive
+#'         biologically
+#'   \item Additional parameter may increase
+#'         parameter correlation
+#' }
+#'
 #' @param data A rumen_gp object.
+#'
 #' @param start Optional list of starting values.
 #' May contain any of:
-#' A, k, and d.
+#' \itemize{
+#'   \item \code{A}
+#'   \item \code{k}
+#'   \item \code{d}
+#' }
 #'
-#' @return A le0_fit object.
+#' @examples
+#' \dontrun{
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' # Fit using package default starting values
+#' fit_default <- fit_le0(
+#'   gp
+#' )
+#'
+#' summary(fit_default)
+#'
+#' # Fit using custom starting values
+#' fit_custom_start <- fit_le0(
+#'   gp,
+#'   start = list(
+#'     A = 120,
+#'     k = 0.05,
+#'     d = 0.50
+#'   )
+#' )
+#'
+#' summary(fit_custom_start)
+#'
+#' }
+#'
+#' @return A \code{le0_fit} object containing:
+#' \itemize{
+#'   \item Parameter estimates
+#'   \item Model diagnostics
+#'   \item Predicted values
+#'   \item Residuals
+#' }
 #'
 #' @export
 fit_le0 <- function(

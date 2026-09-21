@@ -1,7 +1,14 @@
 
-#' Validate processed ANKOM data
+#' Validate processed rumen gas production data
 #'
 #' Performs quality-control checks on a rumen_gp object.
+#'
+#' Supports datasets created by either:
+#' - process_ankom()
+#' - as_rumen_gp()
+#'
+#' ANKOM-specific checks are performed only when
+#' Gas_PSI is available.
 #'
 #' @param data A rumen_gp object.
 #'
@@ -15,9 +22,11 @@ validate_ankom <- function(data) {
   # ----------------------------
 
   if (!inherits(data, "rumen_gp")) {
+
     stop(
       "Input must be a rumen_gp object."
     )
+
   }
 
   # ----------------------------
@@ -25,12 +34,12 @@ validate_ankom <- function(data) {
   # ----------------------------
 
   required_cols <- c(
-    "Time_h",
     "Head",
-    "Gas_PSI",
-    "Gas_mL",
+    "Bottle",
+    "Rep",
     "Treatment",
-    "Rep"
+    "Time_h",
+    "Gas_mL"
   )
 
   missing_cols <- setdiff(
@@ -57,11 +66,19 @@ validate_ankom <- function(data) {
   # ----------------------------
 
   if (any(is.na(data$Time_h))) {
-    stop("Missing Time_h values detected.")
+
+    stop(
+      "Missing Time_h values detected."
+    )
+
   }
 
   if (any(is.na(data$Gas_mL))) {
-    stop("Missing Gas_mL values detected.")
+
+    stop(
+      "Missing Gas_mL values detected."
+    )
+
   }
 
   # ----------------------------
@@ -90,40 +107,7 @@ validate_ankom <- function(data) {
   }
 
   # ----------------------------
-  # Negative pressure values
-  # ----------------------------
-
-  min_pressure <- min(
-    data$Gas_PSI,
-    na.rm = TRUE
-  )
-
-  if (min_pressure < -1) {
-
-    warning(
-      paste(
-        "Large negative pressure values detected.",
-        "Minimum PSI =",
-        round(min_pressure, 3),
-        ". Please inspect the affected bottles."
-      )
-    )
-
-  } else if (min_pressure < 0) {
-
-    message(
-      paste(
-        "Minor negative pressure values detected.",
-        "Minimum PSI =",
-        round(min_pressure, 3),
-        ". These may reflect normal sensor variation."
-      )
-    )
-
-  }
-
-  # ----------------------------
-  # Empty bottles
+  # Bottle observation counts
   # ----------------------------
 
   bottle_counts <- data |>
@@ -140,11 +124,89 @@ validate_ankom <- function(data) {
   }
 
   # ----------------------------
-  # Treatment-level summary
+  # ANKOM-specific checks
+  # ----------------------------
+
+  if ("Gas_PSI" %in% names(data)) {
+
+    min_pressure <- min(
+      data$Gas_PSI,
+      na.rm = TRUE
+    )
+
+    if (is.finite(min_pressure)) {
+
+      if (min_pressure < -1) {
+
+        warning(
+          paste(
+            "Large negative pressure values detected.",
+            "Minimum PSI =",
+            round(
+              min_pressure,
+              3
+            ),
+            ". Please inspect the affected bottles."
+          )
+        )
+
+      } else if (min_pressure < 0) {
+
+        message(
+          paste(
+            "Minor negative pressure values detected.",
+            "Minimum PSI =",
+            round(
+              min_pressure,
+              3
+            ),
+            ". These may reflect normal sensor variation."
+          )
+        )
+
+      }
+
+    }
+
+  }
+
+  # ----------------------------
+  # Time ordering check
+  # ----------------------------
+
+  time_issue <- data |>
+    dplyr::group_by(
+      Head
+    ) |>
+    dplyr::summarise(
+      Ordered =
+        all(
+          diff(Time_h) >= 0
+        ),
+      .groups = "drop"
+    ) |>
+    dplyr::filter(
+      !Ordered
+    )
+
+  if (nrow(time_issue) > 0) {
+
+    warning(
+      paste(
+        "Time_h is not monotonically increasing in",
+        nrow(time_issue),
+        "bottle(s)."
+      )
+    )
+
+  }
+
+  # ----------------------------
+  # Validation summary
   # ----------------------------
 
   message(
-    "ANKOM data validation passed.",
+    "rumenGP data validation passed.",
     "\nObservations: ", nrow(data),
     "\nHeads: ", dplyr::n_distinct(data$Head),
     "\nTreatments: ", dplyr::n_distinct(data$Treatment)

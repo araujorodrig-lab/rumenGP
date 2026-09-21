@@ -1,15 +1,136 @@
 
 #' Fit Michaelis-Menten model
 #'
-#' Fits the Michaelis-Menten gas production model
-#' to each ANKOM bottle.
+#' Fits the generalized Michaelis-Menten model
+#' to each bottle in a rumen_gp dataset.
+#'
+#' ## Equation
+#'
+#' \deqn{
+#' V(t)
+#' =
+#' A
+#' \frac{t^{c}}
+#' {
+#' t^{c}+K^{c}
+#' }
+#' }
+#'
+#' where:
+#'
+#' \itemize{
+#'   \item \eqn{V(t)} is cumulative gas production at time \eqn{t}
+#'   \item \eqn{A} is asymptotic gas production
+#'   \item \eqn{K} is the half-time parameter
+#'   \item \eqn{c} is the shape parameter
+#' }
+#'
+#' ## Interpretation
+#'
+#' The generalized Michaelis-Menten model describes
+#' cumulative gas production using a flexible sigmoidal
+#' function.
+#'
+#' The parameter \eqn{K} represents the time required
+#' to reach approximately half of the asymptotic gas
+#' production, while \eqn{c} controls curve shape and
+#' steepness.
+#'
+#' ## Advantages
+#'
+#' \itemize{
+#'   \item Flexible sigmoidal behavior
+#'   \item Biologically meaningful half-time parameter
+#'   \item Usually converges reliably
+#'   \item Well suited for rumen gas production data
+#' }
+#'
+#' ## Limitations
+#'
+#' \itemize{
+#'   \item Shape parameter may be difficult to interpret
+#'         biologically
+#'   \item More complex than simple exponential models
+#' }
+#'
+#' ## Notes
+#'
+#' The generalized Michaelis-Menten model is
+#' mathematically equivalent to the Groot model
+#' implemented in \code{fit_groot()}.
+#'
+#' Parameter correspondence:
+#'
+#' \itemize{
+#'   \item \code{A = VF}
+#'   \item \code{K = b}
+#'   \item \code{c = k}
+#' }
+#'
+#' Both formulations produce identical fitted values
+#' and model diagnostics when convergence is achieved.
+#'
+#' Researchers may choose either formulation according
+#' to the terminology commonly used in their field.
 #'
 #' @param data A rumen_gp object.
+#'
 #' @param start Optional list of starting values.
 #' May contain any of:
-#' A, K, and c.
+#' \itemize{
+#'   \item \code{A}
+#'   \item \code{K}
+#'   \item \code{c}
+#' }
 #'
-#' @return A mm_fit object.
+#' @examples
+#' \dontrun{
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' # Fit using package default starting values
+#' fit_default <- fit_mm(
+#'   gp
+#' )
+#'
+#' summary(fit_default)
+#'
+#' # Fit using custom starting values
+#' fit_custom_start <- fit_mm(
+#'   gp,
+#'   start = list(
+#'     A = 120,
+#'     K = 10,
+#'     c = 2
+#'   )
+#' )
+#'
+#' summary(fit_custom_start)
+#'
+#' }
+#'
+#' @return A \code{mm_fit} object containing:
+#' \itemize{
+#'   \item Parameter estimates
+#'   \item Model diagnostics
+#'   \item Predicted values
+#'   \item Residuals
+#' }
 #'
 #' @export
 fit_mm <- function(

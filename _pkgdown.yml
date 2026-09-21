@@ -1,0 +1,120 @@
+
+url: https://araujorodrig-lab.github.io/rumenGP
+
+template:
+  bootstrap: 5
+
+home:
+  title: rumenGP
+  description: >
+    Tools for importing, processing, visualizing,
+    fitting, comparing, and interpreting in vitro
+    rumen gas production data.
+
+navbar:
+  structure:
+    left:
+      - intro
+      - articles
+      - reference
+      - news
+
+articles:
+
+  - title: Getting Started
+    navbar: Getting Started
+    contents:
+      - getting-started
+
+  - title: Data Import
+    navbar: Importing Data
+    contents:
+      - importing-data
+
+  - title: Modeling
+    navbar: Modeling
+    contents:
+      - custom-models
+      - model-equations
+      - interpreting-models
+
+reference:
+
+  - title: Data Import
+    contents:
+      - example_data
+      - read_ankom
+      - read_metadata
+      - parse_ankom_time
+      - process_ankom
+      - pressure_to_volume
+      - as_rumen_gp
+      - validate_ankom
+      - validate_metadata
+
+  - title: Model Fitting
+    contents:
+      - fit_brody
+      - fit_dual_logistic
+      - fit_exp0
+      - fit_expl
+      - fit_gompertz
+      - fit_groot
+      - fit_le0
+      - fit_lel
+      - fit_logistic
+      - fit_mitscherlich
+      - fit_mm
+      - fit_orskov
+      - fit_custom
+
+  - title: Model Comparison
+    contents:
+      - compare_models
+      - compare_models_by_treatment
+      - rank_models
+      - rank_models_by_treatment
+      - best_model_by_treatment
+      - model_win_frequency
+
+  - title: Diagnostics and Quality Control
+    contents:
+      - flag_model
+      - exclude_heads
+
+  - title: Visualization
+    contents:
+      - plot_gp
+      - plot_fit
+      - plot_residuals
+      - plot_treatment_mean
+      - plot_model_comparison
+      - plot_model_rankings
+
+  - title: Advanced Visualization
+    contents:
+      - plot_all_fits
+      - plot_all_gompertz_fits
+      - plot_all_treatment_means
+      - plot_diagnostics
+      - plot_dual_pools
+      - plot_model_comparison_all
+      - plot_model_comparison_treatment
+      - plot_model_performance
+      - plot_residual_comparison
+
+  - title: Summary Methods
+    contents:
+      - summary.brody_fit
+      - summary.custom_fit
+      - summary.dual_logistic_fit
+      - summary.exp0_fit
+      - summary.expl_fit
+      - summary.gompertz_fit
+      - summary.groot_fit
+      - summary.le0_fit
+      - summary.lel_fit
+      - summary.logistic_fit
+      - summary.mitscherlich_fit
+      - summary.mm_fit
+      - summary.orskov_fit

@@ -2,7 +2,7 @@
 % Please edit documentation in R/validate_ankom.R
 \name{validate_ankom}
 \alias{validate_ankom}
-\title{Validate processed ANKOM data}
+\title{Validate processed rumen gas production data}
 \usage{
 validate_ankom(data)
 }
@@ -14,4 +14,14 @@ The validated rumen_gp object.
 }
 \description{
 Performs quality-control checks on a rumen_gp object.
+}
+\details{
+Supports datasets created by either:
+\itemize{
+\item process_ankom()
+\item as_rumen_gp()
+}
+
+ANKOM-specific checks are performed only when
+Gas_PSI is available.
 }

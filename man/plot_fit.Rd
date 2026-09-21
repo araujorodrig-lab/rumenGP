@@ -4,12 +4,14 @@
 \alias{plot_fit}
 \title{Plot fitted model}
 \usage{
-plot_fit(fit, head)
+plot_fit(fit, head = NULL)
 }
 \arguments{
 \item{fit}{A fitted model object.}
 
-\item{head}{Head identifier.}
+\item{head}{Optional Head identifier.
+If omitted and only one bottle is present,
+that bottle is plotted automatically.}
 }
 \value{
 A ggplot object.

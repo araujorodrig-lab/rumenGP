@@ -5,14 +5,16 @@
 #'
 #' @param fit A fitted model object containing a
 #' predictions element.
-#' @param head Head identifier.
+#' @param head Optional Head identifier.
+#' If omitted and only one bottle is present,
+#' that bottle is plotted automatically.
 #'
 #' @return A ggplot object.
 #'
 #' @export
 plot_residuals <- function(
     fit,
-    head
+    head = NULL
 ) {
 
   if (!"predictions" %in% names(fit)) {
@@ -23,12 +25,59 @@ plot_residuals <- function(
 
   }
 
+  if (nrow(fit$predictions) == 0) {
+
+    stop(
+      "Fit object contains no residuals."
+    )
+
+  }
+
   model_name <- class(fit)[1]
+
+  available_heads <- unique(
+    fit$predictions$Head
+  )
+
+  # ----------------------------
+  # Automatic Head selection
+  # ----------------------------
+
+  if (is.null(head)) {
+
+    if (length(available_heads) == 1) {
+
+      head <- available_heads
+
+    } else {
+
+      stop(
+        paste(
+          "Multiple bottles detected.",
+          "Please supply head =",
+          paste(
+            available_heads,
+            collapse = ", "
+          )
+        )
+      )
+
+    }
+
+  }
+
+  # ----------------------------
+  # Filter selected bottle
+  # ----------------------------
 
   df <- fit$predictions |>
     dplyr::filter(
       Head == as.character(head)
     )
+
+  # ----------------------------
+  # Missing bottle handling
+  # ----------------------------
 
   if (nrow(df) == 0) {
 
@@ -40,6 +89,10 @@ plot_residuals <- function(
     )
 
   }
+
+  # ----------------------------
+  # Plot
+  # ----------------------------
 
   ggplot2::ggplot(
     df,

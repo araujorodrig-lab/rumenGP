@@ -1,0 +1,13 @@
+pandoc: '3.10'
+pkgdown: 2.2.0
+pkgdown_sha: ~
+articles:
+  custom-models: custom-models.html
+  getting-started: getting-started.html
+  importing-data: importing-data.html
+  interpreting-models: interpreting-models.html
+  model-equations: model-equations.html
+last_built: 2026-09-21T15:29Z
+urls:
+  reference: https://araujorodrig-lab.github.io/rumenGP/reference
+  article: https://araujorodrig-lab.github.io/rumenGP/articles

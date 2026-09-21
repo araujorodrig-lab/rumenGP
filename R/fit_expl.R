@@ -4,12 +4,102 @@
 #' Fits the exponential gas production model
 #' with an explicit lag phase.
 #'
+#' ## Equation
+#'
+#' \deqn{
+#' V(t) = Vf \left(1 - e^{-k(t-\lambda)}\right)
+#' }
+#'
+#' where:
+#'
+#' \itemize{
+#'   \item \eqn{V(t)} is cumulative gas production at time \eqn{t}
+#'   \item \eqn{Vf} is asymptotic gas production
+#'   \item \eqn{k} is the fractional rate constant
+#'   \item \eqn{\lambda} is lag time
+#' }
+#'
+#' ## Interpretation
+#'
+#' The EXPL model assumes that gas production
+#' follows an exponential pattern after a lag
+#' phase. The lag parameter represents the delay
+#' before substantial fermentation begins.
+#'
+#' ## Advantages
+#'
+#' \itemize{
+#'   \item Explicit lag parameter
+#'   \item Simple biological interpretation
+#'   \item Stable convergence
+#' }
+#'
+#' ## Limitations
+#'
+#' \itemize{
+#'   \item Less flexible than sigmoidal models
+#'   \item May not adequately represent multiple
+#'         fermentation phases
+#' }
+#'
 #' @param data A rumen_gp object.
+#'
 #' @param start Optional list of starting values.
 #' May contain any of:
-#' Vf, k, and lambda.
+#' \itemize{
+#'   \item \code{Vf}
+#'   \item \code{k}
+#'   \item \code{lambda}
+#' }
 #'
-#' @return An expl_fit object.
+#' @examples
+#' \dontrun{
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' # Fit using package default starting values
+#' fit_default <- fit_expl(
+#'   gp
+#' )
+#'
+#' summary(fit_default)
+#'
+#' # Fit using custom starting values
+#' fit_custom_start <- fit_expl(
+#'   gp,
+#'   start = list(
+#'     Vf = 120,
+#'     k = 0.05,
+#'     lambda = 1
+#'   )
+#' )
+#'
+#' summary(fit_custom_start)
+#'
+#' }
+#'
+#' @return An \code{expl_fit} object containing:
+#' \itemize{
+#'   \item Parameter estimates
+#'   \item Model diagnostics
+#'   \item Predicted values
+#'   \item Residuals
+#' }
 #'
 #' @export
 fit_expl <- function(

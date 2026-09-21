@@ -1,15 +1,127 @@
 
 #' Fit Orskov and McDonald model
 #'
-#' Fits the Orskov and McDonald gas
-#' production model to each ANKOM bottle.
+#' Fits the Orskov and McDonald gas-production
+#' model to each bottle in a rumen_gp dataset.
+#'
+#' ## Equation
+#'
+#' \deqn{
+#' V(t)
+#' =
+#' VF
+#' +
+#' b
+#' \left(
+#' 1-e^{-kt}
+#' \right)
+#' }
+#'
+#' where:
+#'
+#' \itemize{
+#'   \item \eqn{V(t)} is cumulative gas production at time \eqn{t}
+#'   \item \eqn{VF} is the intercept (initial gas volume)
+#'   \item \eqn{b} is the fermentable fraction
+#'   \item \eqn{k} is the fractional rate constant
+#' }
+#'
+#' ## Interpretation
+#'
+#' The Orskov and McDonald model partitions gas
+#' production into:
+#'
+#' \itemize{
+#'   \item An intercept term (\eqn{VF})
+#'   \item A fermentable fraction (\eqn{b})
+#' }
+#'
+#' The asymptotic gas production is:
+#'
+#' \deqn{
+#' VF + b
+#' }
+#'
+#' The parameter \eqn{k} controls the rate at which
+#' the asymptote is approached.
+#'
+#' ## Advantages
+#'
+#' \itemize{
+#'   \item Widely used in ruminant nutrition research
+#'   \item Parameters have straightforward biological interpretation
+#'   \item Stable convergence
+#'   \item Useful benchmark model for comparison
+#' }
+#'
+#' ## Limitations
+#'
+#' \itemize{
+#'   \item No explicit lag parameter
+#'   \item Limited flexibility for highly sigmoidal
+#'         fermentation profiles
+#'   \item Less adaptable than Gompertz, Groot,
+#'         or Dual Logistic models
+#' }
 #'
 #' @param data A rumen_gp object.
+#'
 #' @param start Optional list of starting values.
 #' May contain any of:
-#' VF, b, and k.
+#' \itemize{
+#'   \item \code{VF}
+#'   \item \code{b}
+#'   \item \code{k}
+#' }
 #'
-#' @return An orskov_fit object.
+#' @examples
+#' \dontrun{
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' # Fit using package default starting values
+#' fit_default <- fit_orskov(
+#'   gp
+#' )
+#'
+#' summary(fit_default)
+#'
+#' # Fit using custom starting values
+#' fit_custom_start <- fit_orskov(
+#'   gp,
+#'   start = list(
+#'     VF = 5,
+#'     b = 120,
+#'     k = 0.05
+#'   )
+#' )
+#'
+#' summary(fit_custom_start)
+#'
+#' }
+#'
+#' @return An \code{orskov_fit} object containing:
+#' \itemize{
+#'   \item Parameter estimates
+#'   \item Model diagnostics
+#'   \item Predicted values
+#'   \item Residuals
+#' }
 #'
 #' @export
 fit_orskov <- function(

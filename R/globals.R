@@ -18,6 +18,7 @@ utils::globalVariables(
     "Model",
     "N",
     "Observed",
+    "Ordered",
     "Overall_Rank",
     "Predicted",
     "R2",

@@ -4,13 +4,15 @@
 \alias{plot_residuals}
 \title{Plot model residuals}
 \usage{
-plot_residuals(fit, head)
+plot_residuals(fit, head = NULL)
 }
 \arguments{
 \item{fit}{A fitted model object containing a
 predictions element.}
 
-\item{head}{Head identifier.}
+\item{head}{Optional Head identifier.
+If omitted and only one bottle is present,
+that bottle is plotted automatically.}
 }
 \value{
 A ggplot object.

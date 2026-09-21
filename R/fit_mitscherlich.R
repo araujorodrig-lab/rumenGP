@@ -2,14 +2,131 @@
 #' Fit Mitscherlich model
 #'
 #' Fits the Mitscherlich gas-production model
-#' to each ANKOM bottle.
+#' to each bottle in a rumen_gp dataset.
+#'
+#' ## Equation
+#'
+#' \deqn{
+#' V(t)
+#' =
+#' A
+#' \left[
+#' 1
+#' -
+#' \exp
+#' \left(
+#' -k(t-\lambda)
+#' -
+#' d
+#' \left(
+#' \sqrt{t+0.001}
+#' -
+#' \sqrt{\lambda+0.001}
+#' \right)
+#' \right)
+#' \right]
+#' }
+#'
+#' where:
+#'
+#' \itemize{
+#'   \item \eqn{V(t)} is cumulative gas production at time \eqn{t}
+#'   \item \eqn{A} is asymptotic gas production
+#'   \item \eqn{k} is the fractional rate constant
+#'   \item \eqn{d} is a diffusion or shape parameter
+#'   \item \eqn{\lambda} is lag time
+#' }
+#'
+#' ## Interpretation
+#'
+#' The Mitscherlich model combines an exponential
+#' fermentation component with a diffusion-like term.
+#'
+#' The parameter \eqn{k} describes the primary
+#' fermentation rate, while \eqn{d} provides
+#' additional flexibility for representing changes
+#' in fermentation dynamics over time.
+#'
+#' ## Advantages
+#'
+#' \itemize{
+#'   \item Explicit lag parameter
+#'   \item Flexible curve shape
+#'   \item Can describe complex fermentation dynamics
+#'   \item Often performs well when simple exponential
+#'         models are inadequate
+#' }
+#'
+#' ## Limitations
+#'
+#' \itemize{
+#'   \item More complex than EXP0 or EXPL
+#'   \item Increased parameter correlation
+#'   \item Diffusion parameter may be less intuitive
+#'         biologically
+#'   \item May require careful starting values
+#' }
 #'
 #' @param data A rumen_gp object.
+#'
 #' @param start Optional list of starting values.
 #' May contain any of:
-#' A, k, d, and lambda.
+#' \itemize{
+#'   \item \code{A}
+#'   \item \code{k}
+#'   \item \code{d}
+#'   \item \code{lambda}
+#' }
 #'
-#' @return A mitscherlich_fit object.
+#' @examples
+#' \dontrun{
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' # Fit using package default starting values
+#' fit_default <- fit_mitscherlich(
+#'   gp
+#' )
+#'
+#' summary(fit_default)
+#'
+#' # Fit using custom starting values
+#' fit_custom_start <- fit_mitscherlich(
+#'   gp,
+#'   start = list(
+#'     A = 120,
+#'     k = 0.05,
+#'     d = 0.05,
+#'     lambda = 0.50
+#'   )
+#' )
+#'
+#' summary(fit_custom_start)
+#'
+#' }
+#'
+#' @return A \code{mitscherlich_fit} object containing:
+#' \itemize{
+#'   \item Parameter estimates
+#'   \item Model diagnostics
+#'   \item Predicted values
+#'   \item Residuals
+#' }
 #'
 #' @export
 fit_mitscherlich <- function(

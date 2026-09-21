@@ -2,14 +2,121 @@
 #' Fit Logistic model
 #'
 #' Fits a Logistic gas-production model
-#' to each ANKOM bottle.
+#' to each bottle in a rumen_gp dataset.
+#'
+#' ## Equation
+#'
+#' \deqn{
+#' V(t)
+#' =
+#' \frac{A}
+#' {
+#' 1+\exp
+#' \left[
+#' 2+
+#' 4k(\lambda-t)
+#' \right]
+#' }
+#' }
+#'
+#' where:
+#'
+#' \itemize{
+#'   \item \eqn{V(t)} is cumulative gas production at time \eqn{t}
+#'   \item \eqn{A} is asymptotic gas production
+#'   \item \eqn{k} is the fractional rate constant
+#'   \item \eqn{\lambda} is lag time
+#' }
+#'
+#' ## Interpretation
+#'
+#' The Logistic model describes gas production using a
+#' sigmoidal curve with an initial lag phase,
+#' a period of rapid fermentation, and a plateau
+#' approaching the asymptotic gas production.
+#'
+#' The parameter \eqn{k} controls the steepness of the
+#' curve, while \eqn{\lambda} determines the position
+#' of the sigmoid along the time axis.
+#'
+#' ## Advantages
+#'
+#' \itemize{
+#'   \item Explicit lag parameter
+#'   \item Smooth sigmoidal behavior
+#'   \item Stable convergence
+#'   \item Widely used in biological growth and
+#'         fermentation studies
+#' }
+#'
+#' ## Limitations
+#'
+#' \itemize{
+#'   \item Assumes a symmetric sigmoidal curve
+#'   \item May not adequately fit highly asymmetric
+#'         fermentation profiles
+#'   \item Less flexible than Gompertz or Dual Logistic
+#'         models
+#' }
 #'
 #' @param data A rumen_gp object.
+#'
 #' @param start Optional list of starting values.
 #' May contain any of:
-#' A, k, and lambda.
+#' \itemize{
+#'   \item \code{A}
+#'   \item \code{k}
+#'   \item \code{lambda}
+#' }
 #'
-#' @return A logistic_fit object.
+#' @examples
+#' \dontrun{
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' # Fit using package default starting values
+#' fit_default <- fit_logistic(
+#'   gp
+#' )
+#'
+#' summary(fit_default)
+#'
+#' # Fit using custom starting values
+#' fit_custom_start <- fit_logistic(
+#'   gp,
+#'   start = list(
+#'     A = 120,
+#'     k = 0.05,
+#'     lambda = 1
+#'   )
+#' )
+#'
+#' summary(fit_custom_start)
+#'
+#' }
+#'
+#' @return A \code{logistic_fit} object containing:
+#' \itemize{
+#'   \item Parameter estimates
+#'   \item Model diagnostics
+#'   \item Predicted values
+#'   \item Residuals
+#' }
 #'
 #' @export
 fit_logistic <- function(

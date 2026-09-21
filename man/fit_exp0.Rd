@@ -11,12 +11,103 @@ fit_exp0(data, start = NULL)
 
 \item{start}{Optional list of starting values.
 May contain any of:
-Vf and k.}
+\itemize{
+\item \code{Vf}
+\item \code{k}
+}}
 }
 \value{
-An exp0_fit object.
+An \code{exp0_fit} object containing:
+\itemize{
+\item Parameter estimates
+\item Model diagnostics
+\item Predicted values
+\item Residuals
+}
 }
 \description{
 Fits the exponential gas production model
 without an explicit lag phase.
+}
+\details{
+\subsection{Equation}{
+
+\deqn{
+V(t) = Vf \left( 1 - e^{-kt} \right)
+}
+
+where:
+
+\itemize{
+\item \eqn{V(t)} is cumulative gas production at time \eqn{t}
+\item \eqn{Vf} is asymptotic gas production
+\item \eqn{k} is the fractional rate constant
+}
+}
+
+\subsection{Interpretation}{
+
+The EXP0 model assumes that gas production
+increases exponentially toward an asymptotic
+value without an explicit lag phase.
+}
+
+\subsection{Advantages}{
+
+\itemize{
+\item Simple and computationally efficient
+\item Stable convergence
+\item Easy biological interpretation
+}
+}
+
+\subsection{Limitations}{
+
+\itemize{
+\item Does not model lag time
+\item Limited flexibility for sigmoidal
+fermentation profiles
+}
+}
+}
+\examples{
+\dontrun{
+
+files <- example_data()
+
+raw_data <- read_ankom(
+  files$ankom
+)
+
+metadata <- read_metadata(
+  files$metadata
+)
+
+gp <- process_ankom(
+  raw_data,
+  metadata,
+  headspace_ml = 210,
+  temperature_c = 39
+)
+
+# Fit using package defaults
+fit_default <- fit_exp0(
+  gp
+)
+
+summary(fit_default)
+
+# Fit using user-defined starting values
+fit_custom_start <- fit_exp0(
+  gp,
+  start = list(
+    Vf = 120,
+    k = 0.05
+  )
+)
+
+summary(fit_custom_start)
+
+}
+
 }
