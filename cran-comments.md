@@ -1,4 +1,3 @@
-
 ## Test environments
 
 * Windows 11, R 4.5.1
@@ -15,7 +14,23 @@
 
 ## Comments
 
-This is the initial release of rumenGP.
+This is a resubmission of rumenGP.
+
+This resubmission addresses the notes reported during
+the CRAN incoming pretest.
+
+Changes made:
+
+* Excluded cran-comments.md from package builds using
+  .Rbuildignore.
+* Updated package metadata.
+* Updated package citation infrastructure.
+* Rechecked the package locally.
+* Revalidated the package on R-hub and win-builder.
+
+Current results:
+
+0 errors | 0 warnings | 0 notes
 
 rumenGP provides tools for importing,
 processing, visualizing, fitting,
@@ -33,7 +48,3 @@ The package supports:
 * Treatment-level ranking
 * Diagnostic tools
 * Visualization functions
-
-The package was checked locally,
-on R-hub (Linux, macOS, and Windows),
-and on win-builder (R-devel).
