@@ -74,6 +74,7 @@ k
 k1
 k2
 mu
+r
 ```
 
 These parameters describe how rapidly gas production approaches the
@@ -100,6 +101,15 @@ Higher rates generally suggest:
 
 - Faster microbial degradation
 - Greater substrate accessibility
+- More rapid attainment of asymptotic gas production
+
+In Burr XII and Inverse Paralogistic models, the parameter:
+
+``` text
+r
+```
+
+serves a similar role.
 
 ------------------------------------------------------------------------
 
@@ -111,7 +121,7 @@ Common parameter name:
 lambda
 ```
 
-or:
+or
 
 ``` math
 \lambda
@@ -152,7 +162,7 @@ K
 Used in:
 
 - Groot
-- Michaelis-Menten
+- Generalized Michaelis-Menten
 
 These parameters determine the time required to achieve approximately
 half of the asymptotic gas production.
@@ -179,9 +189,12 @@ Smaller values indicate faster fermentation.
 Common parameter names:
 
 ``` text
+a
 c
 d
+k
 m
+p
 ```
 
 Shape parameters modify the curvature of the fermentation profile.
@@ -201,6 +214,49 @@ They are usually considered:
 ``` text
 Empirical flexibility parameters.
 ```
+
+Examples:
+
+#### Groot
+
+``` text
+k
+```
+
+controls curve steepness.
+
+#### Generalized Michaelis-Menten
+
+``` text
+c
+```
+
+controls curve shape and steepness.
+
+#### Log-logistic
+
+``` text
+a
+```
+
+controls curve shape and steepness.
+
+#### Burr XII
+
+``` text
+a
+p
+```
+
+jointly influence asymmetry, curvature, and inflection behavior.
+
+#### Inverse Paralogistic
+
+``` text
+a
+```
+
+controls the overall shape of the fermentation profile.
 
 ------------------------------------------------------------------------
 
@@ -295,6 +351,11 @@ Interpretation:
 the fitted model.
 ```
 
+#### Important
+
+A high R-squared does not guarantee that the model is biologically
+meaningful or scientifically preferable.
+
 ------------------------------------------------------------------------
 
 ## RMSE
@@ -356,6 +417,11 @@ Model complexity
 
 Smaller values are preferred.
 
+AIC is especially useful when:
+
+- Comparing non-nested models
+- Comparing models with different numbers of parameters
+
 ------------------------------------------------------------------------
 
 ## BIC
@@ -369,6 +435,9 @@ BIC
 Similar to AIC but applies a stronger penalty for additional parameters.
 
 Smaller values are preferred.
+
+Because BIC penalizes complexity more heavily, it often favors simpler
+models unless the additional parameters substantially improve fit.
 
 ------------------------------------------------------------------------
 
@@ -406,6 +475,140 @@ model selection.
 
 ------------------------------------------------------------------------
 
+## Understanding Model Equivalence
+
+Several gas-production models are mathematically equivalent despite
+using different parameter names.
+
+#### Groot
+
+``` math
+V(t)
+=
+\frac{VF}
+{
+1+\left(\frac{b}{t}\right)^k
+}
+```
+
+#### Generalized Michaelis-Menten
+
+``` math
+V(t)
+=
+A
+\frac{t^c}
+{
+t^c + K^c
+}
+```
+
+#### Log-logistic
+
+``` math
+V(t)
+=
+VF
+\frac{(rt)^a}
+{
+1+(rt)^a
+}
+```
+
+Parameter correspondence:
+
+| Groot | Generalized Michaelis-Menten | Log-logistic |
+|-------|------------------------------|--------------|
+| VF    | A                            | VF           |
+| b     | K                            | 1/r          |
+| k     | c                            | a            |
+
+Therefore:
+
+``` text
+Groot
+=
+Generalized Michaelis-Menten
+=
+Log-logistic
+```
+
+These formulations produce identical:
+
+- Predicted values
+- Residuals
+- RSS
+- RMSE
+- R²
+- AIC
+- BIC
+
+when equivalent parameter transformations are used.
+
+Researchers may therefore choose the parameterization most familiar
+within their field.
+
+------------------------------------------------------------------------
+
+## Interpreting Burr XII and Inverse Paralogistic Models
+
+### Burr XII
+
+Equation:
+
+``` math
+V(t)
+=
+VF
+\left[
+1
+-
+\left(
+1+(rt)^a
+\right)^{-p}
+\right]
+```
+
+Key interpretation:
+
+- VF determines asymptotic gas production
+- r controls fermentation speed
+- a and p jointly control shape and asymmetry
+
+The model is highly flexible and can adapt to many fermentation
+profiles.
+
+However, this flexibility may increase the risk of overfitting when
+datasets are small.
+
+------------------------------------------------------------------------
+
+### Inverse Paralogistic
+
+Equation:
+
+``` math
+V(t)
+=
+VF
+\left[
+1
++
+(rt)^{-a}
+\right]^{-a}
+```
+
+Key interpretation:
+
+- VF represents asymptotic gas production
+- r influences production speed
+- a controls curve shape and steepness
+
+This model can describe diverse sigmoidal profiles while retaining a
+relatively simple parameter structure.
+
+------------------------------------------------------------------------
+
 ## Model Selection Strategy
 
 Recommended workflow:
@@ -421,10 +624,14 @@ Recommended workflow:
 
 5. Examine residual plots
 
-6. Consider biological interpretation
+6. Consider parameter plausibility
 
-7. Select the most appropriate model
+7. Consider biological interpretation
+
+8. Select the most appropriate model
 ```
+
+No single model should be considered universally superior.
 
 ------------------------------------------------------------------------
 
@@ -450,6 +657,7 @@ When convergence problems occur:
 - Apply bounds
 - Try simpler models
 - Compare alternative equations
+- Consider biologically meaningful parameter ranges
 
 ------------------------------------------------------------------------
 
@@ -464,6 +672,7 @@ Researchers should consider:
 - Parameter interpretation
 - Stability of estimates
 - Reproducibility
+- Experimental context
 
 alongside fit statistics.
 
@@ -501,19 +710,24 @@ Examples:
 ### Use Flexible Sigmoidal Models When
 
 - Fermentation profiles are complex
+- Greater flexibility is desired
+- Multiple candidate models are being compared
 
 Examples:
 
 - Groot
-- Michaelis-Menten
+- Generalized Michaelis-Menten
+- Burr XII
+- Inverse Paralogistic
 - LE0
 - LEL
 
 ------------------------------------------------------------------------
 
-### Use Dual-Pool Models When
+### Use Multi-Pool Models When
 
 - Rapid and slow fractions are biologically relevant
+- Substrate heterogeneity is important
 
 Example:
 
@@ -530,5 +744,28 @@ A successful analysis combines:
 - Parameter interpretability
 - Robust convergence
 
+rumenGP provides both classical and modern approaches to gas-production
+modeling, including:
+
+- Brody
+- Ørskov and McDonald
+- EXP0
+- EXPL
+- Gompertz
+- Logistic
+- Mitscherlich
+- LE0
+- LEL
+- Groot
+- Generalized Michaelis-Menten
+- Dual Logistic
+- Burr XII
+- Inverse Paralogistic
+
+In addition, the Log-logistic formulation is already represented
+mathematically through the existing Groot and generalized
+Michaelis-Menten parameterizations.
+
 Researchers are encouraged to fit multiple models and evaluate both
-statistical and biological performance before selecting a final model.
+statistical and biological performance before selecting a final
+representation of fermentation kinetics.

@@ -55,14 +55,17 @@ reference:
   - title: Model Fitting
     contents:
       - fit_brody
+      - fit_burr_xii
       - fit_dual_logistic
       - fit_exp0
       - fit_expl
       - fit_gompertz
       - fit_groot
+      - fit_inverse_paralogistic
       - fit_le0
       - fit_lel
       - fit_logistic
+      - fit_loglogistic
       - fit_mitscherlich
       - fit_mm
       - fit_orskov
@@ -105,15 +108,18 @@ reference:
   - title: Summary Methods
     contents:
       - summary.brody_fit
+      - summary.burr_xii_fit
       - summary.custom_fit
       - summary.dual_logistic_fit
       - summary.exp0_fit
       - summary.expl_fit
       - summary.gompertz_fit
       - summary.groot_fit
+      - summary.inverse_paralogistic_fit
       - summary.le0_fit
       - summary.lel_fit
       - summary.logistic_fit
+      - summary.loglogistic_fit
       - summary.mitscherlich_fit
       - summary.mm_fit
       - summary.orskov_fit

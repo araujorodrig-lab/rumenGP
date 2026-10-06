@@ -10,7 +10,7 @@ The package supports:
 - ANKOM RF datasets
 - Manual gas-volume datasets
 - Pressure-based datasets
-- Twelve built-in kinetic models
+- Fourteen built-in kinetic models
 - User-defined kinetic models
 - Model comparison and ranking
 - Treatment-level model evaluation
@@ -34,10 +34,10 @@ files <- example_data()
 
 files
 #> $ankom
-#> [1] "C:/Users/Arlan/AppData/Local/Temp/RtmpAtUG72/temp_libpath59dca801625/rumenGP/extdata/example_ankom.xlsx"
+#> [1] "C:/Users/Arlan/AppData/Local/R/win-library/4.5/rumenGP/extdata/example_ankom.xlsx"
 #> 
 #> $metadata
-#> [1] "C:/Users/Arlan/AppData/Local/Temp/RtmpAtUG72/temp_libpath59dca801625/rumenGP/extdata/example_metadata.xlsx"
+#> [1] "C:/Users/Arlan/AppData/Local/R/win-library/4.5/rumenGP/extdata/example_metadata.xlsx"
 ```
 
 ## Import ANKOM Data
@@ -143,6 +143,12 @@ groot_fit <- fit_groot(gp)
 #> Heads: 24
 #> Treatments: 5
 
+mm_fit <- fit_mm(gp)
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
+
 gompertz_fit <- fit_gompertz(gp)
 #> rumenGP data validation passed.
 #> Observations: 1752
@@ -150,6 +156,19 @@ gompertz_fit <- fit_gompertz(gp)
 #> Treatments: 5
 
 brody_fit <- fit_brody(gp)
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
+
+burr_fit <- fit_burr_xii(gp)
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
+
+inverse_paralogistic_fit <-
+  fit_inverse_paralogistic(gp)
 #> rumenGP data validation passed.
 #> Observations: 1752
 #> Heads: 24
@@ -238,6 +257,13 @@ comparison <- compare_models(
 
   Groot = groot_fit,
 
+  MichaelisMenten = mm_fit,
+
+  BurrXII = burr_fit,
+
+  InverseParalogistic =
+    inverse_paralogistic_fit,
+
   Gompertz = gompertz_fit,
 
   Brody = brody_fit
@@ -245,14 +271,20 @@ comparison <- compare_models(
 )
 
 comparison
-#>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS
-#> 1    Groot      24              24           0 0.9134994  2.154301  491.4637
-#> 2 Gompertz      24              23           1 0.9545965  4.216094 1837.5449
-#> 3    Brody      24              23           1 0.9453304  3.604892 1076.8697
-#>   Mean_AIC Mean_BIC Lambda_Boundary
-#> 1 297.0687 306.1754               0
-#> 2 392.2245 401.3864               8
-#> 3 393.6300 402.7918               0
+#>                 Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE
+#> 1               Groot      24              24           0 0.9134994  2.154301
+#> 2     MichaelisMenten      24              24           0 0.9408013  2.041895
+#> 3             BurrXII      24              24           0 0.8752286  3.760356
+#> 4 InverseParalogistic      24              24           0 0.8898379  3.413298
+#> 5            Gompertz      24              23           1 0.9545965  4.216094
+#> 6               Brody      24              23           1 0.9453304  3.604892
+#>    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary
+#> 1  491.4637 297.0687 306.1754               0
+#> 2  458.2130 293.3112 302.4731               0
+#> 3 1729.1639 355.1061 366.4894               0
+#> 4 1244.0029 351.4587 360.5654               0
+#> 5 1837.5449 392.2245 401.3864               8
+#> 6 1076.8697 393.6300 402.7918               0
 ```
 
 The comparison table includes:
@@ -271,14 +303,27 @@ The comparison table includes:
 rank_models(
   comparison
 )
-#>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS
-#> 1    Groot      24              24           0 0.9134994  2.154301  491.4637
-#> 2 Gompertz      24              23           1 0.9545965  4.216094 1837.5449
-#> 3    Brody      24              23           1 0.9453304  3.604892 1076.8697
-#>   Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC Rank_BIC
-#> 1 297.0687 306.1754               0       3         1        1        1
-#> 2 392.2245 401.3864               8       1         3        2        2
-#> 3 393.6300 402.7918               0       2         2        3        3
+#>                 Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE
+#> 1               Groot      24              24           0 0.9134994  2.154301
+#> 2     MichaelisMenten      24              24           0 0.9408013  2.041895
+#> 3             BurrXII      24              24           0 0.8752286  3.760356
+#> 4 InverseParalogistic      24              24           0 0.8898379  3.413298
+#> 5            Gompertz      24              23           1 0.9545965  4.216094
+#> 6               Brody      24              23           1 0.9453304  3.604892
+#>    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC
+#> 1  491.4637 297.0687 306.1754               0       4         2        2
+#> 2  458.2130 293.3112 302.4731               0       3         1        1
+#> 3 1729.1639 355.1061 366.4894               0       6         5        4
+#> 4 1244.0029 351.4587 360.5654               0       5         3        3
+#> 5 1837.5449 392.2245 401.3864               8       1         6        5
+#> 6 1076.8697 393.6300 402.7918               0       2         4        6
+#>   Rank_BIC
+#> 1        2
+#> 2        1
+#> 3        4
+#> 4        3
+#> 5        5
+#> 6        6
 ```
 
 ## Compare Models by Treatment
@@ -292,6 +337,13 @@ treatment_comparison <-
 
     Groot = groot_fit,
 
+    MichaelisMenten = mm_fit,
+
+    BurrXII = burr_fit,
+
+    InverseParalogistic =
+      inverse_paralogistic_fit,
+
     Gompertz = gompertz_fit,
 
     Brody = brody_fit
@@ -299,24 +351,20 @@ treatment_comparison <-
   )
 
 treatment_comparison
-#> # A tibble: 15 × 6
-#>    Treatment Model    Mean_R2 Mean_RMSE Mean_AIC Mean_BIC
-#>    <chr>     <chr>      <dbl>     <dbl>    <dbl>    <dbl>
-#>  1 BLANK     Groot      0.714      1.75     257.     266.
-#>  2 Plant_A   Groot      0.968      2.33     281.     290.
-#>  3 Plant_B   Groot      0.854      1.73     281.     290.
-#>  4 Plant_C   Groot      0.982      2.11     309.     319.
-#>  5 TMR       Groot      0.988      3.14     377.     386.
-#>  6 BLANK     Gompertz   0.943      2.01     293.     302.
-#>  7 Plant_A   Gompertz   0.936      5.05     417.     426.
-#>  8 Plant_B   Gompertz   0.969      4.16     393.     402.
-#>  9 Plant_C   Gompertz   0.967      3.73     381.     390.
-#> 10 TMR       Gompertz   0.957      5.83     464.     473.
-#> 11 BLANK     Brody      0.907      1.77     299.     308.
-#> 12 Plant_A   Brody      0.928      4.01     405.     415.
-#> 13 Plant_B   Brody      0.976      3.86     411.     421.
-#> 14 Plant_C   Brody      0.941      3.46     394.     403.
-#> 15 TMR       Brody      0.977      4.50     435.     444.
+#> # A tibble: 30 × 6
+#>    Treatment Model           Mean_R2 Mean_RMSE Mean_AIC Mean_BIC
+#>    <chr>     <chr>             <dbl>     <dbl>    <dbl>    <dbl>
+#>  1 BLANK     Groot             0.714     1.75      257.     266.
+#>  2 Plant_A   Groot             0.968     2.33      281.     290.
+#>  3 Plant_B   Groot             0.854     1.73      281.     290.
+#>  4 Plant_C   Groot             0.982     2.11      309.     319.
+#>  5 TMR       Groot             0.988     3.14      377.     386.
+#>  6 BLANK     MichaelisMenten   0.972     0.925     201.     210.
+#>  7 Plant_A   MichaelisMenten   0.970     2.32      284.     293.
+#>  8 Plant_B   MichaelisMenten   0.830     1.74      286.     295.
+#>  9 Plant_C   MichaelisMenten   0.983     2.09      313.     322.
+#> 10 TMR       MichaelisMenten   0.989     3.12      381.     390.
+#> # ℹ 20 more rows
 ```
 
 ## Rank Models by Treatment
@@ -329,24 +377,20 @@ ranked_treatments <-
   )
 
 ranked_treatments
-#> # A tibble: 15 × 10
-#>    Treatment Model    Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE
-#>    <chr>     <chr>      <dbl>     <dbl>    <dbl>    <dbl>   <int>     <int>
-#>  1 BLANK     Groot      0.714      1.75     257.     266.       3         1
-#>  2 Plant_A   Groot      0.968      2.33     281.     290.       1         1
-#>  3 Plant_B   Groot      0.854      1.73     281.     290.       3         1
-#>  4 Plant_C   Groot      0.982      2.11     309.     319.       1         1
-#>  5 TMR       Groot      0.988      3.14     377.     386.       1         1
-#>  6 BLANK     Gompertz   0.943      2.01     293.     302.       1         3
-#>  7 Plant_A   Gompertz   0.936      5.05     417.     426.       2         3
-#>  8 Plant_B   Gompertz   0.969      4.16     393.     402.       2         3
-#>  9 Plant_C   Gompertz   0.967      3.73     381.     390.       2         3
-#> 10 TMR       Gompertz   0.957      5.83     464.     473.       3         3
-#> 11 BLANK     Brody      0.907      1.77     299.     308.       2         2
-#> 12 Plant_A   Brody      0.928      4.01     405.     415.       3         2
-#> 13 Plant_B   Brody      0.976      3.86     411.     421.       1         2
-#> 14 Plant_C   Brody      0.941      3.46     394.     403.       3         2
-#> 15 TMR       Brody      0.977      4.50     435.     444.       2         2
+#> # A tibble: 30 × 10
+#>    Treatment Model         Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE
+#>    <chr>     <chr>           <dbl>     <dbl>    <dbl>    <dbl>   <int>     <int>
+#>  1 BLANK     Groot           0.714     1.75      257.     266.       5         2
+#>  2 Plant_A   Groot           0.968     2.33      281.     290.       2         2
+#>  3 Plant_B   Groot           0.854     1.73      281.     290.       3         1
+#>  4 Plant_C   Groot           0.982     2.11      309.     319.       2         2
+#>  5 TMR       Groot           0.988     3.14      377.     386.       2         2
+#>  6 BLANK     MichaelisMen…   0.972     0.925     201.     210.       1         1
+#>  7 Plant_A   MichaelisMen…   0.970     2.32      284.     293.       1         1
+#>  8 Plant_B   MichaelisMen…   0.830     1.74      286.     295.       4         2
+#>  9 Plant_C   MichaelisMen…   0.983     2.09      313.     322.       1         1
+#> 10 TMR       MichaelisMen…   0.989     3.12      381.     390.       1         1
+#> # ℹ 20 more rows
 #> # ℹ 2 more variables: Rank_AIC <int>, Rank_BIC <int>
 ```
 
@@ -360,14 +404,17 @@ best_models <-
   )
 
 best_models
-#> # A tibble: 5 × 12
+#> # A tibble: 8 × 12
 #>   Treatment Model Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE Rank_AIC
 #>   <chr>     <chr>   <dbl>     <dbl>    <dbl>    <dbl>   <int>     <int>    <int>
-#> 1 BLANK     Groot   0.714      1.75     257.     266.       3         1        1
-#> 2 Plant_A   Groot   0.968      2.33     281.     290.       1         1        1
-#> 3 Plant_B   Groot   0.854      1.73     281.     290.       3         1        1
-#> 4 Plant_C   Groot   0.982      2.11     309.     319.       1         1        1
-#> 5 TMR       Groot   0.988      3.14     377.     386.       1         1        1
+#> 1 BLANK     Mich…   0.972     0.925     201.     210.       1         1        1
+#> 2 Plant_A   Groot   0.968     2.33      281.     290.       2         2        1
+#> 3 Plant_A   Mich…   0.970     2.32      284.     293.       1         1        2
+#> 4 Plant_B   Groot   0.854     1.73      281.     290.       3         1        1
+#> 5 Plant_C   Groot   0.982     2.11      309.     319.       2         2        1
+#> 6 Plant_C   Mich…   0.983     2.09      313.     322.       1         1        2
+#> 7 TMR       Groot   0.988     3.14      377.     386.       2         2        1
+#> 8 TMR       Mich…   0.989     3.12      381.     390.       1         1        2
 #> # ℹ 3 more variables: Rank_BIC <int>, Total_Rank <int>, Overall_Rank <int>
 ```
 
@@ -378,10 +425,11 @@ best_models
 model_win_frequency(
   best_models
 )
-#> # A tibble: 1 × 2
-#>   Model Treatments_Won
-#>   <chr>          <int>
-#> 1 Groot              5
+#> # A tibble: 2 × 2
+#>   Model           Treatments_Won
+#>   <chr>                    <int>
+#> 1 Groot                        4
+#> 2 MichaelisMenten              4
 ```
 
 ## Quality Control Workflow
@@ -397,7 +445,7 @@ Process ANKOM data
     ↓
 Validate processed data
     ↓
-Fit models
+Fit multiple candidate models
     ↓
 Flag problematic bottles
     ↓
@@ -407,7 +455,11 @@ Exclude problematic bottles
     ↓
 Refit models
     ↓
-Compare models
+Compare RMSE
+    ↓
+Compare AIC and BIC
+    ↓
+Select final model
 ```
 
 Example bottle exclusion:
@@ -435,10 +487,14 @@ Current built-in models:
 - LEL
 - Logistic
 - Mitscherlich
-- Michaelis-Menten
-- Orskov and McDonald
+- Generalized Michaelis-Menten
+- Ørskov and McDonald
+- Burr XII
+- Inverse Paralogistic
 
-### Note on Groot and Michaelis-Menten
+## Model Equivalence
+
+### Groot and Generalized Michaelis-Menten
 
 The Groot and generalized Michaelis-Menten models are mathematically
 equivalent.
@@ -449,8 +505,168 @@ Parameter correspondence:
 - b = K
 - k = c
 
+Both formulations produce identical fitted values, residuals,
+diagnostics, AIC, BIC, RMSE, and R-squared when convergence is achieved.
+
 Researchers may choose either formulation depending on the terminology
 commonly used in their field.
+
+### Groot, Generalized Michaelis-Menten, and Log-logistic
+
+The Log-logistic formulation
+
+``` math
+V(t)
+=
+VF
+\frac{(rt)^a}
+{
+1 + (rt)^a
+}
+```
+
+can be rewritten as
+
+``` math
+V(t)
+=
+VF
+\frac{t^a}
+{
+t^a + (1/r)^a
+}
+```
+
+which is mathematically identical to both the Groot and generalized
+Michaelis-Menten models.
+
+Parameter correspondence:
+
+| Groot | Generalized Michaelis-Menten | Log-logistic |
+|-------|------------------------------|--------------|
+| VF    | A                            | VF           |
+| b     | K                            | 1/r          |
+| k     | c                            | a            |
+
+Therefore:
+
+``` text
+Groot
+=
+Generalized Michaelis-Menten
+=
+Log-logistic
+```
+
+These formulations describe the same underlying curve and differ only in
+parameterization.
+
+For this reason, rumenGP does not currently implement a separate
+Log-logistic fitting routine. The Log-logistic curve family is already
+represented through the existing Groot and generalized Michaelis-Menten
+implementations.
+
+## Recommended Model Selection Workflow
+
+No single gas-production model should be considered universally
+superior.
+
+A recommended workflow is:
+
+1.  Fit several biologically plausible models.
+2.  Verify convergence.
+3.  Inspect fitted curves.
+4.  Examine residuals.
+5.  Compare RMSE.
+6.  Compare AIC and BIC.
+7.  Evaluate biological plausibility of parameter estimates.
+8.  Select the model most appropriate for the scientific objective.
+
+Recent comparative work has identified Burr XII, Inverse Paralogistic,
+and Log-logistic formulations among the strong-performing models across
+diverse feed datasets.
+
+Because the Log-logistic formulation is mathematically equivalent to the
+existing Groot and generalized Michaelis-Menten models, rumenGP already
+provides this curve family through those parameterizations.
+
+## New Additions
+
+### Burr XII
+
+Equation:
+
+``` math
+V(t)
+=
+VF
+\left[
+1
+-
+\left(
+1+(rt)^a
+\right)^{-p}
+\right]
+```
+
+Parameters:
+
+- VF: asymptotic gas production
+- r: rate parameter
+- a: shape parameter
+- p: shape parameter
+
+Potential advantages:
+
+- Highly flexible curve shape
+- Accommodates diverse fermentation profiles
+- Often produces excellent goodness-of-fit
+- Useful for comparative model evaluation
+
+Potential limitations:
+
+- Four-parameter model
+- Greater risk of overfitting than simpler models
+- Parameter interpretation may be less intuitive
+
+### Inverse Paralogistic
+
+Equation:
+
+``` math
+V(t)
+=
+VF
+\left[
+1
++
+(rt)^{-a}
+\right]^{-a}
+```
+
+Parameters:
+
+- VF: asymptotic gas production
+- r: rate parameter
+- a: shape parameter
+
+Potential advantages:
+
+- Flexible sigmoidal behavior
+- Relatively simple parameterization
+- Performs well across diverse kinetic profiles
+
+Potential limitations:
+
+- Less common in rumen literature
+- Shape parameter can be difficult to interpret
+- Requires positive incubation times
+
+Neither Burr XII nor Inverse Paralogistic should be considered
+universally superior.
+
+Model performance depends on feed type, experimental design, data
+quality, and model-selection criteria.
 
 ## Next Steps
 
@@ -518,3 +734,25 @@ See:
 ```
 
 for additional details.
+
+## Summary
+
+rumenGP provides a complete workflow for importing, processing,
+visualizing, fitting, comparing, and interpreting in vitro rumen
+gas-production data.
+
+Current capabilities include:
+
+- ANKOM RF workflows
+- Manual gas-volume workflows
+- Pressure-based workflows
+- Fourteen built-in kinetic models
+- User-defined models
+- Model comparison and ranking
+- Treatment-level model evaluation
+- Diagnostic tools
+- Visualization tools
+
+Researchers are encouraged to compare multiple biologically plausible
+models and to consider both statistical performance and biological
+interpretation before selecting a final model.

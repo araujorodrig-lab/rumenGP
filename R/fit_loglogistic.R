@@ -1,4 +1,141 @@
 
+#' Fit Log-logistic model
+#'
+#' Fits the Log-logistic gas production model
+#' to each bottle in a rumen_gp dataset.
+#'
+#' ## Equation
+#'
+#' \deqn{
+#' V(t)
+#' =
+#' \frac{
+#' VF(rt)^a
+#' }
+#' {
+#' 1 + (rt)^a
+#' }
+#' }
+#'
+#' where:
+#'
+#' \itemize{
+#'   \item \eqn{V(t)} is cumulative gas production at time \eqn{t}
+#'   \item \eqn{VF} is asymptotic gas production
+#'   \item \eqn{r} is the rate parameter
+#'   \item \eqn{a} is the shape parameter
+#' }
+#'
+#' ## Interpretation
+#'
+#' The Log-logistic model is a flexible sigmoidal
+#' model capable of describing a wide range of gas
+#' production profiles.
+#'
+#' The parameter \eqn{r} controls the speed of gas
+#' production, while \eqn{a} controls curve shape,
+#' steepness, and inflection behavior.
+#'
+#' ## Advantages
+#'
+#' \itemize{
+#'   \item Excellent flexibility
+#'   \item Biologically interpretable parameters
+#'   \item Often produces excellent fits
+#'   \item Common in nonlinear growth and
+#'         fermentation modeling
+#' }
+#'
+#' ## Limitations
+#'
+#' \itemize{
+#'   \item Requires positive incubation times
+#'   \item Shape parameter may be less intuitive
+#'         than simple exponential models
+#' }
+#'
+#' ## Notes
+#'
+#' The Log-logistic model is mathematically
+#' equivalent to both the Groot model
+#' implemented in \code{fit_groot()} and the
+#' generalized Michaelis-Menten model
+#' implemented in \code{fit_mm()}.
+#'
+#' Parameter correspondence:
+#'
+#' \itemize{
+#'   \item \code{VF = A}
+#'   \item \code{a = c = k}
+#'   \item \code{1/r = K = b}
+#' }
+#'
+#' Both formulations produce identical fitted
+#' values, residuals, diagnostics, AIC, BIC,
+#' RMSE, and R-squared when convergence is
+#' achieved.
+#'
+#' Researchers may choose either formulation
+#' according to the terminology commonly used
+#' in their field.
+#'
+#' @param data A rumen_gp object.
+#'
+#' @param start Optional list of starting values.
+#' May contain any of:
+#' \itemize{
+#'   \item \code{VF}
+#'   \item \code{r}
+#'   \item \code{a}
+#' }
+#'
+#' @examples
+#'
+#' files <- example_data()
+#'
+#' raw_data <- read_ankom(
+#'   files$ankom
+#' )
+#'
+#' metadata <- read_metadata(
+#'   files$metadata
+#' )
+#'
+#' gp <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39
+#' )
+#'
+#' # Fit using package default starting values
+#' fit_default <- fit_loglogistic(
+#'   gp
+#' )
+#'
+#' summary(fit_default)
+#'
+#' # Fit using custom starting values
+#' fit_custom_start <- fit_loglogistic(
+#'   gp,
+#'   start = list(
+#'     VF = 120,
+#'     r = 0.10,
+#'     a = 2
+#'   )
+#' )
+#'
+#' summary(fit_custom_start)
+#'
+#' @return A \code{loglogistic_fit} object containing:
+#' \itemize{
+#'   \item Parameter estimates
+#'   \item Model diagnostics
+#'   \item Predicted values
+#'   \item Residuals
+#' }
+#'
+#' @export
 fit_loglogistic <- function(
     data,
     start = NULL
@@ -87,7 +224,6 @@ fit_loglogistic <- function(
           (
             (r * Time_h)^a
           ) /
-
           (
             1 +
               (r * Time_h)^a
@@ -100,7 +236,7 @@ fit_loglogistic <- function(
         lower = c(
           VF = 0,
           r = 1e-6,
-          a = 1.000001
+          a = 1e-6
         ),
 
         control =
@@ -139,9 +275,7 @@ fit_loglogistic <- function(
     tss <- sum(
       (
         df_fit$Gas_mL -
-          mean(
-            df_fit$Gas_mL
-          )
+          mean(df_fit$Gas_mL)
       )^2,
       na.rm = TRUE
     )
@@ -164,16 +298,27 @@ fit_loglogistic <- function(
     )
 
     list(
+
       model = fit,
+
       converged = TRUE,
+
       status = "OK",
+
       predictions = preds,
+
       residuals = residuals,
+
       rss = rss,
+
       r2 = r2,
+
       rmse = rmse,
+
       aic = AIC(fit),
+
       bic = BIC(fit)
+
     )
 
   }
@@ -306,9 +451,7 @@ fit_loglogistic <- function(
     function(df, fit) {
 
       if (!fit$converged) {
-
         return(NULL)
-
       }
 
       df_pred <- df |>

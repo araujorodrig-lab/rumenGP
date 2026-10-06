@@ -148,11 +148,11 @@ V_f
 
 #### Parameters
 
-| Parameter | Description               |
-|-----------|---------------------------|
-| Vf        | Asymptotic gas production |
-| k         | Fractional rate constant  |
-| λ         | Lag time                  |
+| Parameter   | Description               |
+|-------------|---------------------------|
+| Vf          | Asymptotic gas production |
+| k           | Fractional rate constant  |
+| $`\lambda`$ | Lag time                  |
 
 #### Advantages
 
@@ -188,11 +188,11 @@ A
 
 #### Parameters
 
-| Parameter | Description                 |
-|-----------|-----------------------------|
-| A         | Asymptotic gas production   |
-| μ         | Maximum gas production rate |
-| λ         | Lag time                    |
+| Parameter   | Description                 |
+|-------------|-----------------------------|
+| A           | Asymptotic gas production   |
+| $`\mu`$     | Maximum gas production rate |
+| $`\lambda`$ | Lag time                    |
 
 #### Advantages
 
@@ -225,11 +225,11 @@ V(t)
 
 #### Parameters
 
-| Parameter | Description               |
-|-----------|---------------------------|
-| A         | Asymptotic gas production |
-| k         | Fractional rate constant  |
-| λ         | Lag time                  |
+| Parameter   | Description               |
+|-------------|---------------------------|
+| A           | Asymptotic gas production |
+| k           | Fractional rate constant  |
+| $`\lambda`$ | Lag time                  |
 
 #### Advantages
 
@@ -269,12 +269,12 @@ d
 
 #### Parameters
 
-| Parameter | Description               |
-|-----------|---------------------------|
-| A         | Asymptotic gas production |
-| k         | Fractional rate constant  |
-| d         | Shape parameter           |
-| λ         | Lag time                  |
+| Parameter   | Description               |
+|-------------|---------------------------|
+| A           | Asymptotic gas production |
+| k           | Fractional rate constant  |
+| d           | Shape parameter           |
+| $`\lambda`$ | Lag time                  |
 
 #### Advantages
 
@@ -353,12 +353,12 @@ k(t-\lambda)
 
 #### Parameters
 
-| Parameter | Description               |
-|-----------|---------------------------|
-| A         | Asymptotic gas production |
-| k         | Fractional rate constant  |
-| d         | Shape parameter           |
-| λ         | Lag time                  |
+| Parameter   | Description               |
+|-------------|---------------------------|
+| A           | Asymptotic gas production |
+| k           | Fractional rate constant  |
+| d           | Shape parameter           |
+| $`\lambda`$ | Lag time                  |
 
 #### Advantages
 
@@ -371,7 +371,7 @@ k(t-\lambda)
 
 ------------------------------------------------------------------------
 
-### Michaelis-Menten
+### Generalized Michaelis-Menten
 
 #### Equation
 
@@ -395,8 +395,9 @@ t^{c}+K^{c}
 
 #### Advantages
 
-- Flexible
+- Flexible sigmoidal behavior
 - Strong biological interpretation
+- Widely applicable across fermentation studies
 
 #### Limitations
 
@@ -436,6 +437,139 @@ V(t)
 
 ------------------------------------------------------------------------
 
+### Burr XII
+
+#### Equation
+
+``` math
+V(t)
+=
+VF
+\left[
+1
+-
+\left(
+1+(rt)^a
+\right)^{-p}
+\right]
+```
+
+#### Parameters
+
+| Parameter | Description               |
+|-----------|---------------------------|
+| VF        | Asymptotic gas production |
+| r         | Rate parameter            |
+| a         | Shape parameter           |
+| p         | Shape parameter           |
+
+#### Parameter Constraints
+
+``` math
+a > 1
+```
+
+``` math
+p > 0
+```
+
+#### Interpretation
+
+The Burr XII model is a highly flexible sigmoidal model capable of
+describing a broad range of fermentation profiles.
+
+The parameter $`r`$ controls gas-production rate, while $`a`$ and $`p`$
+jointly influence curve shape, asymmetry, and inflection behavior.
+
+#### Advantages
+
+- Highly flexible curve shape
+- Accommodates diverse fermentation profiles
+- Often provides excellent goodness of fit
+- Useful for broad model comparison studies
+
+#### Limitations
+
+- More parameters than simpler models
+- Greater risk of overfitting
+- Parameter interpretation may be less intuitive
+
+#### Typical Applications
+
+- Diverse feed datasets
+- Comparative model-selection studies
+- Sigmoidal fermentation profiles
+
+#### Literature Context
+
+Recent comparative studies have identified Burr XII among the
+strongest-performing models across diverse feed categories when
+evaluated using information-criterion-based selection methods.
+
+------------------------------------------------------------------------
+
+### Inverse Paralogistic
+
+#### Equation
+
+``` math
+V(t)
+=
+VF
+\left[
+1
++
+(rt)^{-a}
+\right]^{-a}
+```
+
+#### Parameters
+
+| Parameter | Description               |
+|-----------|---------------------------|
+| VF        | Asymptotic gas production |
+| r         | Rate parameter            |
+| a         | Shape parameter           |
+
+#### Parameter Constraints
+
+``` math
+a > 1
+```
+
+#### Interpretation
+
+The Inverse Paralogistic model is a flexible sigmoidal model capable of
+describing a wide range of cumulative gas-production curves.
+
+The parameter $`r`$ controls production speed, while $`a`$ controls
+curve shape and steepness.
+
+#### Advantages
+
+- Flexible sigmoidal behavior
+- Relatively simple parameterization
+- Performs well across diverse gas-production datasets
+
+#### Limitations
+
+- Less common in rumen literature
+- Shape parameter can be difficult to interpret biologically
+- Requires strictly positive incubation times
+
+#### Typical Applications
+
+- Flexible nonlinear gas-production modeling
+- Comparative model-selection studies
+- Curves exhibiting sigmoidal behavior
+
+#### Literature Context
+
+Recent comparative studies have identified Inverse Paralogistic among
+the strongest-performing models across diverse feed categories.
+
+------------------------------------------------------------------------
+
 ## Multi-Pool Models
 
 ### Dual Logistic
@@ -464,13 +598,13 @@ V(t)
 
 #### Parameters
 
-| Parameter | Description                                  |
-|-----------|----------------------------------------------|
-| V1F       | Gas volume from rapidly fermentable fraction |
-| V2F       | Gas volume from slowly fermentable fraction  |
-| k1        | Rate constant of rapid fraction              |
-| k2        | Rate constant of slow fraction               |
-| λ         | Lag time                                     |
+| Parameter   | Description                                  |
+|-------------|----------------------------------------------|
+| $`V_{1F}`$  | Gas volume from rapidly fermentable fraction |
+| $`V_{2F}`$  | Gas volume from slowly fermentable fraction  |
+| $`k_1`$     | Rate constant of rapid fraction              |
+| $`k_2`$     | Rate constant of slow fraction               |
+| $`\lambda`$ | Lag time                                     |
 
 #### Advantages
 
@@ -486,30 +620,97 @@ V(t)
 
 ## Model Equivalence
 
-### Groot and Michaelis-Menten
+### Groot, Generalized Michaelis-Menten, and Log-logistic
 
-The Groot and generalized Michaelis-Menten models are mathematically
-equivalent.
+Several gas-production models commonly used in rumen fermentation
+research and nonlinear modeling are mathematically equivalent.
 
-Parameter correspondence:
-
-``` math
-VF = A
-```
+#### Groot
 
 ``` math
-b = K
+V(t)
+=
+\frac{VF}
+{
+1+\left(\frac{b}{t}\right)^k
+}
 ```
+
+#### Generalized Michaelis-Menten
 
 ``` math
-k = c
+V(t)
+=
+A
+\frac{t^{c}}
+{
+t^{c}+K^{c}
+}
 ```
 
-Both formulations produce identical fitted values and model diagnostics
-when convergence is achieved.
+#### Log-logistic
 
-Researchers may select either model according to the terminology
-commonly used in their field.
+``` math
+V(t)
+=
+VF
+\frac{(rt)^a}
+{
+1+(rt)^a
+}
+```
+
+The Log-logistic formulation can be rewritten as:
+
+``` math
+V(t)
+=
+VF
+\frac{t^a}
+{
+t^a+(1/r)^a
+}
+```
+
+which is identical to the generalized Michaelis-Menten formulation.
+
+#### Parameter Correspondence
+
+| Groot | Generalized Michaelis-Menten | Log-logistic |
+|-------|------------------------------|--------------|
+| VF    | A                            | VF           |
+| b     | K                            | 1/r          |
+| k     | c                            | a            |
+
+Therefore:
+
+``` math
+\text{Groot}
+\equiv
+\text{Generalized Michaelis-Menten}
+\equiv
+\text{Log-logistic}
+```
+
+These formulations produce identical:
+
+- Fitted values
+- Residuals
+- RSS
+- RMSE
+- R-squared
+- AIC
+- BIC
+
+when equivalent parameter transformations are used.
+
+Researchers may therefore choose the parameterization most commonly used
+within their field while obtaining identical fitted curves.
+
+For this reason, rumenGP does not currently implement a separate
+Log-logistic fitting routine. The Log-logistic formulation is already
+represented through the existing Groot and generalized Michaelis-Menten
+parameterizations.
 
 ------------------------------------------------------------------------
 
@@ -550,12 +751,16 @@ Use when:
 - LE0
 - LEL
 - Groot
-- Michaelis-Menten
+- Generalized Michaelis-Menten
+- Burr XII
+- Inverse Paralogistic
 
 Use when:
 
 - Fermentation profiles display sigmoidal behavior
 - Greater flexibility is needed
+- Multiple biologically plausible models are being compared
+- Information-criterion-based selection (AIC or BIC) is desired
 
 ------------------------------------------------------------------------
 
@@ -590,19 +795,26 @@ for additional details.
 
 ------------------------------------------------------------------------
 
-## Summary
+## Model Selection Guidance
 
-rumenGP provides a diverse collection of nonlinear kinetic models
-ranging from simple exponential equations to flexible multi-pool
-formulations.
+No single gas-production model should be considered universally
+superior.
 
-Model choice should be guided by:
+Model performance depends on:
 
-- Biological plausibility
-- Goodness of fit
-- Parameter interpretability
-- Convergence stability
-- Research objectives
+- Feed type
+- Experimental design
+- Data quality
+- Fermentation profile characteristics
+- Model-selection criteria
 
-Researchers are encouraged to compare multiple models before selecting a
-final representation of fermentation kinetics.
+A practical workflow is:
+
+1.  Fit several biologically plausible candidate models.
+2.  Verify convergence.
+3.  Examine fitted curves visually.
+4.  Examine residual patterns.
+5.  Compare RMSE.
+6.  Compare AIC and BIC.
+7.  Evaluate parameter plausibility.
+8.  Select the model most appropriate

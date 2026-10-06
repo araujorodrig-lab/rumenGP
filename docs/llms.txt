@@ -738,6 +738,8 @@ and visualization.
 
 - [`fit_brody()`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_brody.md)
   : Fit Brody model
+- [`fit_burr_xii()`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_burr_xii.md)
+  : Fit Burr XII model
 - [`fit_dual_logistic()`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_dual_logistic.md)
   : Fit dual-pool logistic model
 - [`fit_exp0()`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_exp0.md)
@@ -748,12 +750,16 @@ and visualization.
   : Fit Gompertz model
 - [`fit_groot()`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_groot.md)
   : Fit Groot model
+- [`fit_inverse_paralogistic()`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_inverse_paralogistic.md)
+  : Fit Inverse Paralogistic model
 - [`fit_le0()`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_le0.md)
   : Fit Logistic-Exponential model (LE0)
 - [`fit_lel()`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_lel.md)
   : Fit Logistic-Exponential model (LEL)
 - [`fit_logistic()`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_logistic.md)
   : Fit Logistic model
+- [`fit_loglogistic()`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_loglogistic.md)
+  : Fit Log-logistic model
 - [`fit_mitscherlich()`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_mitscherlich.md)
   : Fit Mitscherlich model
 - [`fit_mm()`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_mm.md)
@@ -823,6 +829,8 @@ and visualization.
 
 - [`summary(`*`<brody_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.brody_fit.md)
   : Summary of Brody Fits
+- [`summary(`*`<burr_xii_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.burr_xii_fit.md)
+  : Summary of Burr XII Fits
 - [`summary(`*`<custom_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.custom_fit.md)
   : Summary of Custom Model Fits
 - [`summary(`*`<dual_logistic_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.dual_logistic_fit.md)
@@ -835,12 +843,16 @@ and visualization.
   : Summary of Gompertz Fits
 - [`summary(`*`<groot_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.groot_fit.md)
   : Summary of Groot Fits
+- [`summary(`*`<inverse_paralogistic_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.inverse_paralogistic_fit.md)
+  : Summary of Inverse Paralogistic Fits
 - [`summary(`*`<le0_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.le0_fit.md)
   : Summary of LE0 Fits
 - [`summary(`*`<lel_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.lel_fit.md)
   : Summary of LEL Fits
 - [`summary(`*`<logistic_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.logistic_fit.md)
   : Summary of Logistic Fits
+- [`summary(`*`<loglogistic_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.loglogistic_fit.md)
+  : Summary of Log-logistic Fits
 - [`summary(`*`<mitscherlich_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.mitscherlich_fit.md)
   : Summary of Mitscherlich Fits
 - [`summary(`*`<mm_fit>`*`)`](https://araujorodrig-lab.github.io/rumenGP/reference/summary.mm_fit.md)

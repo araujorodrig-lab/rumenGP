@@ -7,21 +7,26 @@ RF Gas Production System.
 
 rumenGP provides the function
 [`as_rumen_gp()`](https://araujorodrig-lab.github.io/rumenGP/reference/as_rumen_gp.md)
-for importing manually collected gas-volume data and pressure-based
+for importing manually collected gas-volume datasets and pressure-based
 datasets into the standard `rumen_gp` format.
 
-Once imported, the data can be analyzed using the same modeling,
-visualization, and model-comparison tools available for ANKOM
-experiments.
+Once imported, the data can be analyzed using the same:
+
+- Modeling tools
+- Visualization tools
+- Diagnostic workflows
+- Model-comparison procedures
+
+available for ANKOM experiments.
 
 ``` r
 
 library(rumenGP)
 ```
 
-## Importing Gas Volume Data
+## Importing Gas-Volume Data
 
-The simplest workflow is to import cumulative gas production
+The simplest workflow is to import cumulative gas-production
 measurements directly.
 
 ``` r
@@ -29,8 +34,8 @@ measurements directly.
 manual_volume <- data.frame(
 
   Bottle = c(
-    1,1,1,
-    2,2,2
+    1, 1, 1,
+    2, 2, 2
   ),
 
   Treatment = c(
@@ -43,13 +48,13 @@ manual_volume <- data.frame(
   ),
 
   Time = c(
-    0,4,8,
-    0,4,8
+    0, 4, 8,
+    0, 4, 8
   ),
 
   Gas = c(
-    0,20,40,
-    0,35,60
+    0, 20, 40,
+    0, 35, 60
   )
 
 )
@@ -100,8 +105,7 @@ Incubation time
 Gas production
 ```
 
-These columns can have any names as long as they are specified through
-the function arguments.
+Column names may vary and are specified through function arguments.
 
 For example:
 
@@ -196,7 +200,7 @@ Currently supported pressure units are:
 
 ``` text
 psi
-kpa
+kPa
 ```
 
 Examples:
@@ -210,15 +214,15 @@ or
 
 ``` r
 
-pressure_unit = "kpa"
+pressure_unit = "kPa"
 ```
 
 ## Headspace Volume
 
 Pressure measurements require information about headspace volume.
 
-Headspace volume is the gas volume available inside the bottle and is
-not necessarily the same as the total bottle volume.
+Headspace volume represents the gas space inside the bottle and is not
+necessarily the same as the total bottle volume.
 
 Example:
 
@@ -237,7 +241,7 @@ When pressure data are imported:
 headspace_volume = 50
 ```
 
-should represent the headspace volume, not the total bottle capacity.
+should represent the headspace volume and not the total bottle capacity.
 
 ## Headspace Units
 
@@ -263,7 +267,7 @@ headspace_unit = "L"
 ## Negative Pressure Values
 
 Pressure datasets occasionally contain slightly negative readings caused
-by sensor variation.
+by sensor noise or instrument variability.
 
 These values can be automatically corrected.
 
@@ -272,11 +276,11 @@ These values can be automatically corrected.
 negative_pressure <- data.frame(
 
   Bottle = c(
-    1,1,1
+    1, 1, 1
   ),
 
   Time = c(
-    0,4,8
+    0, 4, 8
   ),
 
   PSI = c(
@@ -311,7 +315,7 @@ gp_negative <- as_rumen_gp(
 
 ## Validation
 
-Imported datasets can be validated using:
+Imported datasets should be validated before model fitting.
 
 ``` r
 
@@ -331,7 +335,7 @@ validate_ankom(
 #> 6    2      2   1      Corn      8     60
 ```
 
-The function checks:
+The validation procedure checks:
 
 - Required columns
 - Missing values
@@ -339,16 +343,37 @@ The function checks:
 - Time ordering
 - Dataset consistency
 
-## Fitting a Model
+## Fitting Models
 
 Once imported, manually collected datasets can be analyzed exactly like
 ANKOM datasets.
 
 ``` r
 
-fit <- fit_groot(
-  gp
-)
+groot_fit <- fit_groot(gp)
+#> rumenGP data validation passed.
+#> Observations: 6
+#> Heads: 2
+#> Treatments: 2
+#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
+#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
+
+mm_fit <- fit_mm(gp)
+#> rumenGP data validation passed.
+#> Observations: 6
+#> Heads: 2
+#> Treatments: 2
+
+burr_fit <- fit_burr_xii(gp)
+#> rumenGP data validation passed.
+#> Observations: 6
+#> Heads: 2
+#> Treatments: 2
+#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
+#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
+
+inverse_paralogistic_fit <-
+  fit_inverse_paralogistic(gp)
 #> rumenGP data validation passed.
 #> Observations: 6
 #> Heads: 2
@@ -357,11 +382,11 @@ fit <- fit_groot(
 #> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
 ```
 
-Inspect results:
+Inspect one fitted model:
 
 ``` r
 
-summary(fit)
+summary(groot_fit)
 #> 
 #> Groot model summary
 #> -------------------
@@ -371,7 +396,10 @@ summary(fit)
 #> Low R-squared (< 0.90): 2
 ```
 
-## Compare Models
+## Comparing Models
+
+Model performance can be compared using several goodness-of-fit
+statistics.
 
 ``` r
 
@@ -379,7 +407,12 @@ comparison <- compare_models(
 
   Groot = fit_groot(gp),
 
-  Brody = fit_brody(gp),
+  MichaelisMenten = fit_mm(gp),
+
+  BurrXII = fit_burr_xii(gp),
+
+  InverseParalogistic =
+    fit_inverse_paralogistic(gp),
 
   Gompertz = fit_gompertz(gp)
 
@@ -398,21 +431,204 @@ comparison <- compare_models(
 #> Observations: 6
 #> Heads: 2
 #> Treatments: 2
+#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
+#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
+#> rumenGP data validation passed.
+#> Observations: 6
+#> Heads: 2
+#> Treatments: 2
+#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
+#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
+#> rumenGP data validation passed.
+#> Observations: 6
+#> Heads: 2
+#> Treatments: 2
 
 comparison
-#>      Model Bottles Successful_Fits Failed_Fits    Mean_R2   Mean_RMSE
-#> 1    Groot       2               2           0 -0.8504581 15.39025685
-#> 2    Brody       2               2           0  0.9999943  0.02766102
-#> 3 Gompertz       2               0           2        NaN         NaN
-#>       Mean_RSS  Mean_AIC  Mean_BIC Lambda_Boundary
-#> 1 5.033062e+02  24.48171  19.25430               0
-#> 2 4.590791e-03 -91.55179 -95.15734               0
-#> 3          NaN       NaN       NaN               0
+#>                 Model Bottles Successful_Fits Failed_Fits    Mean_R2 Mean_RMSE
+#> 1               Groot       2               2           0 -0.8504581  15.39026
+#> 2     MichaelisMenten       2               0           2        NaN       NaN
+#> 3             BurrXII       2               2           0 -4.0124301  25.34022
+#> 4 InverseParalogistic       2               2           0 -8.6379664  35.14058
+#> 5            Gompertz       2               0           2        NaN       NaN
+#>    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary
+#> 1  503.3062 24.48171 19.25430               0
+#> 2       NaN      NaN      NaN               0
+#> 3 1352.8435 28.49555 21.96129               0
+#> 4 2590.5823 27.81283 22.58542               0
+#> 5       NaN      NaN      NaN               0
 ```
+
+The comparison table includes:
+
+- Mean R-squared
+- Mean RMSE
+- Mean RSS
+- Mean AIC
+- Mean BIC
+- Number of successful fits
+
+## Model Ranking
+
+``` r
+
+rank_models(
+  comparison
+)
+#>                 Model Bottles Successful_Fits Failed_Fits    Mean_R2 Mean_RMSE
+#> 1               Groot       2               2           0 -0.8504581  15.39026
+#> 2     MichaelisMenten       2               0           2        NaN       NaN
+#> 3             BurrXII       2               2           0 -4.0124301  25.34022
+#> 4 InverseParalogistic       2               2           0 -8.6379664  35.14058
+#> 5            Gompertz       2               0           2        NaN       NaN
+#>    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC
+#> 1  503.3062 24.48171 19.25430               0       1         1        1
+#> 2       NaN      NaN      NaN               0       4         4        4
+#> 3 1352.8435 28.49555 21.96129               0       2         2        3
+#> 4 2590.5823 27.81283 22.58542               0       3         3        2
+#> 5       NaN      NaN      NaN               0       5         5        5
+#>   Rank_BIC
+#> 1        1
+#> 2        4
+#> 3        2
+#> 4        3
+#> 5        5
+```
+
+## Available Models
+
+Current built-in models include:
+
+- Brody
+- Dual Logistic
+- EXP0
+- EXPL
+- Gompertz
+- Groot
+- LE0
+- LEL
+- Logistic
+- Mitscherlich
+- Generalized Michaelis-Menten
+- Ørskov and McDonald
+- Burr XII
+- Inverse Paralogistic
+
+## Model Equivalence
+
+### Groot and Generalized Michaelis-Menten
+
+The Groot and generalized Michaelis-Menten models are mathematically
+equivalent.
+
+Parameter correspondence:
+
+- VF = A
+- b = K
+- k = c
+
+Both formulations produce identical:
+
+- Fitted values
+- Residuals
+- RMSE
+- RSS
+- AIC
+- BIC
+- R-squared
+
+when convergence is achieved.
+
+### Groot, Generalized Michaelis-Menten, and Log-logistic
+
+The Log-logistic formulation:
+
+``` math
+V(t)
+=
+VF
+\frac{(rt)^a}
+{
+1+(rt)^a
+}
+```
+
+can be rewritten as:
+
+``` math
+V(t)
+=
+VF
+\frac{t^a}
+{
+t^a+(1/r)^a
+}
+```
+
+which is mathematically identical to both the Groot and generalized
+Michaelis-Menten models.
+
+Parameter correspondence:
+
+| Groot | Generalized Michaelis-Menten | Log-logistic |
+|-------|------------------------------|--------------|
+| VF    | A                            | VF           |
+| b     | K                            | 1/r          |
+| k     | c                            | a            |
+
+Therefore:
+
+``` text
+Groot
+=
+Generalized Michaelis-Menten
+=
+Log-logistic
+```
+
+These parameterizations describe the same underlying curve.
+
+For this reason, rumenGP does not implement a separate Log-logistic
+fitting routine because the curve is already represented through the
+existing Groot and generalized Michaelis-Menten implementations.
+
+## Recommended Model Selection Workflow
+
+A practical workflow is:
+
+``` text
+1. Import and validate data
+
+2. Fit several biologically plausible models
+
+3. Verify convergence
+
+4. Inspect fitted curves
+
+5. Examine residuals
+
+6. Compare RMSE
+
+7. Compare AIC and BIC
+
+8. Evaluate parameter plausibility
+
+9. Select the most appropriate model
+```
+
+No single model should be considered universally superior.
+
+Model performance depends on:
+
+- Feed type
+- Experimental design
+- Data quality
+- Fermentation profile characteristics
+- Model-selection criteria
 
 ## Common Errors
 
-### No gas or pressure supplied
+### No Gas or Pressure Supplied
 
 ``` r
 
@@ -429,7 +645,7 @@ Produces:
 Provide either gas_col or pressure_col.
 ```
 
-### Both gas and pressure supplied
+### Both Gas and Pressure Supplied
 
 ``` r
 
@@ -446,7 +662,7 @@ Produces:
 Provide only one of gas_col or pressure_col.
 ```
 
-### Missing headspace volume
+### Missing Headspace Volume
 
 ``` r
 
@@ -465,16 +681,28 @@ headspace_volume must be supplied when pressure_col is used.
 
 The
 [`as_rumen_gp()`](https://araujorodrig-lab.github.io/rumenGP/reference/as_rumen_gp.md)
-function makes it possible to use rumenGP with:
+function allows rumenGP to be used with:
 
 - Manual gas-volume datasets
 - Pressure-based datasets
 - Non-ANKOM experiments
 
 Once imported, all datasets become standard `rumen_gp` objects and can
-be analyzed using the full modeling framework.
+be analyzed using the complete rumenGP workflow, including:
+
+- Fourteen built-in kinetic models
+- User-defined models
+- Model comparison
+- Treatment-level evaluation
+- Diagnostic workflows
+- Visualization tools
+
+The same modeling workflow can therefore be applied consistently across
+ANKOM and non-ANKOM gas-production experiments.
 
 ## Next Steps
+
+Additional capabilities include custom model development.
 
 See:
 
@@ -483,4 +711,4 @@ See:
 ?fit_custom
 ```
 
-for information about fitting custom kinetic models.
+for information about fitting user-defined kinetic models.

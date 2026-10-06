@@ -1,0 +1,167 @@
+# Fit Log-logistic model
+
+Fits the Log-logistic gas production model to each bottle in a rumen_gp
+dataset.
+
+## Usage
+
+``` r
+fit_loglogistic(data, start = NULL)
+```
+
+## Arguments
+
+- data:
+
+  A rumen_gp object.
+
+- start:
+
+  Optional list of starting values. May contain any of:
+
+  - `VF`
+
+  - `r`
+
+  - `a`
+
+## Value
+
+A `loglogistic_fit` object containing:
+
+- Parameter estimates
+
+- Model diagnostics
+
+- Predicted values
+
+- Residuals
+
+## Details
+
+### Equation
+
+\$\$ V(t) = \frac{ VF(rt)^a } { 1 + (rt)^a } \$\$
+
+where:
+
+- \\V(t)\\ is cumulative gas production at time \\t\\
+
+- \\VF\\ is asymptotic gas production
+
+- \\r\\ is the rate parameter
+
+- \\a\\ is the shape parameter
+
+### Interpretation
+
+The Log-logistic model is a flexible sigmoidal model capable of
+describing a wide range of gas production profiles.
+
+The parameter \\r\\ controls the speed of gas production, while \\a\\
+controls curve shape, steepness, and inflection behavior.
+
+### Advantages
+
+- Excellent flexibility
+
+- Biologically interpretable parameters
+
+- Often produces excellent fits
+
+- Common in nonlinear growth and fermentation modeling
+
+### Limitations
+
+- Requires positive incubation times
+
+- Shape parameter may be less intuitive than simple exponential models
+
+### Notes
+
+The Log-logistic model is mathematically equivalent to both the Groot
+model implemented in
+[`fit_groot()`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_groot.md)
+and the generalized Michaelis-Menten model implemented in
+[`fit_mm()`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_mm.md).
+
+Parameter correspondence:
+
+- `VF = A`
+
+- `a = c = k`
+
+- `1/r = K = b`
+
+Both formulations produce identical fitted values, residuals,
+diagnostics, AIC, BIC, RMSE, and R-squared when convergence is achieved.
+
+Researchers may choose either formulation according to the terminology
+commonly used in their field.
+
+## Examples
+
+``` r
+
+files <- example_data()
+
+raw_data <- read_ankom(
+  files$ankom
+)
+
+metadata <- read_metadata(
+  files$metadata
+)
+
+gp <- process_ankom(
+  raw_data,
+  metadata,
+  headspace_ml = 210,
+  temperature_c = 39
+)
+
+# Fit using package default starting values
+fit_default <- fit_loglogistic(
+  gp
+)
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
+
+summary(fit_default)
+#> 
+#> Log-logistic model summary
+#> --------------------------
+#> Total bottles: 24
+#> Successful fits: 24
+#> Failed fits: 0
+#> Low R-squared (< 0.90): 3
+#> 
+
+# Fit using custom starting values
+fit_custom_start <- fit_loglogistic(
+  gp,
+  start = list(
+    VF = 120,
+    r = 0.10,
+    a = 2
+  )
+)
+#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> rumenGP data validation passed.
+#> Observations: 1752
+#> Heads: 24
+#> Treatments: 5
+
+summary(fit_custom_start)
+#> 
+#> Log-logistic model summary
+#> --------------------------
+#> Total bottles: 24
+#> Successful fits: 23
+#> Failed fits: 1
+#> Low R-squared (< 0.90): 2
+#> 
+```

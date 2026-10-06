@@ -9,16 +9,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/araujorodrig-lab/rumenGP/blob/HEAD/DESCRIPTION)
+[`inst/CITATION`](https://github.com/araujorodrig-lab/rumenGP/blob/HEAD/inst/CITATION)
 
-Araujo Rodrigues A, Cuquetto Mantovani H (2026). *rumenGP: Rumen Gas
-Production Kinetic Modeling and Model Comparison*. R package version
-0.0.0.9000, <https://araujorodrig-lab.github.io/rumenGP>.
+Araujo Rodrigues A, Cuquetto Mantovani H (2026). *rumenGP: An R Package
+for Rumen Gas Production Modeling, Comparison, and Visualization*. R
+package version 0.1.1, <https://araujorodrig-lab.github.io/rumenGP/>.
 
     @Manual{,
-      title = {rumenGP: Rumen Gas Production Kinetic Modeling and Model Comparison},
+      title = {rumenGP: An R Package for Rumen Gas Production Modeling, Comparison, and Visualization},
       author = {Arlan {Araujo Rodrigues} and Hilario {Cuquetto Mantovani}},
       year = {2026},
-      note = {R package version 0.0.0.9000},
-      url = {https://araujorodrig-lab.github.io/rumenGP},
+      note = {R package version 0.1.1},
+      url = {https://araujorodrig-lab.github.io/rumenGP/},
     }

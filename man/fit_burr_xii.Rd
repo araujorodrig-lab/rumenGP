@@ -73,9 +73,10 @@ asymmetry, and inflection behavior.
 \item Excellent flexibility
 \item Accommodates diverse curve shapes
 \item Often produces excellent fits
-\item Identified as a top-performing
-gas production model across
-multiple feed categories
+\item Identified as one of the
+top-performing models in a
+large comparative study of
+in vitro gas production profiles
 }
 }
 
