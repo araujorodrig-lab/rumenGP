@@ -636,20 +636,142 @@ Compare models</code></pre>
 <li>Mitscherlich</li>
 <li>Michaelis-Menten</li>
 <li>Orskov and McDonald</li>
+<li>Burr XII</li>
+<li>Inverse Paralogistic</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="model-notes">Model Notes<a class="anchor" aria-label="anchor" href="#model-notes"></a>
+<h3 id="model-equivalence">Model Equivalence<a class="anchor" aria-label="anchor" href="#model-equivalence"></a>
 </h3>
-<p>The Groot and generalized Michaelis-Menten models are mathematically equivalent.</p>
+<p>Several model formulations included in rumenGP are mathematically equivalent and are provided because different scientific disciplines and publications prefer different parameterizations.</p>
+<div class="section level4">
+<h4 id="groot--generalized-michaelis-menten">Groot ↔︎ Generalized Michaelis-Menten<a class="anchor" aria-label="anchor" href="#groot--generalized-michaelis-menten"></a>
+</h4>
+<p>The Groot model</p>
+<p>V(t) = VF / [1 + (b/t)^k]</p>
+<p>is mathematically equivalent to the generalized Michaelis-Menten model</p>
+<p>V(t) = A t^c / (t^c + K^c)</p>
 <p>Parameter correspondence:</p>
 <ul>
 <li>VF = A</li>
 <li>b = K</li>
 <li>k = c</li>
 </ul>
+<p>Both formulations produce identical fitted values, residuals, model diagnostics, AIC, BIC, RMSE, and R-squared when convergence is achieved.</p>
+<p>Researchers may choose either formulation according to the terminology commonly used in their field.</p>
+</div>
+<div class="section level4">
+<h4 id="groot--michaelis-menten--log-logistic">Groot ↔︎ Michaelis-Menten ↔︎ Log-logistic<a class="anchor" aria-label="anchor" href="#groot--michaelis-menten--log-logistic"></a>
+</h4>
+<p>The Log-logistic model</p>
+<p>V(t) = VF(rt)^a / [1 + (rt)^a]</p>
+<p>can be rewritten as</p>
+<p>V(t) = VF t^a / [t^a + (1/r)^a]</p>
+<p>which is mathematically identical to the Groot and generalized Michaelis-Menten formulations.</p>
+<p>Parameter correspondence:</p>
+<table class="table">
+<thead><tr>
+<th>Groot</th>
+<th>Michaelis-Menten</th>
+<th>Log-logistic</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>VF</td>
+<td>A</td>
+<td>VF</td>
+</tr>
+<tr>
+<td>b</td>
+<td>K</td>
+<td>1/r</td>
+</tr>
+<tr>
+<td>k</td>
+<td>c</td>
+<td>a</td>
+</tr>
+</tbody>
+</table>
+<p>These formulations describe the same underlying curve and differ only in parameterization.</p>
+<p>Consequently, rumenGP already represents the Log-logistic model through the existing Groot and generalized Michaelis-Menten implementations.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="recent-model-additions">Recent Model Additions<a class="anchor" aria-label="anchor" href="#recent-model-additions"></a>
+</h3>
+<div class="section level4">
+<h4 id="burr-xii">Burr XII<a class="anchor" aria-label="anchor" href="#burr-xii"></a>
+</h4>
+<p>Equation:</p>
+<p>V(t) = VF [1 - (1 + (rt)<sup>a)</sup>(-p)]</p>
+<p>Parameters:</p>
+<ul>
+<li>VF: asymptotic gas production</li>
+<li>r: rate parameter</li>
+<li>a: shape parameter</li>
+<li>p: shape parameter</li>
+</ul>
+<p>Advantages:</p>
+<ul>
+<li>Highly flexible sigmoidal behavior</li>
+<li>Accommodates diverse fermentation profiles</li>
+<li>Often provides strong goodness-of-fit</li>
+<li>Useful for comparative model evaluation</li>
+</ul>
+<p>Limitations:</p>
+<ul>
+<li>Four-parameter model</li>
+<li>Greater risk of overfitting than simpler models</li>
+<li>Parameter interpretation may be less intuitive</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="inverse-paralogistic">Inverse Paralogistic<a class="anchor" aria-label="anchor" href="#inverse-paralogistic"></a>
+</h4>
+<p>Equation:</p>
+<p>V(t) = VF [1 + (rt)<sup>(-a)]</sup>(-a)</p>
+<p>Parameters:</p>
+<ul>
+<li>VF: asymptotic gas production</li>
+<li>r: rate parameter</li>
+<li>a: shape parameter</li>
+</ul>
+<p>Advantages:</p>
+<ul>
+<li>Flexible sigmoidal behavior</li>
+<li>Biologically meaningful asymptote</li>
+<li>Performs well across diverse curve shapes</li>
+</ul>
+<p>Limitations:</p>
+<ul>
+<li>Shape parameter may be difficult to interpret</li>
+<li>Requires positive incubation times</li>
+<li>Less commonly used than traditional rumen models</li>
+</ul>
+<p>Neither Burr XII nor Inverse Paralogistic should be regarded as universally superior.</p>
+<p>Model performance depends on feed type, experimental design, data quality, and the model-selection criteria used.</p>
 <hr>
 </div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="recommended-model-selection-workflow">Recommended Model Selection Workflow<a class="anchor" aria-label="anchor" href="#recommended-model-selection-workflow"></a>
+</h2>
+<p>No single gas production model is expected to perform best for every dataset.</p>
+<p>A recommended workflow is:</p>
+<ol style="list-style-type: decimal">
+<li>Fit several biologically plausible models.</li>
+<li>Verify model convergence.</li>
+<li>Inspect fitted curves visually.</li>
+<li>Examine residual patterns.</li>
+<li>Compare RMSE, AIC, and BIC.</li>
+<li>Evaluate parameter plausibility.</li>
+<li>Select the model most appropriate for the research objective.</li>
+</ol>
+<p>Published comparative work has reported strong performance for Burr XII, Inverse Paralogistic, and Log-logistic formulations across diverse feed datasets.</p>
+<p>Because the Log-logistic formulation is mathematically equivalent to both Groot and generalized Michaelis-Menten models, rumenGP already provides this curve family through those existing parameterizations.</p>
+<hr>
 </div>
 <div class="section level2">
 <h2 id="major-features">Major Features<a class="anchor" aria-label="anchor" href="#major-features"></a>
@@ -666,7 +788,9 @@ Compare models</code></pre>
 <h3 id="modeling">Modeling<a class="anchor" aria-label="anchor" href="#modeling"></a>
 </h3>
 <ul>
-<li>12 built-in models</li>
+<li>15 built-in kinetic models</li>
+<li>Burr XII</li>
+<li>Inverse Paralogistic</li>
 <li><code><a href="reference/fit_custom.html">fit_custom()</a></code></li>
 </ul>
 </div>
@@ -709,10 +833,13 @@ Compare models</code></pre>
 <li>✅ ANKOM RF workflow</li>
 <li>✅ Generic data import</li>
 <li>✅ Pressure-based workflows</li>
-<li>✅ Twelve kinetic models</li>
+<li>✅ Fifteen kinetic models</li>
+<li>✅ Burr XII model</li>
+<li>✅ Inverse Paralogistic model</li>
 <li>✅ Custom model framework</li>
 <li>✅ Model comparison framework</li>
 <li>✅ Treatment-level model ranking</li>
+<li>✅ Model-equivalence documentation</li>
 <li>✅ Diagnostic workflows</li>
 <li>✅ Visualization tools</li>
 <li>✅ Five package vignettes</li>
@@ -723,21 +850,21 @@ Compare models</code></pre>
 <div class="section level3">
 <h3 id="development-status">Development Status<a class="anchor" aria-label="anchor" href="#development-status"></a>
 </h3>
-<p>rumenGP is currently maintained and developed as an open-source framework for rumen gas production analysis. Future releases may include additional modeling, reporting, and statistical workflows.</p>
+<p>rumenGP is currently maintained and developed as an open-source framework for rumen gas production analysis.</p>
+<p>Current releases support:</p>
+<ul>
+<li>ANKOM RF workflows</li>
+<li>Manual gas production workflows</li>
+<li>Pressure-based workflows</li>
+<li>Fifteen nonlinear gas production models</li>
+<li>User-defined kinetic models</li>
+<li>Model comparison and ranking</li>
+<li>Treatment-level evaluation</li>
+<li>Visualization and diagnostics</li>
+</ul>
+<p>Future releases may include additional reporting, model-evaluation, and statistical workflows.</p>
 <hr>
 </div>
-</div>
-<div class="section level2">
-<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
-</h2>
-<p>If you use <strong>rumenGP</strong> in research, please cite:</p>
-<pre class="text"><code>Rodrigues, A. A. and Mantovani, H. C.
-
-rumenGP:
-An R package for rumen gas production
-kinetic modeling, model comparison,
-and visualization.</code></pre>
-<p>(Citation information will be updated as the package develops.)</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

@@ -757,7 +757,7 @@ provides this curve family through those existing parameterizations.
 
 ### Modeling
 
-- 14 built-in kinetic models
+- 15 built-in kinetic models
 - Burr XII
 - Inverse Paralogistic
 - `fit_custom()`
@@ -791,7 +791,7 @@ provides this curve family through those existing parameterizations.
 - ✅ ANKOM RF workflow
 - ✅ Generic data import
 - ✅ Pressure-based workflows
-- ✅ Fourteen kinetic models
+- ✅ Fifteen kinetic models
 - ✅ Burr XII model
 - ✅ Inverse Paralogistic model
 - ✅ Custom model framework
@@ -814,7 +814,7 @@ Current releases support:
 - ANKOM RF workflows
 - Manual gas production workflows
 - Pressure-based workflows
-- Fourteen nonlinear gas production models
+- Fifteen nonlinear gas production models
 - User-defined kinetic models
 - Model comparison and ranking
 - Treatment-level evaluation
