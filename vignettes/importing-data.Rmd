@@ -581,7 +581,7 @@ Once imported, all datasets become standard
 `rumen_gp` objects and can be analyzed using
 the complete rumenGP workflow, including:
 
-- Fourteen built-in kinetic models
+- Fifteen built-in kinetic models
 - User-defined models
 - Model comparison
 - Treatment-level evaluation

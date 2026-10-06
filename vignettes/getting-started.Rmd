@@ -25,7 +25,7 @@ The package supports:
 - ANKOM RF datasets
 - Manual gas-volume datasets
 - Pressure-based datasets
-- Fourteen built-in kinetic models
+- Fifteen built-in kinetic models
 - User-defined kinetic models
 - Model comparison and ranking
 - Treatment-level model evaluation
@@ -596,7 +596,7 @@ Current capabilities include:
 - ANKOM RF workflows
 - Manual gas-volume workflows
 - Pressure-based workflows
-- Fourteen built-in kinetic models
+- Fifteen built-in kinetic models
 - User-defined models
 - Model comparison and ranking
 - Treatment-level model evaluation
