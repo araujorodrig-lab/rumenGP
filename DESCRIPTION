@@ -1,6 +1,6 @@
 Package: rumenGP
 Title: Rumen Gas Production Modeling, Comparison, and Visualization
-Version: 0.2.0
+Version: 0.2.1
 Authors@R:
     c(
       person(
