@@ -367,6 +367,8 @@ like ANKOM datasets.</p>
 <span><span class="co">#&gt; Observations: 6</span></span>
 <span><span class="co">#&gt; Heads: 2</span></span>
 <span><span class="co">#&gt; Treatments: 2</span></span>
+<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
+<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
 <span></span>
 <span><span class="va">burr_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_burr_xii.html">fit_burr_xii</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
@@ -425,6 +427,8 @@ statistics.</p>
 <span><span class="co">#&gt; Observations: 6</span></span>
 <span><span class="co">#&gt; Heads: 2</span></span>
 <span><span class="co">#&gt; Treatments: 2</span></span>
+<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
+<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
 <span><span class="co">#&gt; Observations: 6</span></span>
 <span><span class="co">#&gt; Heads: 2</span></span>
@@ -445,13 +449,13 @@ statistics.</p>
 <span><span class="va">comparison</span></span>
 <span><span class="co">#&gt;                 Model Bottles Successful_Fits Failed_Fits    Mean_R2 Mean_RMSE</span></span>
 <span><span class="co">#&gt; 1               Groot       2               2           0 -0.8504581  15.39026</span></span>
-<span><span class="co">#&gt; 2     MichaelisMenten       2               0           2        NaN       NaN</span></span>
+<span><span class="co">#&gt; 2     MichaelisMenten       2               2           0 -1.0262531  16.11200</span></span>
 <span><span class="co">#&gt; 3             BurrXII       2               2           0 -4.0124301  25.34022</span></span>
 <span><span class="co">#&gt; 4 InverseParalogistic       2               2           0 -8.6379664  35.14058</span></span>
 <span><span class="co">#&gt; 5            Gompertz       2               0           2        NaN       NaN</span></span>
 <span><span class="co">#&gt;    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary</span></span>
 <span><span class="co">#&gt; 1  503.3062 24.48171 19.25430               0</span></span>
-<span><span class="co">#&gt; 2       NaN      NaN      NaN               0</span></span>
+<span><span class="co">#&gt; 2  546.0510 24.68778 19.46037               0</span></span>
 <span><span class="co">#&gt; 3 1352.8435 28.49555 21.96129               0</span></span>
 <span><span class="co">#&gt; 4 2590.5823 27.81283 22.58542               0</span></span>
 <span><span class="co">#&gt; 5       NaN      NaN      NaN               0</span></span></code></pre></div>
@@ -474,21 +478,21 @@ statistics.</p>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;                 Model Bottles Successful_Fits Failed_Fits    Mean_R2 Mean_RMSE</span></span>
 <span><span class="co">#&gt; 1               Groot       2               2           0 -0.8504581  15.39026</span></span>
-<span><span class="co">#&gt; 2     MichaelisMenten       2               0           2        NaN       NaN</span></span>
+<span><span class="co">#&gt; 2     MichaelisMenten       2               2           0 -1.0262531  16.11200</span></span>
 <span><span class="co">#&gt; 3             BurrXII       2               2           0 -4.0124301  25.34022</span></span>
 <span><span class="co">#&gt; 4 InverseParalogistic       2               2           0 -8.6379664  35.14058</span></span>
 <span><span class="co">#&gt; 5            Gompertz       2               0           2        NaN       NaN</span></span>
 <span><span class="co">#&gt;    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC</span></span>
 <span><span class="co">#&gt; 1  503.3062 24.48171 19.25430               0       1         1        1</span></span>
-<span><span class="co">#&gt; 2       NaN      NaN      NaN               0       4         4        4</span></span>
-<span><span class="co">#&gt; 3 1352.8435 28.49555 21.96129               0       2         2        3</span></span>
-<span><span class="co">#&gt; 4 2590.5823 27.81283 22.58542               0       3         3        2</span></span>
+<span><span class="co">#&gt; 2  546.0510 24.68778 19.46037               0       2         2        2</span></span>
+<span><span class="co">#&gt; 3 1352.8435 28.49555 21.96129               0       3         3        4</span></span>
+<span><span class="co">#&gt; 4 2590.5823 27.81283 22.58542               0       4         4        3</span></span>
 <span><span class="co">#&gt; 5       NaN      NaN      NaN               0       5         5        5</span></span>
 <span><span class="co">#&gt;   Rank_BIC</span></span>
 <span><span class="co">#&gt; 1        1</span></span>
-<span><span class="co">#&gt; 2        4</span></span>
-<span><span class="co">#&gt; 3        2</span></span>
-<span><span class="co">#&gt; 4        3</span></span>
+<span><span class="co">#&gt; 2        2</span></span>
+<span><span class="co">#&gt; 3        3</span></span>
+<span><span class="co">#&gt; 4        4</span></span>
 <span><span class="co">#&gt; 5        5</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -516,54 +520,55 @@ statistics.</p>
 <div class="section level2">
 <h2 id="model-equivalence">Model Equivalence<a class="anchor" aria-label="anchor" href="#model-equivalence"></a>
 </h2>
-<div class="section level3">
-<h3 id="groot-and-generalized-michaelis-menten">Groot and Generalized Michaelis-Menten<a class="anchor" aria-label="anchor" href="#groot-and-generalized-michaelis-menten"></a>
-</h3>
+<div class="section level4">
+<h4 id="groot-and-generalized-michaelis-menten">Groot and Generalized Michaelis-Menten<a class="anchor" aria-label="anchor" href="#groot-and-generalized-michaelis-menten"></a>
+</h4>
 <p>The Groot and generalized Michaelis-Menten models are mathematically
-equivalent.</p>
+equivalent for positive values of time.</p>
 <p>Parameter correspondence:</p>
 <ul>
-<li>VF = A</li>
-<li>b = K</li>
-<li>k = c</li>
+<li><code>VF = A</code></li>
+<li><code>b = K</code></li>
+<li><code>k = c</code></li>
 </ul>
-<p>Both formulations produce identical:</p>
-<ul>
-<li>Fitted values</li>
-<li>Residuals</li>
-<li>RMSE</li>
-<li>RSS</li>
-<li>AIC</li>
-<li>BIC</li>
-<li>R-squared</li>
-</ul>
-<p>when convergence is achieved.</p>
+<p>Both formulations describe the same underlying sigmoidal gas
+production curve but differ in parameterization.</p>
+<p>The Groot model contains the term</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>b</mi><mi>t</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>k</mi></msup><annotation encoding="application/x-tex">
+\left(\frac{b}{t}\right)^k
+</annotation></semantics></math></p>
+<p>and is therefore undefined at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>.
+Consequently, observations collected at <code>Time_h = 0</code> are
+excluded when fitting the Groot model.</p>
+<p>Researchers may choose either formulation depending on the
+terminology commonly used in their field.</p>
 </div>
-<div class="section level3">
-<h3 id="groot-generalized-michaelis-menten-and-log-logistic">Groot, Generalized Michaelis-Menten, and Log-logistic<a class="anchor" aria-label="anchor" href="#groot-generalized-michaelis-menten-and-log-logistic"></a>
-</h3>
-<p>The Log-logistic formulation:</p>
+<div class="section level4">
+<h4 id="groot-generalized-michaelis-menten-and-log-logistic">Groot, Generalized Michaelis-Menten, and Log-logistic<a class="anchor" aria-label="anchor" href="#groot-generalized-michaelis-menten-and-log-logistic"></a>
+</h4>
+<p>The Log-logistic formulation</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>V</mi><mi>F</mi><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>a</mi></msup></mrow><mrow><mn>1</mn><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>a</mi></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
 V(t)
 =
 VF
 \frac{(rt)^a}
 {
-1+(rt)^a
+1 + (rt)^a
 }
 </annotation></semantics></math></p>
-<p>can be rewritten as:</p>
+<p>can be rewritten as</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>V</mi><mi>F</mi><mfrac><msup><mi>t</mi><mi>a</mi></msup><mrow><msup><mi>t</mi><mi>a</mi></msup><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mi>/</mi><mi>r</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>a</mi></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
 V(t)
 =
 VF
 \frac{t^a}
 {
-t^a+(1/r)^a
+t^a + (1/r)^a
 }
 </annotation></semantics></math></p>
-<p>which is mathematically identical to both the Groot and generalized
-Michaelis-Menten models.</p>
+<p>which is mathematically equivalent to both the Groot and generalized
+Michaelis-Menten models for positive values of time.</p>
 <p>Parameter correspondence:</p>
 <table class="table">
 <thead><tr class="header">
@@ -589,16 +594,21 @@ Michaelis-Menten models.</p>
 </tr>
 </tbody>
 </table>
-<p>Therefore:</p>
-<pre class="text"><code>Groot
-=
-Generalized Michaelis-Menten
-=
-Log-logistic</code></pre>
-<p>These parameterizations describe the same underlying curve.</p>
-<p>For this reason, rumenGP does not implement a separate Log-logistic
-fitting routine because the curve is already represented through the
-existing Groot and generalized Michaelis-Menten implementations.</p>
+<p>Therefore, the Groot, Generalized Michaelis-Menten, and Log-logistic
+models represent mathematically equivalent parameterizations of the same
+underlying sigmoidal gas production curve.</p>
+<p>These formulations differ only in how their parameters are
+expressed.</p>
+<p>Unlike the Groot model, the generalized Michaelis-Menten and
+Log-logistic formulations are mathematically defined at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>
+and therefore retain the initial observation during model fitting.</p>
+<p>Consequently, parameter estimates and goodness-of-fit statistics may
+differ slightly among parameterizations when time-zero observations are
+present.</p>
+<p>rumenGP implements all three parameterizations, allowing researchers
+to choose the formulation that is most familiar within their field while
+recognizing their underlying mathematical equivalence.</p>
 </div>
 </div>
 <div class="section level2">
@@ -638,7 +648,7 @@ existing Groot and generalized Michaelis-Menten implementations.</p>
 <div class="section level3">
 <h3 id="no-gas-or-pressure-supplied">No Gas or Pressure Supplied<a class="anchor" aria-label="anchor" href="#no-gas-or-pressure-supplied"></a>
 </h3>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/as_rumen_gp.html">as_rumen_gp</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">my_data</span>,</span>
 <span>  head_col <span class="op">=</span> <span class="st">"Bottle"</span>,</span>
@@ -650,7 +660,7 @@ existing Groot and generalized Michaelis-Menten implementations.</p>
 <div class="section level3">
 <h3 id="both-gas-and-pressure-supplied">Both Gas and Pressure Supplied<a class="anchor" aria-label="anchor" href="#both-gas-and-pressure-supplied"></a>
 </h3>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/as_rumen_gp.html">as_rumen_gp</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">my_data</span>,</span>
 <span>  gas_col <span class="op">=</span> <span class="st">"Gas"</span>,</span>
@@ -662,7 +672,7 @@ existing Groot and generalized Michaelis-Menten implementations.</p>
 <div class="section level3">
 <h3 id="missing-headspace-volume">Missing Headspace Volume<a class="anchor" aria-label="anchor" href="#missing-headspace-volume"></a>
 </h3>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/as_rumen_gp.html">as_rumen_gp</a></span><span class="op">(</span></span>
 <span>  pressure_col <span class="op">=</span> <span class="st">"PSI"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -699,7 +709,7 @@ across ANKOM and non-ANKOM gas-production experiments.</p>
 </h2>
 <p>Additional capabilities include custom model development.</p>
 <p>See:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">?</span><span class="va">fit_custom</span></span></code></pre></div>
 <p>for information about fitting user-defined kinetic models.</p>
 </div>

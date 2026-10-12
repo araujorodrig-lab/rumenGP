@@ -118,7 +118,9 @@
 <ul><li>VF = A = VF</li>
 <li>b = K = 1/r</li>
 <li>k = c = a</li>
-</ul><p>Clarified that the Log-logistic formulation is already represented through the existing Groot and generalized Michaelis-Menten parameterizations.</p>
+</ul><p>Clarified that these models represent mathematically equivalent parameterizations of the same underlying sigmoidal gas-production curve for positive values of time.</p>
+<p>Documented differences in the handling of time-zero observations, including the exclusion of <code>Time_h = 0</code> when fitting the Groot model because the formulation is undefined at (t = 0), and the retention of time-zero observations in the Generalized Michaelis-Menten and Log-logistic formulations.</p>
+<p>rumenGP now implements all three parameterizations, allowing researchers to select the formulation most appropriate for their field while recognizing their underlying mathematical equivalence.</p>
 <hr></div>
 <div class="section level3">
 <h3 id="readme-improvements-0-2-1">README Improvements<a class="anchor" aria-label="anchor" href="#readme-improvements-0-2-1"></a></h3>

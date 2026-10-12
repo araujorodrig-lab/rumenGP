@@ -89,9 +89,22 @@ Parameter correspondence:
 * b = K = 1/r
 * k = c = a
 
-Clarified that the Log-logistic formulation is
-already represented through the existing Groot
-and generalized Michaelis-Menten parameterizations.
+Clarified that these models represent mathematically
+equivalent parameterizations of the same underlying
+sigmoidal gas-production curve for positive values of
+time.
+
+Documented differences in the handling of time-zero
+observations, including the exclusion of `Time_h = 0`
+when fitting the Groot model because the formulation
+is undefined at \(t = 0\), and the retention of
+time-zero observations in the Generalized
+Michaelis-Menten and Log-logistic formulations.
+
+rumenGP now implements all three parameterizations,
+allowing researchers to select the formulation most
+appropriate for their field while recognizing their
+underlying mathematical equivalence.
 
 ---
 

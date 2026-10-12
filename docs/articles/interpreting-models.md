@@ -523,30 +523,43 @@ Parameter correspondence:
 | b     | K                            | 1/r          |
 | k     | c                            | a            |
 
-Therefore:
+These formulations describe the same underlying sigmoidal gas-production
+curve and differ only in parameterization.
 
-``` text
-Groot
+The Groot model can be algebraically rearranged into the generalized
+Michaelis-Menten form, and the Log-logistic model can be rewritten as:
+
+``` math
+V(t)
 =
-Generalized Michaelis-Menten
-=
-Log-logistic
+VF
+\frac{t^a}
+{
+t^a + (1/r)^a
+}
 ```
 
-These formulations produce identical:
+demonstrating the mathematical equivalence among the three formulations
+for positive values of time.
 
-- Predicted values
-- Residuals
-- RSS
-- RMSE
-- R²
-- AIC
-- BIC
+Unlike the generalized Michaelis-Menten and Log-logistic formulations,
+the Groot model is undefined at $`t = 0`$ because it contains the term
 
-when equivalent parameter transformations are used.
+``` math
+\left(\frac{b}{t}\right)^k.
+```
+
+Consequently, observations collected at `Time_h = 0` are excluded when
+fitting the Groot model, whereas the generalized Michaelis-Menten and
+Log-logistic models retain the initial observation.
+
+As a result, parameter estimates and goodness-of-fit statistics may
+differ slightly among parameterizations when time-zero observations are
+present.
 
 Researchers may therefore choose the parameterization most familiar
-within their field.
+within their field while recognizing their underlying mathematical
+equivalence.
 
 ------------------------------------------------------------------------
 
@@ -763,10 +776,6 @@ modeling, including:
 - Log-logistic
 - Mitscherlich
 - Ørskov and McDonald
-
-In addition, the Log-logistic formulation is already represented
-mathematically through the existing Groot and generalized
-Michaelis-Menten parameterizations.
 
 Researchers are encouraged to fit multiple models and evaluate both
 statistical and biological performance before selecting a final

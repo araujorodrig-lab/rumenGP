@@ -153,10 +153,7 @@ fit_loglogistic <- function(
 
   fit_one_bottle <- function(df) {
 
-    df_fit <- df |>
-      dplyr::filter(
-        Time_h > 0
-      )
+    df_fit <- df
 
     # ----------------------------------
     # Default starting values
@@ -454,10 +451,7 @@ fit_loglogistic <- function(
         return(NULL)
       }
 
-      df_pred <- df |>
-        dplyr::filter(
-          Time_h > 0
-        )
+      df_pred <- df
 
       data.frame(
         Head = df_pred$Head,

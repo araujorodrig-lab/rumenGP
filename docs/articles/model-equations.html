@@ -1057,68 +1057,59 @@ V(t)
 <hr>
 </div>
 </div>
-</div>
-<div class="section level2">
-<h2 id="model-equivalence">Model Equivalence<a class="anchor" aria-label="anchor" href="#model-equivalence"></a>
-</h2>
 <div class="section level3">
-<h3 id="groot-generalized-michaelis-menten-and-log-logistic">Groot, Generalized Michaelis-Menten, and Log-logistic<a class="anchor" aria-label="anchor" href="#groot-generalized-michaelis-menten-and-log-logistic"></a>
+<h3 id="model-equivalence">Model Equivalence<a class="anchor" aria-label="anchor" href="#model-equivalence"></a>
 </h3>
-<p>Several gas-production models commonly used in rumen fermentation
-research and nonlinear modeling are mathematically equivalent.</p>
 <div class="section level4">
-<h4 id="groot-1">Groot<a class="anchor" aria-label="anchor" href="#groot-1"></a>
+<h4 id="groot-and-generalized-michaelis-menten">Groot and Generalized Michaelis-Menten<a class="anchor" aria-label="anchor" href="#groot-and-generalized-michaelis-menten"></a>
 </h4>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mi>V</mi><mi>F</mi></mrow><mrow><mn>1</mn><mo>+</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>b</mi><mi>t</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>k</mi></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
-V(t)
-=
-\frac{VF}
-{
-1+\left(\frac{b}{t}\right)^k
-}
+<p>The Groot and generalized Michaelis-Menten models are mathematically
+equivalent for positive values of time.</p>
+<p>Parameter correspondence:</p>
+<ul>
+<li><code>VF = A</code></li>
+<li><code>b = K</code></li>
+<li><code>k = c</code></li>
+</ul>
+<p>Both formulations describe the same underlying sigmoidal gas
+production curve but differ in parameterization.</p>
+<p>The Groot model contains the term</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>b</mi><mi>t</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>k</mi></msup><annotation encoding="application/x-tex">
+\left(\frac{b}{t}\right)^k
 </annotation></semantics></math></p>
+<p>and is therefore undefined at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>.
+Consequently, observations collected at <code>Time_h = 0</code> are
+excluded when fitting the Groot model.</p>
+<p>Researchers may choose either formulation depending on the
+terminology commonly used in their field.</p>
 </div>
 <div class="section level4">
-<h4 id="generalized-michaelis-menten-1">Generalized Michaelis-Menten<a class="anchor" aria-label="anchor" href="#generalized-michaelis-menten-1"></a>
+<h4 id="groot-generalized-michaelis-menten-and-log-logistic">Groot, Generalized Michaelis-Menten, and Log-logistic<a class="anchor" aria-label="anchor" href="#groot-generalized-michaelis-menten-and-log-logistic"></a>
 </h4>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mfrac><msup><mi>t</mi><mi>c</mi></msup><mrow><msup><mi>t</mi><mi>c</mi></msup><mo>+</mo><msup><mi>K</mi><mi>c</mi></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
-V(t)
-=
-A
-\frac{t^{c}}
-{
-t^{c}+K^{c}
-}
-</annotation></semantics></math></p>
-</div>
-<div class="section level4">
-<h4 id="log-logistic">Log-logistic<a class="anchor" aria-label="anchor" href="#log-logistic"></a>
-</h4>
+<p>The Log-logistic formulation</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>V</mi><mi>F</mi><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>a</mi></msup></mrow><mrow><mn>1</mn><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>a</mi></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
 V(t)
 =
 VF
 \frac{(rt)^a}
 {
-1+(rt)^a
+1 + (rt)^a
 }
 </annotation></semantics></math></p>
-<p>The Log-logistic formulation can be rewritten as:</p>
+<p>can be rewritten as</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>V</mi><mi>F</mi><mfrac><msup><mi>t</mi><mi>a</mi></msup><mrow><msup><mi>t</mi><mi>a</mi></msup><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mi>/</mi><mi>r</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>a</mi></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
 V(t)
 =
 VF
 \frac{t^a}
 {
-t^a+(1/r)^a
+t^a + (1/r)^a
 }
 </annotation></semantics></math></p>
-<p>which is identical to the generalized Michaelis-Menten
-formulation.</p>
-</div>
-<div class="section level4">
-<h4 id="parameter-correspondence">Parameter Correspondence<a class="anchor" aria-label="anchor" href="#parameter-correspondence"></a>
-</h4>
+<p>which is mathematically equivalent to both the Groot and generalized
+Michaelis-Menten models for positive values of time.</p>
+<p>Parameter correspondence:</p>
 <table class="table">
 <thead><tr class="header">
 <th>Groot</th>
@@ -1143,31 +1134,21 @@ formulation.</p>
 </tr>
 </tbody>
 </table>
-<p>Therefore:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Groot</mtext><mo>≡</mo><mtext mathvariant="normal">Generalized Michaelis-Menten</mtext><mo>≡</mo><mtext mathvariant="normal">Log-logistic</mtext></mrow><annotation encoding="application/x-tex">
-\text{Groot}
-\equiv
-\text{Generalized Michaelis-Menten}
-\equiv
-\text{Log-logistic}
-</annotation></semantics></math></p>
-<p>These formulations produce identical:</p>
-<ul>
-<li>Fitted values</li>
-<li>Residuals</li>
-<li>RSS</li>
-<li>RMSE</li>
-<li>R-squared</li>
-<li>AIC</li>
-<li>BIC</li>
-</ul>
-<p>when equivalent parameter transformations are used.</p>
-<p>Researchers may therefore choose the parameterization most commonly
-used within their field while obtaining identical fitted curves.</p>
-<p>For this reason, rumenGP does not currently implement a separate
-Log-logistic fitting routine. The Log-logistic formulation is already
-represented through the existing Groot and generalized Michaelis-Menten
-parameterizations.</p>
+<p>Therefore, the Groot, Generalized Michaelis-Menten, and Log-logistic
+models represent mathematically equivalent parameterizations of the same
+underlying sigmoidal gas production curve.</p>
+<p>These formulations differ only in how their parameters are
+expressed.</p>
+<p>Unlike the Groot model, the generalized Michaelis-Menten and
+Log-logistic formulations are mathematically defined at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>
+and therefore retain the initial observation during model fitting.</p>
+<p>Consequently, parameter estimates and goodness-of-fit statistics may
+differ slightly among parameterizations when time-zero observations are
+present.</p>
+<p>rumenGP implements all three parameterizations, allowing researchers
+to choose the formulation that is most familiar within their field while
+recognizing their underlying mathematical equivalence.</p>
 <hr>
 </div>
 </div>

@@ -618,37 +618,37 @@ V(t)
 
 ------------------------------------------------------------------------
 
-## Model Equivalence
+### Model Equivalence
 
-### Groot, Generalized Michaelis-Menten, and Log-logistic
+#### Groot and Generalized Michaelis-Menten
 
-Several gas-production models commonly used in rumen fermentation
-research and nonlinear modeling are mathematically equivalent.
+The Groot and generalized Michaelis-Menten models are mathematically
+equivalent for positive values of time.
 
-#### Groot
+Parameter correspondence:
 
-``` math
-V(t)
-=
-\frac{VF}
-{
-1+\left(\frac{b}{t}\right)^k
-}
-```
+- `VF = A`
+- `b = K`
+- `k = c`
 
-#### Generalized Michaelis-Menten
+Both formulations describe the same underlying sigmoidal gas production
+curve but differ in parameterization.
+
+The Groot model contains the term
 
 ``` math
-V(t)
-=
-A
-\frac{t^{c}}
-{
-t^{c}+K^{c}
-}
+\left(\frac{b}{t}\right)^k
 ```
 
-#### Log-logistic
+and is therefore undefined at $`t = 0`$. Consequently, observations
+collected at `Time_h = 0` are excluded when fitting the Groot model.
+
+Researchers may choose either formulation depending on the terminology
+commonly used in their field.
+
+#### Groot, Generalized Michaelis-Menten, and Log-logistic
+
+The Log-logistic formulation
 
 ``` math
 V(t)
@@ -656,11 +656,11 @@ V(t)
 VF
 \frac{(rt)^a}
 {
-1+(rt)^a
+1 + (rt)^a
 }
 ```
 
-The Log-logistic formulation can be rewritten as:
+can be rewritten as
 
 ``` math
 V(t)
@@ -668,13 +668,14 @@ V(t)
 VF
 \frac{t^a}
 {
-t^a+(1/r)^a
+t^a + (1/r)^a
 }
 ```
 
-which is identical to the generalized Michaelis-Menten formulation.
+which is mathematically equivalent to both the Groot and generalized
+Michaelis-Menten models for positive values of time.
 
-#### Parameter Correspondence
+Parameter correspondence:
 
 | Groot | Generalized Michaelis-Menten | Log-logistic |
 |-------|------------------------------|--------------|
@@ -682,35 +683,23 @@ which is identical to the generalized Michaelis-Menten formulation.
 | b     | K                            | 1/r          |
 | k     | c                            | a            |
 
-Therefore:
+Therefore, the Groot, Generalized Michaelis-Menten, and Log-logistic
+models represent mathematically equivalent parameterizations of the same
+underlying sigmoidal gas production curve.
 
-``` math
-\text{Groot}
-\equiv
-\text{Generalized Michaelis-Menten}
-\equiv
-\text{Log-logistic}
-```
+These formulations differ only in how their parameters are expressed.
 
-These formulations produce identical:
+Unlike the Groot model, the generalized Michaelis-Menten and
+Log-logistic formulations are mathematically defined at $`t = 0`$ and
+therefore retain the initial observation during model fitting.
 
-- Fitted values
-- Residuals
-- RSS
-- RMSE
-- R-squared
-- AIC
-- BIC
+Consequently, parameter estimates and goodness-of-fit statistics may
+differ slightly among parameterizations when time-zero observations are
+present.
 
-when equivalent parameter transformations are used.
-
-Researchers may therefore choose the parameterization most commonly used
-within their field while obtaining identical fitted curves.
-
-For this reason, rumenGP does not currently implement a separate
-Log-logistic fitting routine. The Log-logistic formulation is already
-represented through the existing Groot and generalized Michaelis-Menten
-parameterizations.
+rumenGP implements all three parameterizations, allowing researchers to
+choose the formulation that is most familiar within their field while
+recognizing their underlying mathematical equivalence.
 
 ------------------------------------------------------------------------
 

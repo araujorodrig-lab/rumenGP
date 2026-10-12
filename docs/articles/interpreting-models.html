@@ -490,25 +490,39 @@ VF
 </tr>
 </tbody>
 </table>
-<p>Therefore:</p>
-<pre class="text"><code>Groot
+<p>These formulations describe the same underlying sigmoidal
+gas-production curve and differ only in parameterization.</p>
+<p>The Groot model can be algebraically rearranged into the generalized
+Michaelis-Menten form, and the Log-logistic model can be rewritten
+as:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>V</mi><mi>F</mi><mfrac><msup><mi>t</mi><mi>a</mi></msup><mrow><msup><mi>t</mi><mi>a</mi></msup><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mi>/</mi><mi>r</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>a</mi></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+V(t)
 =
-Generalized Michaelis-Menten
-=
-Log-logistic</code></pre>
-<p>These formulations produce identical:</p>
-<ul>
-<li>Predicted values</li>
-<li>Residuals</li>
-<li>RSS</li>
-<li>RMSE</li>
-<li>R²</li>
-<li>AIC</li>
-<li>BIC</li>
-</ul>
-<p>when equivalent parameter transformations are used.</p>
+VF
+\frac{t^a}
+{
+t^a + (1/r)^a
+}
+</annotation></semantics></math></p>
+<p>demonstrating the mathematical equivalence among the three
+formulations for positive values of time.</p>
+<p>Unlike the generalized Michaelis-Menten and Log-logistic
+formulations, the Groot model is undefined at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>
+because it contains the term</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>b</mi><mi>t</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>k</mi></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\left(\frac{b}{t}\right)^k.
+</annotation></semantics></math></p>
+<p>Consequently, observations collected at <code>Time_h = 0</code> are
+excluded when fitting the Groot model, whereas the generalized
+Michaelis-Menten and Log-logistic models retain the initial
+observation.</p>
+<p>As a result, parameter estimates and goodness-of-fit statistics may
+differ slightly among parameterizations when time-zero observations are
+present.</p>
 <p>Researchers may therefore choose the parameterization most familiar
-within their field.</p>
+within their field while recognizing their underlying mathematical
+equivalence.</p>
 <hr>
 </div>
 </div>
@@ -726,9 +740,6 @@ gas-production modeling, including:</p>
 <li>Mitscherlich</li>
 <li>Ørskov and McDonald</li>
 </ul>
-<p>In addition, the Log-logistic formulation is already represented
-mathematically through the existing Groot and generalized
-Michaelis-Menten parameterizations.</p>
 <p>Researchers are encouraged to fit multiple models and evaluate both
 statistical and biological performance before selecting a final
 representation of fermentation kinetics.</p>

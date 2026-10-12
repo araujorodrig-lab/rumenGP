@@ -150,10 +150,7 @@ fit_mm <- function(
 
   fit_one_bottle <- function(df) {
 
-    df_fit <- df |>
-      dplyr::filter(
-        Time_h > 0
-      )
+    df_fit <- df
 
     t <- df_fit$Time_h
     y <- df_fit$Gas_mL
@@ -445,10 +442,7 @@ fit_mm <- function(
         return(NULL)
       }
 
-      df_pred <- df |>
-        dplyr::filter(
-          Time_h > 0
-        )
+      df_pred <- df
 
       data.frame(
         Head = df_pred$Head,

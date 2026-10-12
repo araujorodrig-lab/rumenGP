@@ -339,7 +339,8 @@ Current built-in models:
 ## Groot and Generalized Michaelis-Menten
 
 The Groot and generalized Michaelis-Menten
-models are mathematically equivalent.
+models are mathematically equivalent for
+positive values of time.
 
 Parameter correspondence:
 
@@ -347,10 +348,24 @@ Parameter correspondence:
 - b = K
 - k = c
 
-Both formulations produce identical fitted
-values, residuals, diagnostics, AIC, BIC,
-RMSE, and R-squared when convergence is
-achieved.
+Both formulations describe the same
+underlying sigmoidal gas production curve
+but differ in parameterization.
+
+The Groot model contains the term
+
+\[
+\left(\frac{b}{t}\right)^k
+\]
+
+and is therefore undefined at
+\[
+t = 0.
+\]
+
+Consequently, observations collected at
+`Time_h = 0` are excluded when fitting the
+Groot model.
 
 Researchers may choose either formulation
 depending on the terminology commonly used
@@ -382,9 +397,9 @@ t^a + (1/r)^a
 }
 \]
 
-which is mathematically identical to both
+which is mathematically equivalent to both
 the Groot and generalized Michaelis-Menten
-models.
+models for positive values of time.
 
 Parameter correspondence:
 
@@ -396,24 +411,13 @@ Parameter correspondence:
 
 Therefore:
 
-```text
+``` text
 Groot
 =
 Generalized Michaelis-Menten
 =
 Log-logistic
 ```
-
-These formulations describe the same
-underlying curve and differ only in
-parameterization.
-
-For this reason, rumenGP does not currently
-implement a separate Log-logistic fitting
-routine. The Log-logistic curve family is
-already represented through the existing
-Groot and generalized Michaelis-Menten
-implementations.
 
 # Recommended Model Selection Workflow
 
