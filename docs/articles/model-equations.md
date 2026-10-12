@@ -754,6 +754,7 @@ Use when:
 - Generalized Michaelis-Menten
 - Burr XII
 - Inverse Paralogistic
+- Log-logistic
 
 Use when:
 

@@ -1,5 +1,5 @@
 
-# rumenGP 0.2.0
+# rumenGP 0.2.1
 
 ## New Models
 
@@ -113,23 +113,24 @@ Updated package documentation:
 Current built-in model library:
 
 * Brody
+* Burr XII
 * Dual Logistic
 * EXP0
 * EXPL
+* Generalized Michaelis-Menten
 * Gompertz
 * Groot
+* Inverse Paralogistic
 * LE0
 * LEL
 * Logistic
+* Log-logistic
 * Mitscherlich
-* Generalized Michaelis-Menten
 * Ørskov and McDonald
-* Burr XII
-* Inverse Paralogistic
 
 Total:
 
-* 14 built-in kinetic models
+* 15 built-in kinetic models
 
 ---
 

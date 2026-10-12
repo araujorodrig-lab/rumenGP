@@ -150,8 +150,13 @@ fit_mm <- function(
 
   fit_one_bottle <- function(df) {
 
-    t <- df$Time_h
-    y <- df$Gas_mL
+    df_fit <- df |>
+      dplyr::filter(
+        Time_h > 0
+      )
+
+    t <- df_fit$Time_h
+    y <- df_fit$Gas_mL
 
     # ----------------------------------
     # Default starting values
@@ -227,19 +232,19 @@ fit_mm <- function(
               K^c
           ),
 
-        data = df,
+        data = df_fit,
 
         start = fit_start,
 
         lower = c(
           A = 0,
-          K = 0,
-          c = 0
+          K = 1e-6,
+          c = 1e-6
         ),
 
         control =
           minpack.lm::nls.lm.control(
-            maxiter = 500
+            maxiter = 1000
           )
 
       )
@@ -260,7 +265,7 @@ fit_mm <- function(
 
     preds <- predict(
       fit,
-      newdata = df
+      newdata = df_fit
     )
 
     residuals <- y - preds
@@ -440,15 +445,20 @@ fit_mm <- function(
         return(NULL)
       }
 
+      df_pred <- df |>
+        dplyr::filter(
+          Time_h > 0
+        )
+
       data.frame(
-        Head = df$Head,
-        Bottle = df$Bottle,
-        Rep = df$Rep,
-        Treatment = df$Treatment,
+        Head = df_pred$Head,
+        Bottle = df_pred$Bottle,
+        Rep = df_pred$Rep,
+        Treatment = df_pred$Treatment,
 
-        Time_h = df$Time_h,
+        Time_h = df_pred$Time_h,
 
-        Observed = df$Gas_mL,
+        Observed = df_pred$Gas_mL,
 
         Predicted = fit$predictions,
 

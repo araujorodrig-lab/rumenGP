@@ -500,19 +500,20 @@ rank_models(
 Current built-in models include:
 
 - Brody
+- Burr XII
 - Dual Logistic
 - EXP0
 - EXPL
+- Generalized Michaelis-Menten
 - Gompertz
 - Groot
+- Inverse Paralogistic
 - LE0
 - LEL
 - Logistic
+- Log-logistic
 - Mitscherlich
-- Generalized Michaelis-Menten
 - Ørskov and McDonald
-- Burr XII
-- Inverse Paralogistic
 
 ## Model Equivalence
 

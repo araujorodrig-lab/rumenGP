@@ -718,6 +718,7 @@ Examples:
 - Groot
 - Generalized Michaelis-Menten
 - Burr XII
+- Log-logistic
 - Inverse Paralogistic
 - LE0
 - LEL
@@ -748,19 +749,20 @@ rumenGP provides both classical and modern approaches to gas-production
 modeling, including:
 
 - Brody
-- Ørskov and McDonald
+- Burr XII
+- Dual Logistic
 - EXP0
 - EXPL
+- Generalized Michaelis-Menten
 - Gompertz
-- Logistic
-- Mitscherlich
+- Groot
+- Inverse Paralogistic
 - LE0
 - LEL
-- Groot
-- Generalized Michaelis-Menten
-- Dual Logistic
-- Burr XII
-- Inverse Paralogistic
+- Logistic
+- Log-logistic
+- Mitscherlich
+- Ørskov and McDonald
 
 In addition, the Log-logistic formulation is already represented
 mathematically through the existing Groot and generalized

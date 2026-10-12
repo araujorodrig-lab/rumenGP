@@ -9,7 +9,7 @@ The package supports:
 - ANKOM RF datasets
 - Manually collected gas-volume datasets
 - Pressure-based datasets (PSI or kPa)
-- Twelve built-in kinetic models
+- Fifteen built-in kinetic models
 - User-defined kinetic models
 - Model comparison and ranking
 - Treatment-level model evaluation
@@ -612,19 +612,20 @@ gp_clean <- exclude_heads(
 ### Built-in Models
 
 - Brody
+- Burr XII
 - Dual Logistic
 - EXP0
 - EXPL
+- Generalized Michaelis-Menten
 - Gompertz
 - Groot
+- Inverse Paralogistic
 - LE0
 - LEL
 - Logistic
+- Log-logistic
 - Mitscherlich
-- Michaelis-Menten
-- Orskov and McDonald
-- Burr XII
-- Inverse Paralogistic
+- Ørskov and McDonald
 
 ### Model Equivalence
 
