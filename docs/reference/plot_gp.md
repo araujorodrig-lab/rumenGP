@@ -5,7 +5,7 @@ Plots observed gas production measurements for an individual bottle.
 ## Usage
 
 ``` r
-plot_gp(data, head)
+plot_gp(data, head = NULL)
 ```
 
 ## Arguments
@@ -66,5 +66,13 @@ plot_gp(
   gp,
   head = 1
 )
+
+
+plot_gp(
+  gp
+  )
+#> Error in dplyr::filter(data, Head == as.character(head)): ℹ In argument: `Head == as.character(head)`.
+#> Caused by error:
+#> ! argument "head" is missing, with no default
 
 ```
