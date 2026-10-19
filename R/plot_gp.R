@@ -43,6 +43,11 @@
 #'   head = 1
 #' )
 #'
+#' plot_gp(
+#'   gp
+#'   )
+#'
+#'
 #' @return A \code{ggplot2} object.
 #'
 #' @seealso
@@ -53,33 +58,36 @@
 #' @export
 plot_gp <- function(
     data,
-    head
+    head = NULL
 ) {
 
   if (!inherits(data, "rumen_gp")) {
-    stop(
-      "Input must be a rumen_gp object."
-    )
+    stop("Input must be a rumen_gp object.")
   }
 
-  df <- data |>
-    dplyr::filter(
-      Head == as.character(head)
-    )
+  df <- data
 
-  if (nrow(df) == 0) {
+  # Filter by head only when specified
+  if (!is.null(head)) {
 
-    stop(
-      paste(
-        "Head",
-        head,
-        "was not found."
+    df <- df |>
+      dplyr::filter(
+        Head == as.character(head)
       )
-    )
+
+    if (nrow(df) == 0) {
+      stop(
+        paste("Head", head, "was not found.")
+      )
+    }
 
   }
 
-  ggplot2::ggplot(
+  # Order observations by time
+  df <- df |>
+    dplyr::arrange(Head, Time_h)
+
+  p <- ggplot2::ggplot(
     df,
     ggplot2::aes(
       x = Time_h,
@@ -87,21 +95,34 @@ plot_gp <- function(
     )
   ) +
 
-    ggplot2::geom_point(
-      size = 2
+    ggplot2::geom_line(
+      color = "grey60",
+      linewidth = 0.6
     ) +
 
-    ggplot2::geom_line() +
+    ggplot2::geom_point(
+      color = "grey10",
+      size = 2,
+      alpha = 0.8
+    ) +
 
     ggplot2::labs(
-      title = paste(
-        "Raw gas production - Head",
-        head
-      ),
+      title = if (is.null(head)) {
+        "Raw gas production - All Heads"
+      } else {
+        paste("Raw gas production - Head", head)
+      },
       x = "Time (h)",
       y = "Gas production (mL)"
     ) +
 
     ggplot2::theme_minimal()
 
+  # Facet only when plotting all heads
+  if (is.null(head)) {
+    p <- p +
+      ggplot2::facet_wrap(~ Head)
+  }
+
+  return(p)
 }

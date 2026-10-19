@@ -4,7 +4,7 @@
 \alias{plot_gp}
 \title{Plot Raw Gas Production Curve}
 \usage{
-plot_gp(data, head)
+plot_gp(data, head = NULL)
 }
 \arguments{
 \item{data}{A \code{rumen_gp} object.}
@@ -53,6 +53,11 @@ plot_gp(
   gp,
   head = 1
 )
+
+plot_gp(
+  gp
+  )
+
 
 }
 \seealso{
