@@ -71,8 +71,6 @@ plot_gp(
 plot_gp(
   gp
   )
-#> Error in dplyr::filter(data, Head == as.character(head)): ℹ In argument: `Head == as.character(head)`.
-#> Caused by error:
-#> ! argument "head" is missing, with no default
+
 
 ```

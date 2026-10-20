@@ -192,7 +192,7 @@ plot_all_treatment_means <- function(
     ggplot2::theme_minimal() +
 
     ggplot2::theme(
-      legend.position = "bottom",
+      legend.position = "right",
       strip.text = ggplot2::element_text(
         face = "bold"
       ),

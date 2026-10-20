@@ -114,7 +114,7 @@ plot_model_comparison_all <- function(...) {
     ggplot2::labs(
       x = "Time (h)",
       y = "Gas production (mL)",
-      title = "Model comparison across bottles"
+      title = "Model comparison across heads"
     )
 
 }

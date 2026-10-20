@@ -367,8 +367,6 @@ like ANKOM datasets.</p>
 <span><span class="co">#&gt; Observations: 6</span></span>
 <span><span class="co">#&gt; Heads: 2</span></span>
 <span><span class="co">#&gt; Treatments: 2</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
 <span></span>
 <span><span class="va">burr_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_burr_xii.html">fit_burr_xii</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
@@ -427,8 +425,6 @@ statistics.</p>
 <span><span class="co">#&gt; Observations: 6</span></span>
 <span><span class="co">#&gt; Heads: 2</span></span>
 <span><span class="co">#&gt; Treatments: 2</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
 <span><span class="co">#&gt; Observations: 6</span></span>
 <span><span class="co">#&gt; Heads: 2</span></span>
@@ -449,14 +445,14 @@ statistics.</p>
 <span><span class="va">comparison</span></span>
 <span><span class="co">#&gt;                 Model Bottles Successful_Fits Failed_Fits    Mean_R2 Mean_RMSE</span></span>
 <span><span class="co">#&gt; 1               Groot       2               2           0 -0.8504581  15.39026</span></span>
-<span><span class="co">#&gt; 2     MichaelisMenten       2               2           0 -1.0262531  16.11200</span></span>
-<span><span class="co">#&gt; 3             BurrXII       2               2           0 -4.0124301  25.34022</span></span>
+<span><span class="co">#&gt; 2     MichaelisMenten       2               0           2        NaN       NaN</span></span>
+<span><span class="co">#&gt; 3             BurrXII       2               0           2        NaN       NaN</span></span>
 <span><span class="co">#&gt; 4 InverseParalogistic       2               2           0 -8.6379664  35.14058</span></span>
 <span><span class="co">#&gt; 5            Gompertz       2               0           2        NaN       NaN</span></span>
 <span><span class="co">#&gt;    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary</span></span>
 <span><span class="co">#&gt; 1  503.3062 24.48171 19.25430               0</span></span>
-<span><span class="co">#&gt; 2  546.0510 24.68778 19.46037               0</span></span>
-<span><span class="co">#&gt; 3 1352.8435 28.49555 21.96129               0</span></span>
+<span><span class="co">#&gt; 2       NaN      NaN      NaN               0</span></span>
+<span><span class="co">#&gt; 3       NaN      NaN      NaN               0</span></span>
 <span><span class="co">#&gt; 4 2590.5823 27.81283 22.58542               0</span></span>
 <span><span class="co">#&gt; 5       NaN      NaN      NaN               0</span></span></code></pre></div>
 <p>The comparison table includes:</p>
@@ -478,21 +474,21 @@ statistics.</p>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;                 Model Bottles Successful_Fits Failed_Fits    Mean_R2 Mean_RMSE</span></span>
 <span><span class="co">#&gt; 1               Groot       2               2           0 -0.8504581  15.39026</span></span>
-<span><span class="co">#&gt; 2     MichaelisMenten       2               2           0 -1.0262531  16.11200</span></span>
-<span><span class="co">#&gt; 3             BurrXII       2               2           0 -4.0124301  25.34022</span></span>
+<span><span class="co">#&gt; 2     MichaelisMenten       2               0           2        NaN       NaN</span></span>
+<span><span class="co">#&gt; 3             BurrXII       2               0           2        NaN       NaN</span></span>
 <span><span class="co">#&gt; 4 InverseParalogistic       2               2           0 -8.6379664  35.14058</span></span>
 <span><span class="co">#&gt; 5            Gompertz       2               0           2        NaN       NaN</span></span>
 <span><span class="co">#&gt;    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC</span></span>
 <span><span class="co">#&gt; 1  503.3062 24.48171 19.25430               0       1         1        1</span></span>
-<span><span class="co">#&gt; 2  546.0510 24.68778 19.46037               0       2         2        2</span></span>
-<span><span class="co">#&gt; 3 1352.8435 28.49555 21.96129               0       3         3        4</span></span>
-<span><span class="co">#&gt; 4 2590.5823 27.81283 22.58542               0       4         4        3</span></span>
+<span><span class="co">#&gt; 2       NaN      NaN      NaN               0       3         3        3</span></span>
+<span><span class="co">#&gt; 3       NaN      NaN      NaN               0       4         4        4</span></span>
+<span><span class="co">#&gt; 4 2590.5823 27.81283 22.58542               0       2         2        2</span></span>
 <span><span class="co">#&gt; 5       NaN      NaN      NaN               0       5         5        5</span></span>
 <span><span class="co">#&gt;   Rank_BIC</span></span>
 <span><span class="co">#&gt; 1        1</span></span>
-<span><span class="co">#&gt; 2        2</span></span>
-<span><span class="co">#&gt; 3        3</span></span>
-<span><span class="co">#&gt; 4        4</span></span>
+<span><span class="co">#&gt; 2        3</span></span>
+<span><span class="co">#&gt; 3        4</span></span>
+<span><span class="co">#&gt; 4        2</span></span>
 <span><span class="co">#&gt; 5        5</span></span></code></pre></div>
 </div>
 <div class="section level2">

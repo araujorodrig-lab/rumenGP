@@ -102,7 +102,7 @@ plot_gp <- function(
 
     ggplot2::geom_point(
       color = "grey10",
-      size = 2,
+      size = 0.8,
       alpha = 0.8
     ) +
 
