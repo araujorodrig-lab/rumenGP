@@ -1,6 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+<p align="center">
+
+<img src="man/figures/rumenGP_logo.png" width="300">
+</p>
+
 # rumenGP
 
 <!-- badges: start -->
@@ -48,40 +53,10 @@ devtools::install_local(
 
 ## Package Workflow
 
-``` text
-ANKOM RF
-        ↓
-process_ankom()
-        ↓
-     rumen_gp
+<p align="center">
 
-Manual Gas Volume
-        ↓
-as_rumen_gp()
-        ↓
-     rumen_gp
-
-Pressure Data
-        ↓
-as_rumen_gp()
-        ↓
-pressure_to_volume()
-        ↓
-     rumen_gp
-
-             ↓
-
- Built-in Models
-          +
-  Custom Models
-
-             ↓
-
- Comparison
- Ranking
- Diagnostics
- Visualization
-```
+<img src="man/figures/rumenGP_workflow.png" width="1000">
+</p>
 
 ------------------------------------------------------------------------
 

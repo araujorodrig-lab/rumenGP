@@ -1,5 +1,7 @@
 # rumenGP
 
+![](reference/figures/rumenGP_logo.png)
+
 **rumenGP** is an R package for importing, processing, visualizing,
 fitting, comparing, and interpreting *in vitro* rumen gas production
 data.
@@ -43,40 +45,7 @@ devtools::install_local(
 
 ## Package Workflow
 
-``` text
-ANKOM RF
-        ↓
-process_ankom()
-        ↓
-     rumen_gp
-
-Manual Gas Volume
-        ↓
-as_rumen_gp()
-        ↓
-     rumen_gp
-
-Pressure Data
-        ↓
-as_rumen_gp()
-        ↓
-pressure_to_volume()
-        ↓
-     rumen_gp
-
-             ↓
-
- Built-in Models
-          +
-  Custom Models
-
-             ↓
-
- Comparison
- Ranking
- Diagnostics
- Visualization
-```
+![](reference/figures/rumenGP_workflow.png)
 
 ------------------------------------------------------------------------
 

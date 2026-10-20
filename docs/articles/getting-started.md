@@ -34,10 +34,10 @@ files <- example_data()
 
 files
 #> $ankom
-#> [1] "C:/Users/Arlan/AppData/Local/R/win-library/4.5/rumenGP/extdata/example_ankom.xlsx"
+#> [1] "C:/Users/Arlan/AppData/Local/Temp/Rtmp06LOeG/temp_libpath4a54715263dc/rumenGP/extdata/example_ankom.xlsx"
 #> 
 #> $metadata
-#> [1] "C:/Users/Arlan/AppData/Local/R/win-library/4.5/rumenGP/extdata/example_metadata.xlsx"
+#> [1] "C:/Users/Arlan/AppData/Local/Temp/Rtmp06LOeG/temp_libpath4a54715263dc/rumenGP/extdata/example_metadata.xlsx"
 ```
 
 ## Import ANKOM Data
