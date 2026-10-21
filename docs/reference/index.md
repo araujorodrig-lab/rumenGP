@@ -81,7 +81,7 @@
 ## Visualization
 
 - [`plot_gp()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_gp.md)
-  : Plot Raw Gas Production Curve
+  : Plot Raw Gas Production Curves
 - [`plot_fit()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_fit.md)
   : Plot Fitted Model
 - [`plot_residuals()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_residuals.md)
@@ -106,7 +106,7 @@
 - [`plot_model_comparison_all()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_comparison_all.md)
   : Compare Models for All Bottles
 - [`plot_model_comparison_treatment()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_comparison_treatment.md)
-  : Compare Models for a Treatment
+  : Compare Models Within a Treatment
 - [`plot_model_performance()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_performance.md)
   : Plot Model Performance
 - [`plot_residual_comparison()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_residual_comparison.md)

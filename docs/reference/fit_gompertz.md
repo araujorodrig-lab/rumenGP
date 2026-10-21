@@ -115,21 +115,21 @@ gp <- process_ankom(
 fit_default <- fit_gompertz(
   gp
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 summary(fit_default)
 #> 
 #> Gompertz model summary
 #> ----------------------
-#> Total bottles: 24
+#> Total bottles: 25
 #> Successful fits: 24
-#> Failed fits: 0
-#> Low R-squared (< 0.90): 3
-#> Lambda at boundary: 8
+#> Failed fits: 1
+#> Low R-squared (< 0.90): 2
+#> Lambda at boundary: 22
 #> 
 
 # Fit using custom starting values
@@ -141,21 +141,21 @@ fit_custom_start <- fit_gompertz(
     lambda = 1
   )
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 summary(fit_custom_start)
 #> 
 #> Gompertz model summary
 #> ----------------------
-#> Total bottles: 24
-#> Successful fits: 24
-#> Failed fits: 0
-#> Low R-squared (< 0.90): 12
-#> Lambda at boundary: 12
+#> Total bottles: 25
+#> Successful fits: 23
+#> Failed fits: 2
+#> Low R-squared (< 0.90): 15
+#> Lambda at boundary: 22
 #> 
 
 

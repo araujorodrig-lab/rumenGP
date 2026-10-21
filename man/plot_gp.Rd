@@ -2,32 +2,50 @@
 % Please edit documentation in R/plot_gp.R
 \name{plot_gp}
 \alias{plot_gp}
-\title{Plot Raw Gas Production Curve}
+\title{Plot Raw Gas Production Curves}
 \usage{
-plot_gp(data, head = NULL)
+plot_gp(data, head = NULL, treatment = NULL, mean_treatment = FALSE)
 }
 \arguments{
 \item{data}{A \code{rumen_gp} object.}
 
-\item{head}{Bottle identifier to plot.}
+\item{head}{Optional bottle identifier.
+If supplied, only the selected bottle
+is plotted.}
+
+\item{treatment}{Optional treatment name.
+If supplied, only observations belonging
+to the selected treatment are plotted.}
+
+\item{mean_treatment}{Logical.
+If \code{TRUE}, plots the mean gas-production
+profile of the selected treatment.}
 }
 \value{
 A \code{ggplot2} object.
 }
 \description{
-Plots observed gas production measurements
-for an individual bottle.
+Plots observed gas-production measurements from a
+\code{rumen_gp} object.
 }
 \details{
-This visualization displays the raw gas
-production profile prior to model fitting and
-is useful for:
+The function can be used to visualize:
+
+\itemize{
+\item A single bottle
+\item All bottles in the dataset
+\item All bottles within a treatment
+\item Mean treatment gas-production profiles
+}
+
+This visualization is useful for:
 
 \itemize{
 \item Inspecting fermentation dynamics
 \item Identifying unusual observations
 \item Evaluating data quality
-\item Comparing individual bottle profiles
+\item Comparing bottle-level responses
+\item Comparing treatment-level responses
 }
 }
 \examples{
@@ -49,19 +67,34 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
+# Single bottle
 plot_gp(
   gp,
   head = 1
 )
 
+# All bottles
 plot_gp(
   gp
-  )
+)
 
+# All bottles within a treatment
+plot_gp(
+  gp,
+  treatment = "TMR"
+)
+
+# Mean treatment profile
+plot_gp(
+  gp,
+  treatment = "TMR",
+  mean_treatment = TRUE
+)
 
 }
 \seealso{
 \code{\link{plot_fit}},
 \code{\link{plot_residuals}},
+\code{\link{plot_treatment_mean}},
 \code{\link{process_ankom}}
 }

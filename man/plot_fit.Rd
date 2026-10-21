@@ -60,7 +60,7 @@ fit <- fit_groot(
 # Plot a specific bottle
 plot_fit(
   fit,
-  head = 1
+  head = 6
 )
 
 }

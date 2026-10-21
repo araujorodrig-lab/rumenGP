@@ -49,7 +49,7 @@
 #' # Plot a specific bottle
 #' plot_fit(
 #'   fit,
-#'   head = 1
+#'   head = 6
 #' )
 #'
 #' @return A \code{ggplot2} object.

@@ -2,35 +2,40 @@
 % Please edit documentation in R/plot_model_comparison_treatment.R
 \name{plot_model_comparison_treatment}
 \alias{plot_model_comparison_treatment}
-\title{Compare Models for a Treatment}
+\title{Compare Models Within a Treatment}
 \usage{
 plot_model_comparison_treatment(..., treatment)
 }
 \arguments{
 \item{...}{Fitted model objects.}
 
-\item{treatment}{Treatment name.}
+\item{treatment}{Treatment name to visualize.}
 }
 \value{
-A \code{ggplot2} object.
+A \code{ggplot2} object showing observed
+gas production values and predicted model curves
+for a selected treatment.
 }
 \description{
 Displays observed and predicted gas production
-values for multiple fitted models across all
-replicates of a selected treatment.
+values for multiple fitted models within a
+selected treatment.
 }
 \details{
 Observed measurements are displayed alongside
 model predictions, allowing visual comparison
-of competing kinetic models within a treatment.
+of competing kinetic models across treatment
+replicates.
 
-This visualization is useful for:
+Individual panels correspond to biological
+replicates, facilitating the evaluation of:
 
 \itemize{
-\item Comparing competing models
-\item Evaluating model performance by treatment
-\item Assessing agreement among biological replicates
-\item Identifying systematic prediction errors
+\item Agreement among competing models
+\item Consistency among treatment replicates
+\item Treatment-specific fermentation patterns
+\item Systematic prediction errors
+\item Model performance within a treatment
 }
 }
 \examples{
@@ -63,9 +68,7 @@ gompertz_fit <- fit_gompertz(
 plot_model_comparison_treatment(
   Groot = groot_fit,
   Gompertz = gompertz_fit,
-  treatment = unique(
-    gp$Treatment
-  )[1]
+  treatment = "TMR"
 )
 
 }
@@ -73,6 +76,7 @@ plot_model_comparison_treatment(
 \code{\link{compare_models_by_treatment}},
 \code{\link{plot_model_comparison}},
 \code{\link{plot_model_comparison_all}},
+\code{\link{plot_treatment_mean}},
 \code{\link{fit_groot}},
 \code{\link{fit_gompertz}}
 }

@@ -1,7 +1,7 @@
-# Compare Models for a Treatment
+# Compare Models Within a Treatment
 
 Displays observed and predicted gas production values for multiple
-fitted models across all replicates of a selected treatment.
+fitted models within a selected treatment.
 
 ## Usage
 
@@ -17,33 +17,38 @@ plot_model_comparison_treatment(..., treatment)
 
 - treatment:
 
-  Treatment name.
+  Treatment name to visualize.
 
 ## Value
 
-A `ggplot2` object.
+A `ggplot2` object showing observed gas production values and predicted
+model curves for a selected treatment.
 
 ## Details
 
 Observed measurements are displayed alongside model predictions,
-allowing visual comparison of competing kinetic models within a
-treatment.
+allowing visual comparison of competing kinetic models across treatment
+replicates.
 
-This visualization is useful for:
+Individual panels correspond to biological replicates, facilitating the
+evaluation of:
 
-- Comparing competing models
+- Agreement among competing models
 
-- Evaluating model performance by treatment
+- Consistency among treatment replicates
 
-- Assessing agreement among biological replicates
+- Treatment-specific fermentation patterns
 
-- Identifying systematic prediction errors
+- Systematic prediction errors
+
+- Model performance within a treatment
 
 ## See also
 
 [`compare_models_by_treatment`](https://araujorodrig-lab.github.io/rumenGP/reference/compare_models_by_treatment.md),
 [`plot_model_comparison`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_comparison.md),
 [`plot_model_comparison_all`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_comparison_all.md),
+[`plot_treatment_mean`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_treatment_mean.md),
 [`fit_groot`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_groot.md),
 [`fit_gompertz`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_gompertz.md)
 
@@ -71,27 +76,25 @@ gp <- process_ankom(
 groot_fit <- fit_groot(
   gp
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 gompertz_fit <- fit_gompertz(
   gp
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 plot_model_comparison_treatment(
   Groot = groot_fit,
   Gompertz = gompertz_fit,
-  treatment = unique(
-    gp$Treatment
-  )[1]
+  treatment = "TMR"
 )
 
 ```

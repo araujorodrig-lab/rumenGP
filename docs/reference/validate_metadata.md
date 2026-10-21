@@ -66,22 +66,22 @@ validate_metadata(
   metadata
 )
 #> Metadata validation passed.
-#> Heads: 24
+#> Heads: 25
 #> Treatment: 5
-#> # A tibble: 24 × 5
-#>    Bottle Head    Rep Treatment    pH
-#>     <dbl> <chr> <dbl> <chr>     <dbl>
-#>  1      1 1         1 Plant_A    6.24
-#>  2      2 2         2 Plant_A    6.22
-#>  3      3 3         3 Plant_A    6.24
-#>  4      4 4         4 Plant_A    6.3 
-#>  5      5 5         5 Plant_A    6.15
-#>  6      6 6         6 Plant_A    6.16
-#>  7      7 7         1 Plant_B    6.13
-#>  8      8 8         2 Plant_B    6.12
-#>  9      9 9         3 Plant_B    6.12
-#> 10     10 10        4 Plant_B    6.26
-#> # ℹ 14 more rows
+#> # A tibble: 25 × 4
+#>    Bottle Head    Rep Treatment
+#>     <dbl> <chr> <dbl> <chr>    
+#>  1      1 1         1 TMR      
+#>  2      2 2         1 Blank    
+#>  3      3 3         2 TMR      
+#>  4      4 4         3 TMR      
+#>  5      6 6         4 TMR      
+#>  6      7 7         5 TMR      
+#>  7      9 9         1 Low      
+#>  8     10 10        2 Low      
+#>  9     11 11        3 Low      
+#> 10     12 12        4 Low      
+#> # ℹ 15 more rows
 
 # Typical workflow
 raw_data <- read_ankom(
@@ -98,14 +98,13 @@ gp <- process_ankom(
 head(
   gp
 )
-#> # A tibble: 6 × 11
+#> # A tibble: 6 × 10
 #>   time_raw Time_h Head  Gas_PSI Gas_kPa Gas_moles Gas_mL Bottle   Rep Treatment
 #>   <chr>     <dbl> <chr>   <dbl>   <dbl>     <dbl>  <dbl>  <dbl> <dbl> <chr>    
-#> 1 10:29:34      0 1           0       0         0      0      1     1 Plant_A  
-#> 2 10:29:34      0 2           0       0         0      0      2     2 Plant_A  
-#> 3 10:29:34      0 3           0       0         0      0      3     3 Plant_A  
-#> 4 10:29:34      0 4           0       0         0      0      4     4 Plant_A  
-#> 5 10:29:34      0 5           0       0         0      0      5     5 Plant_A  
-#> 6 10:29:34      0 6           0       0         0      0      6     6 Plant_A  
-#> # ℹ 1 more variable: pH <dbl>
+#> 1 10:54:01      0 1           0       0         0      0      1     1 TMR      
+#> 2 10:54:01      0 2           0       0         0      0      2     1 Blank    
+#> 3 10:54:01      0 3           0       0         0      0      3     2 TMR      
+#> 4 10:54:01      0 4           0       0         0      0      4     3 TMR      
+#> 5 10:54:01      0 6           0       0         0      0      6     4 TMR      
+#> 6 10:54:01      0 7           0       0         0      0      7     5 TMR      
 ```

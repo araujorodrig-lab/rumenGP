@@ -96,10 +96,10 @@ custom_fit <- fit_custom(
   ),
   model_name = "Hyperbolic"
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 summary(
@@ -113,12 +113,12 @@ summary(
 #> Formula:
 #> Gas_mL ~ A * (Time_h/(Time_h + K))
 #> 
-#> Total bottles: 24
+#> Total bottles: 25
 #> Successful fits: 23
-#> Failed fits: 1
-#> Mean R-squared: 0.8911
-#> Mean RMSE: 3.6575
-#> Mean AIC: 393.3084
-#> Mean BIC: 400.1798
+#> Failed fits: 2
+#> Mean R-squared: 0.9439
+#> Mean RMSE: 1.4049
+#> Mean AIC: 469.519
+#> Mean BIC: 478.4427
 #> 
 ```

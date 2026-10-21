@@ -135,21 +135,21 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">raw_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 6 × 52</span></span>
-<span><span class="co">#&gt;   time_raw   `0`   `1`     `2`    `3`    `4`   `5`   `6`    `7`   `8`    `9`</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 10:29:34  14.2 0      0      0      0      0     0      0     0     0     </span></span>
-<span><span class="co">#&gt; 2 10:39:34  14.2 0.873 -0.0728 0.0364 0.0364 0.910 0.218 -0.146 0.873 0.0364</span></span>
-<span><span class="co">#&gt; 3 10:49:34  14.2 1.42  -0.109  0      0.0364 1.53  0.218  0.764 1.53  0.0364</span></span>
-<span><span class="co">#&gt; 4 10:59:34  14.2 1.82  -0.109  0      0.0364 2.04  0.218  0.764 2.07  0     </span></span>
-<span><span class="co">#&gt; 5 11:09:34  14.2 2.11  -0.146  0      0.0364 2.47  0.218  0.764 2.58  0     </span></span>
-<span><span class="co">#&gt; 6 11:19:34  14.2 2.40  -0.146  0      0.0364 2.84  0.218  0.764 2.98  0     </span></span>
-<span><span class="co">#&gt; # ℹ 41 more variables: `10` &lt;dbl&gt;, `11` &lt;dbl&gt;, `12` &lt;dbl&gt;, `13` &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   `14` &lt;dbl&gt;, `15` &lt;dbl&gt;, `16` &lt;dbl&gt;, `17` &lt;dbl&gt;, `18` &lt;dbl&gt;, `19` &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   `20` &lt;lgl&gt;, `21` &lt;dbl&gt;, `22` &lt;dbl&gt;, `23` &lt;dbl&gt;, `24` &lt;dbl&gt;, `25` &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   `26` &lt;dbl&gt;, `27` &lt;lgl&gt;, `28` &lt;lgl&gt;, `29` &lt;lgl&gt;, `30` &lt;lgl&gt;, `31` &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   `32` &lt;lgl&gt;, `33` &lt;lgl&gt;, `34` &lt;lgl&gt;, `35` &lt;lgl&gt;, `36` &lt;lgl&gt;, `37` &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   `38` &lt;lgl&gt;, `39` &lt;lgl&gt;, `40` &lt;lgl&gt;, `41` &lt;lgl&gt;, `42` &lt;lgl&gt;, `43` &lt;lgl&gt;,</span></span>
-<span><span class="co">#&gt; #   `44` &lt;lgl&gt;, `45` &lt;lgl&gt;, `46` &lt;lgl&gt;, `47` &lt;lgl&gt;, `48` &lt;lgl&gt;, `49` &lt;lgl&gt;, …</span></span></code></pre></div>
+<span><span class="co">#&gt;   time_raw   `0`   `1`    `2`   `3`   `4` `5`     `6`   `7`   `8`   `9`  `10`</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 10:54:01  14.1 0     0      0     0     NA    0     0         0 0     0    </span></span>
+<span><span class="co">#&gt; 2 11:04:01  14.1 0.109 0      0.291 0.364 NA    0.255 0.218     0 0.291 0.291</span></span>
+<span><span class="co">#&gt; 3 11:14:01  14.1 0.146 0.0364 0.546 0.655 NA    0.509 0.437     0 0.509 0.546</span></span>
+<span><span class="co">#&gt; 4 11:24:01  14.1 0.109 0.0364 0.764 0.983 NA    0.728 0.655     0 0.728 0.837</span></span>
+<span><span class="co">#&gt; 5 11:34:01  14.1 0.109 0.0364 0.946 1.24  NA    0.983 0.801     0 0.910 1.02 </span></span>
+<span><span class="co">#&gt; 6 11:44:01  14.1 0.109 0.0364 1.09  1.46  NA    1.16  0.983     0 1.06  1.20 </span></span>
+<span><span class="co">#&gt; # ℹ 40 more variables: `11` &lt;dbl&gt;, `12` &lt;dbl&gt;, `13` &lt;dbl&gt;, `14` &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   `15` &lt;dbl&gt;, `16` &lt;dbl&gt;, `17` &lt;dbl&gt;, `18` &lt;dbl&gt;, `19` &lt;dbl&gt;, `20` &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   `21` &lt;dbl&gt;, `22` &lt;dbl&gt;, `23` &lt;dbl&gt;, `24` &lt;dbl&gt;, `25` &lt;lgl&gt;, `26` &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   `27` &lt;dbl&gt;, `28` &lt;dbl&gt;, `29` &lt;dbl&gt;, `30` &lt;lgl&gt;, `31` &lt;lgl&gt;, `32` &lt;lgl&gt;,</span></span>
+<span><span class="co">#&gt; #   `33` &lt;lgl&gt;, `34` &lt;lgl&gt;, `35` &lt;lgl&gt;, `36` &lt;lgl&gt;, `37` &lt;lgl&gt;, `38` &lt;lgl&gt;,</span></span>
+<span><span class="co">#&gt; #   `39` &lt;lgl&gt;, `40` &lt;lgl&gt;, `41` &lt;lgl&gt;, `42` &lt;lgl&gt;, `43` &lt;lgl&gt;, `44` &lt;lgl&gt;,</span></span>
+<span><span class="co">#&gt; #   `45` &lt;lgl&gt;, `46` &lt;lgl&gt;, `47` &lt;lgl&gt;, `48` &lt;lgl&gt;, `49` &lt;lgl&gt;, `50` &lt;lgl&gt;</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="inspect-metadata">Inspect Metadata<a class="anchor" aria-label="anchor" href="#inspect-metadata"></a>
@@ -157,15 +157,15 @@
 <p>The metadata table contains bottle identifiers, treatments, and replicate information.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">metadata</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 5</span></span>
-<span><span class="co">#&gt;   Bottle  Head   Rep Treatment    pH</span></span>
-<span><span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1      1     1     1 Plant_A    6.24</span></span>
-<span><span class="co">#&gt; 2      2     2     2 Plant_A    6.22</span></span>
-<span><span class="co">#&gt; 3      3     3     3 Plant_A    6.24</span></span>
-<span><span class="co">#&gt; 4      4     4     4 Plant_A    6.3 </span></span>
-<span><span class="co">#&gt; 5      5     5     5 Plant_A    6.15</span></span>
-<span><span class="co">#&gt; 6      6     6     6 Plant_A    6.16</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
+<span><span class="co">#&gt;   Bottle  Head   Rep Treatment</span></span>
+<span><span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    </span></span>
+<span><span class="co">#&gt; 1      1     1     1 TMR      </span></span>
+<span><span class="co">#&gt; 2      2     2     1 Blank    </span></span>
+<span><span class="co">#&gt; 3      3     3     2 TMR      </span></span>
+<span><span class="co">#&gt; 4      4     4     3 TMR      </span></span>
+<span><span class="co">#&gt; 5      6     6     4 TMR      </span></span>
+<span><span class="co">#&gt; 6      7     7     5 TMR</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="validate-metadata">Validate metadata<a class="anchor" aria-label="anchor" href="#validate-metadata"></a>
@@ -175,12 +175,13 @@
 <span>  <span class="va">metadata</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Metadata validation passed.</span></span>
-<span><span class="co">#&gt; Heads: 24</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
 <span><span class="co">#&gt; Treatment: 5</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="process-ankom-data">Process ANKOM data<a class="anchor" aria-label="anchor" href="#process-ankom-data"></a>
+<h3 id="process-ankom-data">Process ANKOM Data<a class="anchor" aria-label="anchor" href="#process-ankom-data"></a>
 </h3>
+<p>Standard processing:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/process_ankom.html">process_ankom</a></span><span class="op">(</span></span>
 <span>  <span class="va">raw_data</span>,</span>
@@ -189,25 +190,50 @@
 <span>  temperature_c <span class="op">=</span> <span class="fl">39</span>,</span>
 <span>  zero_negative_pressure <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p>Optional blank correction:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gp_blank_corrected</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/process_ankom.html">process_ankom</a></span><span class="op">(</span></span>
+<span>  <span class="va">raw_data</span>,</span>
+<span>  <span class="va">metadata</span>,</span>
+<span>  headspace_ml <span class="op">=</span> <span class="fl">210</span>,</span>
+<span>  temperature_c <span class="op">=</span> <span class="fl">39</span>,</span>
+<span>  zero_negative_pressure <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  blank_correction <span class="op">=</span> <span class="st">"subtract_mean"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>When blank correction is enabled, the mean gas production of bottles labeled <code>"Blank"</code> is subtracted from all nonblank bottles at each observation time.</p>
 </div>
 <div class="section level3">
 <h3 id="validate-processed-data">Validate processed data<a class="anchor" aria-label="anchor" href="#validate-processed-data"></a>
 </h3>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/validate_ankom.html">validate_ankom</a></span><span class="op">(</span></span>
 <span>  <span class="va">gp</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 1752</span></span>
-<span><span class="co">#&gt; Heads: 24</span></span>
+<span><span class="co">#&gt; Observations: 3618</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
 <span><span class="co">#&gt; Treatments: 5</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gp_blank_corrected</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/validate_ankom.html">validate_ankom</a></span><span class="op">(</span></span>
+<span>  <span class="va">gp_blank_corrected</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; rumenGP data validation passed.</span></span>
+<span><span class="co">#&gt; Observations: 3618</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
+<span><span class="co">#&gt; Treatments: 5</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="blank-correction">Blank Correction<a class="anchor" aria-label="anchor" href="#blank-correction"></a>
+</h3>
+<p>Blank correction is optional because laboratories may follow different preprocessing protocols. By default, rumenGP retains the original gas-production values.</p>
+<p>When <code>blank_correction = "subtract_mean"</code> is used, the mean gas production of blank bottles is subtracted from all nonblank bottles before model fitting. Negative gas values generated by the correction are truncated to zero by default.</p>
 <hr>
 </div>
 </div>
 <div class="section level2">
 <h2 id="example-workflow-manual-gas-volume-data">Example Workflow: Manual Gas Volume Data<a class="anchor" aria-label="anchor" href="#example-workflow-manual-gas-volume-data"></a>
 </h2>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">manual_volume</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span></span>
 <span>  Bottle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -253,7 +279,7 @@
 <div class="section level2">
 <h2 id="example-workflow-pressure-data">Example Workflow: Pressure Data<a class="anchor" aria-label="anchor" href="#example-workflow-pressure-data"></a>
 </h2>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">manual_pressure</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span></span>
 <span>  Bottle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span></span>
@@ -304,43 +330,43 @@
 <div class="section level2">
 <h2 id="model-fitting">Model Fitting<a class="anchor" aria-label="anchor" href="#model-fitting"></a>
 </h2>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">groot_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_groot.html">fit_groot</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 1752</span></span>
-<span><span class="co">#&gt; Heads: 24</span></span>
+<span><span class="co">#&gt; Observations: 3618</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
 <span><span class="co">#&gt; Treatments: 5</span></span>
 <span></span>
 <span><span class="va">brody_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_brody.html">fit_brody</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 1752</span></span>
-<span><span class="co">#&gt; Heads: 24</span></span>
+<span><span class="co">#&gt; Observations: 3618</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
 <span><span class="co">#&gt; Treatments: 5</span></span>
 <span></span>
 <span><span class="va">gompertz_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_gompertz.html">fit_gompertz</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 1752</span></span>
-<span><span class="co">#&gt; Heads: 24</span></span>
+<span><span class="co">#&gt; Observations: 3618</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
 <span><span class="co">#&gt; Treatments: 5</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="model-summaries">Model summaries<a class="anchor" aria-label="anchor" href="#model-summaries"></a>
 </h3>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">groot_fit</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Groot model summary</span></span>
 <span><span class="co">#&gt; -------------------</span></span>
-<span><span class="co">#&gt; Total bottles: 24</span></span>
-<span><span class="co">#&gt; Successful fits: 24</span></span>
+<span><span class="co">#&gt; Total bottles: 25</span></span>
+<span><span class="co">#&gt; Successful fits: 25</span></span>
 <span><span class="co">#&gt; Failed fits: 0</span></span>
-<span><span class="co">#&gt; Low R-squared (&lt; 0.90): 3</span></span></code></pre></div>
+<span><span class="co">#&gt; Low R-squared (&lt; 0.90): 4</span></span></code></pre></div>
 <hr>
 </div>
 </div>
 <div class="section level2">
 <h2 id="compare-models">Compare Models<a class="anchor" aria-label="anchor" href="#compare-models"></a>
 </h2>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compare_models.html">compare_models</a></span><span class="op">(</span></span>
 <span></span>
 <span>  Groot <span class="op">=</span> <span class="fu"><a href="reference/fit_groot.html">fit_groot</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span>,</span>
@@ -351,49 +377,49 @@
 <span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 1752</span></span>
-<span><span class="co">#&gt; Heads: 24</span></span>
+<span><span class="co">#&gt; Observations: 3618</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
 <span><span class="co">#&gt; Treatments: 5</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 1752</span></span>
-<span><span class="co">#&gt; Heads: 24</span></span>
+<span><span class="co">#&gt; Observations: 3618</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
 <span><span class="co">#&gt; Treatments: 5</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 1752</span></span>
-<span><span class="co">#&gt; Heads: 24</span></span>
+<span><span class="co">#&gt; Observations: 3618</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
 <span><span class="co">#&gt; Treatments: 5</span></span>
 <span></span>
 <span><span class="va">comparison</span></span>
-<span><span class="co">#&gt;      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS</span></span>
-<span><span class="co">#&gt; 1    Groot      24              24           0 0.9134994  2.154301  491.4637</span></span>
-<span><span class="co">#&gt; 2    Brody      24              23           1 0.9453304  3.604892 1076.8697</span></span>
-<span><span class="co">#&gt; 3 Gompertz      24              23           1 0.9545965  4.216094 1837.5449</span></span>
+<span><span class="co">#&gt;      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE Mean_RSS</span></span>
+<span><span class="co">#&gt; 1    Groot      25              25           0 0.9053385  1.945126 3229.918</span></span>
+<span><span class="co">#&gt; 2    Brody      25              23           2 0.9863461  2.027406 3500.071</span></span>
+<span><span class="co">#&gt; 3 Gompertz      25              24           1 0.9292863  3.916214 3433.728</span></span>
 <span><span class="co">#&gt;   Mean_AIC Mean_BIC Lambda_Boundary</span></span>
-<span><span class="co">#&gt; 1 297.0687 306.1754               0</span></span>
-<span><span class="co">#&gt; 2 393.6300 402.7918               0</span></span>
-<span><span class="co">#&gt; 3 392.2245 401.3864               8</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 436.0919 447.9643               0</span></span>
+<span><span class="co">#&gt; 2 445.7973 457.6956               0</span></span>
+<span><span class="co">#&gt; 3 760.7782 772.6769              22</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="rank-models">Rank Models<a class="anchor" aria-label="anchor" href="#rank-models"></a>
 </h3>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/rank_models.html">rank_models</a></span><span class="op">(</span></span>
 <span>  <span class="va">comparison</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt;      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS</span></span>
-<span><span class="co">#&gt; 1    Groot      24              24           0 0.9134994  2.154301  491.4637</span></span>
-<span><span class="co">#&gt; 2    Brody      24              23           1 0.9453304  3.604892 1076.8697</span></span>
-<span><span class="co">#&gt; 3 Gompertz      24              23           1 0.9545965  4.216094 1837.5449</span></span>
+<span><span class="co">#&gt;      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE Mean_RSS</span></span>
+<span><span class="co">#&gt; 1    Groot      25              25           0 0.9053385  1.945126 3229.918</span></span>
+<span><span class="co">#&gt; 2    Brody      25              23           2 0.9863461  2.027406 3500.071</span></span>
+<span><span class="co">#&gt; 3 Gompertz      25              24           1 0.9292863  3.916214 3433.728</span></span>
 <span><span class="co">#&gt;   Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC Rank_BIC</span></span>
-<span><span class="co">#&gt; 1 297.0687 306.1754               0       3         1        1        1</span></span>
-<span><span class="co">#&gt; 2 393.6300 402.7918               0       2         2        3        3</span></span>
-<span><span class="co">#&gt; 3 392.2245 401.3864               8       1         3        2        2</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 436.0919 447.9643               0       3         1        1        1</span></span>
+<span><span class="co">#&gt; 2 445.7973 457.6956               0       1         2        2        2</span></span>
+<span><span class="co">#&gt; 3 760.7782 772.6769              22       2         3        3        3</span></span></code></pre></div>
 <hr>
 </div>
 </div>
 <div class="section level2">
 <h2 id="treatment-level-comparison">Treatment-Level Comparison<a class="anchor" aria-label="anchor" href="#treatment-level-comparison"></a>
 </h2>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">treatment_comparison</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="reference/compare_models_by_treatment.html">compare_models_by_treatment</a></span><span class="op">(</span></span>
 <span></span>
@@ -405,16 +431,16 @@
 <span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 1752</span></span>
-<span><span class="co">#&gt; Heads: 24</span></span>
+<span><span class="co">#&gt; Observations: 3618</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
 <span><span class="co">#&gt; Treatments: 5</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 1752</span></span>
-<span><span class="co">#&gt; Heads: 24</span></span>
+<span><span class="co">#&gt; Observations: 3618</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
 <span><span class="co">#&gt; Treatments: 5</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 1752</span></span>
-<span><span class="co">#&gt; Heads: 24</span></span>
+<span><span class="co">#&gt; Observations: 3618</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
 <span><span class="co">#&gt; Treatments: 5</span></span>
 <span></span>
 <span><span class="va">ranked_treatments</span> <span class="op">&lt;-</span></span>
@@ -425,14 +451,15 @@
 <span><span class="fu"><a href="reference/best_model_by_treatment.html">best_model_by_treatment</a></span><span class="op">(</span></span>
 <span>  <span class="va">ranked_treatments</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 5 × 12</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 12</span></span>
 <span><span class="co">#&gt;   Treatment Model Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE Rank_AIC</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;int&gt;     &lt;int&gt;    &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 BLANK     Groot   0.714      1.75     257.     266.       3         1        1</span></span>
-<span><span class="co">#&gt; 2 Plant_A   Groot   0.968      2.33     281.     290.       1         1        1</span></span>
-<span><span class="co">#&gt; 3 Plant_B   Groot   0.854      1.73     281.     290.       3         1        1</span></span>
-<span><span class="co">#&gt; 4 Plant_C   Groot   0.982      2.11     309.     319.       1         1        1</span></span>
-<span><span class="co">#&gt; 5 TMR       Groot   0.988      3.14     377.     386.       1         1        1</span></span>
+<span><span class="co">#&gt; 1 Blank     Groot   0.792     0.890     355.     366.       2         1        1</span></span>
+<span><span class="co">#&gt; 2 High      Groot   0.976     5.51      629.     641.       2         2        1</span></span>
+<span><span class="co">#&gt; 3 High      Brody   0.977     5.49      631.     643.       1         1        2</span></span>
+<span><span class="co">#&gt; 4 Low       Brody   0.998     0.870     340.     352.       1         1        1</span></span>
+<span><span class="co">#&gt; 5 Medium    Groot   0.999     0.864     369.     380.       1         1        1</span></span>
+<span><span class="co">#&gt; 6 TMR       Brody   0.964     1.42      397.     409.       1         2        1</span></span>
 <span><span class="co">#&gt; # ℹ 3 more variables: Rank_BIC &lt;int&gt;, Total_Rank &lt;int&gt;, Overall_Rank &lt;int&gt;</span></span></code></pre></div>
 <hr>
 </div>
@@ -440,7 +467,7 @@
 <h2 id="user-defined-models">User-Defined Models<a class="anchor" aria-label="anchor" href="#user-defined-models"></a>
 </h2>
 <p>Researchers can fit their own kinetic equations using <code><a href="reference/fit_custom.html">fit_custom()</a></code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">custom_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_custom.html">fit_custom</a></span><span class="op">(</span></span>
 <span></span>
 <span>  data <span class="op">=</span> <span class="va">gp</span>,</span>
@@ -469,8 +496,8 @@
 <span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 1752</span></span>
-<span><span class="co">#&gt; Heads: 24</span></span>
+<span><span class="co">#&gt; Observations: 3618</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
 <span><span class="co">#&gt; Treatments: 5</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">custom_fit</span><span class="op">)</span></span>
@@ -482,15 +509,15 @@
 <span><span class="co">#&gt; Formula:</span></span>
 <span><span class="co">#&gt; Gas_mL ~ A * (Time_h/(Time_h + K))</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Total bottles: 24</span></span>
-<span><span class="co">#&gt; Successful fits: 23</span></span>
+<span><span class="co">#&gt; Total bottles: 25</span></span>
+<span><span class="co">#&gt; Successful fits: 24</span></span>
 <span><span class="co">#&gt; Failed fits: 1</span></span>
-<span><span class="co">#&gt; Mean R-squared: 0.8965</span></span>
-<span><span class="co">#&gt; Mean RMSE: 3.5146</span></span>
-<span><span class="co">#&gt; Mean AIC: 384.8351</span></span>
-<span><span class="co">#&gt; Mean BIC: 391.7065</span></span></code></pre></div>
+<span><span class="co">#&gt; Mean R-squared: 0.9046</span></span>
+<span><span class="co">#&gt; Mean RMSE: 1.3572</span></span>
+<span><span class="co">#&gt; Mean AIC: 455.0445</span></span>
+<span><span class="co">#&gt; Mean BIC: 463.9685</span></span></code></pre></div>
 <p>Compare custom and built-in models:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/compare_models.html">compare_models</a></span><span class="op">(</span></span>
 <span></span>
 <span>  Groot <span class="op">=</span> <span class="fu"><a href="reference/fit_groot.html">fit_groot</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span>,</span>
@@ -501,21 +528,21 @@
 <span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 1752</span></span>
-<span><span class="co">#&gt; Heads: 24</span></span>
+<span><span class="co">#&gt; Observations: 3618</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
 <span><span class="co">#&gt; Treatments: 5</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 1752</span></span>
-<span><span class="co">#&gt; Heads: 24</span></span>
+<span><span class="co">#&gt; Observations: 3618</span></span>
+<span><span class="co">#&gt; Heads: 25</span></span>
 <span><span class="co">#&gt; Treatments: 5</span></span>
 <span><span class="co">#&gt;        Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS</span></span>
-<span><span class="co">#&gt; 1      Groot      24              24           0 0.9134994  2.154301  491.4637</span></span>
-<span><span class="co">#&gt; 2      Brody      24              23           1 0.9453304  3.604892 1076.8697</span></span>
-<span><span class="co">#&gt; 3 Hyperbolic      24              23           1 0.8964862  3.514586 1053.1526</span></span>
+<span><span class="co">#&gt; 1      Groot      25              25           0 0.9053385  1.945126 3229.9183</span></span>
+<span><span class="co">#&gt; 2      Brody      25              23           2 0.9863461  2.027406 3500.0705</span></span>
+<span><span class="co">#&gt; 3 Hyperbolic      25              24           1 0.9046316  1.357169  400.0963</span></span>
 <span><span class="co">#&gt;   Mean_AIC Mean_BIC Lambda_Boundary</span></span>
-<span><span class="co">#&gt; 1 297.0687 306.1754               0</span></span>
-<span><span class="co">#&gt; 2 393.6300 402.7918               0</span></span>
-<span><span class="co">#&gt; 3 384.8351 391.7065               0</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 436.0919 447.9643               0</span></span>
+<span><span class="co">#&gt; 2 445.7973 457.6956               0</span></span>
+<span><span class="co">#&gt; 3 455.0445 463.9685               0</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
@@ -524,34 +551,34 @@
 <div class="section level3">
 <h3 id="raw-gas-production">Raw gas production<a class="anchor" aria-label="anchor" href="#raw-gas-production"></a>
 </h3>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_gp.html">plot_gp</a></span><span class="op">(</span></span>
 <span>  <span class="va">gp</span>,</span>
-<span>  head <span class="op">=</span> <span class="st">"1"</span></span>
+<span>  head <span class="op">=</span> <span class="st">"6"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="plot-model-fit">Plot model fit<a class="anchor" aria-label="anchor" href="#plot-model-fit"></a>
 </h3>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_fit.html">plot_fit</a></span><span class="op">(</span></span>
 <span>  <span class="va">groot_fit</span>,</span>
-<span>  head <span class="op">=</span> <span class="st">"1"</span></span>
+<span>  head <span class="op">=</span> <span class="st">"6"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="plot-residuals">Plot residuals<a class="anchor" aria-label="anchor" href="#plot-residuals"></a>
 </h3>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_residuals.html">plot_residuals</a></span><span class="op">(</span></span>
 <span>  <span class="va">groot_fit</span>,</span>
-<span>  head <span class="op">=</span> <span class="st">"1"</span></span>
+<span>  head <span class="op">=</span> <span class="st">"6"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="treatment-means">Treatment means<a class="anchor" aria-label="anchor" href="#treatment-means"></a>
 </h3>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_treatment_mean.html">plot_treatment_mean</a></span><span class="op">(</span></span>
 <span>  Groot <span class="op">=</span> <span class="fu"><a href="reference/fit_groot.html">fit_groot</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span>,</span>
 <span>  Brody <span class="op">=</span> <span class="fu"><a href="reference/fit_brody.html">fit_brody</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span>,</span>
@@ -581,7 +608,7 @@ Refit models
     ↓
 Compare models</code></pre>
 <p>Example:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gp_clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/exclude_heads.html">exclude_heads</a></span><span class="op">(</span></span>
 <span>  <span class="va">gp</span>,</span>
 <span>  heads <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10"</span><span class="op">)</span>,</span>

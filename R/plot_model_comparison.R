@@ -52,7 +52,7 @@
 #' plot_model_comparison(
 #'   Groot = groot_fit,
 #'   Gompertz = gompertz_fit,
-#'   head = 1
+#'   head = 6
 #' )
 #'
 #' @return A \code{ggplot2} object.

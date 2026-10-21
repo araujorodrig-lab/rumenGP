@@ -106,21 +106,21 @@ gp <- process_ankom(
 fit_default <- fit_logistic(
   gp
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 summary(fit_default)
 #> 
 #> Logistic model summary
 #> ----------------------
-#> Total bottles: 24
+#> Total bottles: 25
 #> Successful fits: 24
-#> Failed fits: 0
-#> Low R-squared (< 0.90): 7
-#> Lambda at boundary: 9
+#> Failed fits: 1
+#> Low R-squared (< 0.90): 2
+#> Lambda at boundary: 23
 #> 
 
 # Fit using custom starting values
@@ -132,21 +132,21 @@ fit_custom_start <- fit_logistic(
     lambda = 1
   )
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 summary(fit_custom_start)
 #> 
 #> Logistic model summary
 #> ----------------------
-#> Total bottles: 24
-#> Successful fits: 23
+#> Total bottles: 25
+#> Successful fits: 24
 #> Failed fits: 1
-#> Low R-squared (< 0.90): 12
-#> Lambda at boundary: 12
+#> Low R-squared (< 0.90): 22
+#> Lambda at boundary: 23
 #> 
 
 

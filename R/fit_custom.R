@@ -2,7 +2,7 @@
 #' Fit Custom Nonlinear Model
 #'
 #' Fits a user-defined nonlinear model
-#' to each bottle in a rumen_gp dataset.
+#' to each bottle in a \code{rumen_gp} dataset.
 #'
 #' ## Overview
 #'
@@ -17,6 +17,7 @@
 #'   \item \code{plot_fit()}
 #'   \item \code{plot_residuals()}
 #'   \item \code{compare_models()}
+#'   \item \code{rank_models()}
 #' }
 #'
 #' making them fully compatible with the
@@ -91,11 +92,12 @@
 #'   \item Start with biologically meaningful equations
 #'   \item Use reasonable starting values
 #'   \item Apply parameter bounds when appropriate
+#'   \item Inspect convergence diagnostics
 #'   \item Compare custom models against built-in models
 #'   \item Evaluate both fit quality and parameter interpretability
 #' }
 #'
-#' @param data A rumen_gp object.
+#' @param data A \code{rumen_gp} object.
 #'
 #' @param formula A nonlinear model formula.
 #'
@@ -111,7 +113,6 @@
 #' to label the fitted model.
 #'
 #' @examples
-#'
 #'
 #' files <- example_data()
 #'
@@ -161,23 +162,33 @@
 #'
 #' summary(custom_fit)
 #'
+#' # Find a bottle with a successful fit
+#' successful_head <-
+#'   custom_fit$diagnostics |>
+#'   dplyr::filter(
+#'     Converged
+#'   ) |>
+#'   dplyr::slice(1) |>
+#'   dplyr::pull(
+#'     Head
+#'   )
+#'
 #' plot_fit(
 #'   custom_fit,
-#'   head = 1
+#'   head = successful_head
 #' )
 #'
 #' plot_residuals(
 #'   custom_fit,
-#'   head = 1
+#'   head = successful_head
 #' )
 #'
-#' # Compare with built-in models
+#' # Compare against built-in models
 #' compare_models(
 #'   Groot = fit_groot(gp),
+#'   BurrXII = fit_burr_xii(gp),
 #'   Hyperbolic = custom_fit
 #' )
-#'
-#'
 #'
 #' @return A \code{custom_fit} object containing:
 #' \itemize{
@@ -194,6 +205,7 @@
 #' @seealso
 #' \code{\link{fit_groot}},
 #' \code{\link{fit_mm}},
+#' \code{\link{fit_burr_xii}},
 #' \code{\link{compare_models}},
 #' \code{\link{plot_fit}},
 #' \code{\link{plot_residuals}}

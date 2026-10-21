@@ -33,11 +33,6 @@ The package includes a small example dataset.
 files <- example_data()
 
 files
-#> $ankom
-#> [1] "C:/Users/Arlan/AppData/Local/Temp/Rtmp06LOeG/temp_libpath4a54715263dc/rumenGP/extdata/example_ankom.xlsx"
-#> 
-#> $metadata
-#> [1] "C:/Users/Arlan/AppData/Local/Temp/Rtmp06LOeG/temp_libpath4a54715263dc/rumenGP/extdata/example_metadata.xlsx"
 ```
 
 ## Import ANKOM Data
@@ -65,7 +60,7 @@ metadata <- validate_metadata(
   metadata
 )
 #> Metadata validation passed.
-#> Heads: 24
+#> Heads: 25
 #> Treatment: 5
 ```
 
@@ -84,9 +79,27 @@ gp <- process_ankom(
 )
 ```
 
+Optional blank correction:
+
+``` r
+
+gp_blank_corrected <- process_ankom(
+  raw_data,
+  metadata,
+  headspace_ml = 210,
+  temperature_c = 39,
+  zero_negative_pressure = TRUE,
+  blank_correction = "subtract_mean"
+)
+```
+
+When blank correction is enabled, the mean gas production of bottles
+identified as `Treatment = "Blank"` is subtracted from all nonblank
+bottles at each observation time.
+
 ## Validate Processed Data
 
-The resulting dataset is a standardized `rumen_gp` object.
+The resulting datasets are standardized `rumen_gp` objects.
 
 ``` r
 
@@ -94,8 +107,16 @@ gp <- validate_ankom(
   gp
 )
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
+#> Treatments: 5
+
+gp_blank_corrected <- validate_ankom(
+  gp_blank_corrected
+)
+#> rumenGP data validation passed.
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 class(gp)
@@ -107,16 +128,15 @@ Inspect the data:
 ``` r
 
 head(gp)
-#> # A tibble: 6 × 11
+#> # A tibble: 6 × 10
 #>   time_raw Time_h Head  Gas_PSI Gas_kPa Gas_moles Gas_mL Bottle   Rep Treatment
 #>   <chr>     <dbl> <chr>   <dbl>   <dbl>     <dbl>  <dbl>  <dbl> <dbl> <chr>    
-#> 1 10:29:34      0 1           0       0         0      0      1     1 Plant_A  
-#> 2 10:29:34      0 2           0       0         0      0      2     2 Plant_A  
-#> 3 10:29:34      0 3           0       0         0      0      3     3 Plant_A  
-#> 4 10:29:34      0 4           0       0         0      0      4     4 Plant_A  
-#> 5 10:29:34      0 5           0       0         0      0      5     5 Plant_A  
-#> 6 10:29:34      0 6           0       0         0      0      6     6 Plant_A  
-#> # ℹ 1 more variable: pH <dbl>
+#> 1 10:54:01      0 1           0       0         0      0      1     1 TMR      
+#> 2 10:54:01      0 2           0       0         0      0      2     1 Blank    
+#> 3 10:54:01      0 3           0       0         0      0      3     2 TMR      
+#> 4 10:54:01      0 4           0       0         0      0      4     3 TMR      
+#> 5 10:54:01      0 6           0       0         0      0      6     4 TMR      
+#> 6 10:54:01      0 7           0       0         0      0      7     5 TMR
 ```
 
 ## Visualize Raw Gas Production
@@ -126,10 +146,63 @@ Individual bottle profiles can be visualized.
 ``` r
 
 plot_gp(
-  gp,
-  head = "1"
+  gp
 )
 ```
+
+![](getting-started_files/figure-html/unnamed-chunk-10-1.png)
+
+Remove Abnormal heads
+
+``` r
+
+gp_clean <- exclude_heads(
+  gp,
+  heads = c("1", "2", "4", "20"),
+  reason = "Sensor malfunction"
+)
+
+plot_gp(
+  gp_clean
+)
+```
+
+![](getting-started_files/figure-html/unnamed-chunk-11-1.png)
+
+Treatment-level observations can also be visualized.
+
+``` r
+
+plot_gp(
+  gp_clean,
+  treatment = "TMR"
+)
+```
+
+![](getting-started_files/figure-html/unnamed-chunk-12-1.png)
+
+Mean treatment profiles can be displayed using:
+
+``` r
+
+plot_gp(
+  gp_clean,
+  treatment = "TMR",
+  mean_treatment = TRUE
+)
+```
+
+![](getting-started_files/figure-html/unnamed-chunk-13-1.png)
+
+### Note on Blank Correction
+
+Blank correction is optional because laboratories often follow different
+preprocessing procedures.
+
+By default, rumenGP retains the original gas-production values. When
+`blank_correction = "subtract_mean"` is used, the mean gas production of
+blank bottles is subtracted from all nonblank bottles prior to model
+fitting and comparison.
 
 ## Fit Kinetic Models
 
@@ -137,41 +210,40 @@ Several built-in models are available.
 
 ``` r
 
-groot_fit <- fit_groot(gp)
+groot_fit <- fit_groot(gp_clean)
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
-mm_fit <- fit_mm(gp)
+mm_fit <- fit_mm(gp_clean)
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
-gompertz_fit <- fit_gompertz(gp)
+gompertz_fit <- fit_gompertz(gp_clean)
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
-brody_fit <- fit_brody(gp)
+brody_fit <- fit_brody(gp_clean)
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
-burr_fit <- fit_burr_xii(gp)
+burr_fit <- fit_burr_xii(gp_clean)
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
-inverse_paralogistic_fit <-
-  fit_inverse_paralogistic(gp)
+inverse_paralogistic_fit <-  fit_inverse_paralogistic(gp_clean)
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 ```
 
@@ -185,10 +257,10 @@ summary(groot_fit)
 #> 
 #> Groot model summary
 #> -------------------
-#> Total bottles: 24
-#> Successful fits: 24
+#> Total bottles: 21
+#> Successful fits: 21
 #> Failed fits: 0
-#> Low R-squared (< 0.90): 3
+#> Low R-squared (< 0.90): 0
 ```
 
 ## Identify Potentially Problematic Bottles
@@ -201,22 +273,22 @@ flags <- flag_model(
 
 head(flags)
 #>   Head Bottle Rep Treatment Converged Status       RSS        R2      RMSE
-#> 1    1      1   1   Plant_A      TRUE     OK  34.55456 0.9990094 0.6927658
-#> 2   10     10   4   Plant_B      TRUE     OK 111.43398 0.1535773 1.2440636
-#> 3   11     11   5   Plant_B      TRUE     OK 158.20900 0.9956744 1.4823452
-#> 4   12     12   6   Plant_B      TRUE     OK 201.79056 0.9948662 1.6741107
-#> 5   13     13   1   Plant_C      TRUE     OK 240.73021 0.9946908 1.8285172
-#> 6   14     14   2   Plant_C      TRUE     OK 415.12645 0.9908573 2.4011758
+#> 1   10     10   2       Low      TRUE     OK 150.63376 0.9983872 1.0227745
+#> 2   11     11   3       Low      TRUE     OK 181.51413 0.9978351 1.1227265
+#> 3   12     12   4       Low      TRUE     OK  81.41463 0.9990175 0.7519171
+#> 4   13     13   1    Medium      TRUE     OK  84.42650 0.9989933 0.7656991
+#> 5   14     14   2    Medium      TRUE     OK  60.68699 0.9993438 0.6491821
+#> 6   15     15   3    Medium      TRUE     OK 153.90377 0.9982583 1.0338163
 #>        AIC      BIC Lambda_Boundary Flag_FitFailed Flag_LowR2
-#> 1 159.4700 168.5767           FALSE          FALSE      FALSE
-#> 2 243.7743 252.8810           FALSE          FALSE       TRUE
-#> 3 269.0092 278.1159           FALSE          FALSE      FALSE
-#> 4 286.5278 295.6344           FALSE          FALSE      FALSE
-#> 5 299.2319 308.3386           FALSE          FALSE      FALSE
-#> 6 338.4652 347.5718           FALSE          FALSE      FALSE
+#> 1 423.1398 435.0190           FALSE          FALSE      FALSE
+#> 2 449.9932 461.8725           FALSE          FALSE      FALSE
+#> 3 334.5371 346.4164           FALSE          FALSE      FALSE
+#> 4 339.7681 351.6473           FALSE          FALSE      FALSE
+#> 5 292.2262 304.1055           FALSE          FALSE      FALSE
+#> 6 426.2323 438.1116           FALSE          FALSE      FALSE
 #>   Flag_LambdaBoundary Overall_Flag
 #> 1               FALSE           OK
-#> 2               FALSE       LOW_R2
+#> 2               FALSE           OK
 #> 3               FALSE           OK
 #> 4               FALSE           OK
 #> 5               FALSE           OK
@@ -231,7 +303,7 @@ Observed and predicted values can be visualized.
 
 plot_fit(
   groot_fit,
-  head = "1"
+  head = "6"
 )
 ```
 
@@ -243,7 +315,7 @@ Residual plots help identify systematic deviations.
 
 plot_residuals(
   groot_fit,
-  head = "1"
+  head = "6"
 )
 ```
 
@@ -261,8 +333,7 @@ comparison <- compare_models(
 
   BurrXII = burr_fit,
 
-  InverseParalogistic =
-    inverse_paralogistic_fit,
+  InverseParalogistic = inverse_paralogistic_fit,
 
   Gompertz = gompertz_fit,
 
@@ -272,19 +343,19 @@ comparison <- compare_models(
 
 comparison
 #>                 Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE
-#> 1               Groot      24              24           0 0.9134994  2.154301
-#> 2     MichaelisMenten      24              23           1 0.9813334  2.072285
-#> 3             BurrXII      24              24           0 0.8834349  3.734508
-#> 4 InverseParalogistic      24              24           0 0.8898379  3.413298
-#> 5            Gompertz      24              23           1 0.9545965  4.216094
-#> 6               Brody      24              23           1 0.9453304  3.604892
+#> 1               Groot      21              21           0 0.9967371 0.9955345
+#> 2     MichaelisMenten      21              21           0 0.8804937 2.4761155
+#> 3             BurrXII      21              21           0 0.9966061 1.1008029
+#> 4 InverseParalogistic      21              21           0 0.9565272 3.2532678
+#> 5            Gompertz      21              21           0 0.9722322 3.4802686
+#> 6               Brody      21              21           0 0.9969746 0.9479644
 #>    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary
-#> 1  491.4637 297.0687 306.1754               0
-#> 2  472.4112 294.8372 303.9991               0
-#> 3 1729.1626 358.8921 370.3444               0
-#> 4 1244.0029 351.4587 360.5654               0
-#> 5 1837.5449 392.2245 401.3864               8
-#> 6 1076.8697 393.6300 402.7918               0
+#> 1  150.1038 406.9209 418.7920               0
+#> 2 2285.4631 527.0733 538.9708               0
+#> 3  209.4051 421.5674 436.4393               0
+#> 4 3549.5272 589.5483 601.4195               0
+#> 5 1868.7759 769.2312 781.1287              21
+#> 6  144.1933 386.1759 398.0734               0
 ```
 
 The comparison table includes:
@@ -304,26 +375,26 @@ rank_models(
   comparison
 )
 #>                 Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE
-#> 1               Groot      24              24           0 0.9134994  2.154301
-#> 2     MichaelisMenten      24              23           1 0.9813334  2.072285
-#> 3             BurrXII      24              24           0 0.8834349  3.734508
-#> 4 InverseParalogistic      24              24           0 0.8898379  3.413298
-#> 5            Gompertz      24              23           1 0.9545965  4.216094
-#> 6               Brody      24              23           1 0.9453304  3.604892
+#> 1               Groot      21              21           0 0.9967371 0.9955345
+#> 2     MichaelisMenten      21              21           0 0.8804937 2.4761155
+#> 3             BurrXII      21              21           0 0.9966061 1.1008029
+#> 4 InverseParalogistic      21              21           0 0.9565272 3.2532678
+#> 5            Gompertz      21              21           0 0.9722322 3.4802686
+#> 6               Brody      21              21           0 0.9969746 0.9479644
 #>    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC
-#> 1  491.4637 297.0687 306.1754               0       4         2        2
-#> 2  472.4112 294.8372 303.9991               0       1         1        1
-#> 3 1729.1626 358.8921 370.3444               0       6         5        4
-#> 4 1244.0029 351.4587 360.5654               0       5         3        3
-#> 5 1837.5449 392.2245 401.3864               8       2         6        5
-#> 6 1076.8697 393.6300 402.7918               0       3         4        6
+#> 1  150.1038 406.9209 418.7920               0       2         2        2
+#> 2 2285.4631 527.0733 538.9708               0       6         4        4
+#> 3  209.4051 421.5674 436.4393               0       3         3        3
+#> 4 3549.5272 589.5483 601.4195               0       5         5        5
+#> 5 1868.7759 769.2312 781.1287              21       4         6        6
+#> 6  144.1933 386.1759 398.0734               0       1         1        1
 #>   Rank_BIC
 #> 1        2
-#> 2        1
-#> 3        4
-#> 4        3
-#> 5        5
-#> 6        6
+#> 2        4
+#> 3        3
+#> 4        5
+#> 5        6
+#> 6        1
 ```
 
 ## Compare Models by Treatment
@@ -332,8 +403,7 @@ Treatment-level comparisons are also available.
 
 ``` r
 
-treatment_comparison <-
-  compare_models_by_treatment(
+treatment_comparison <-  compare_models_by_treatment(
 
     Groot = groot_fit,
 
@@ -341,8 +411,7 @@ treatment_comparison <-
 
     BurrXII = burr_fit,
 
-    InverseParalogistic =
-      inverse_paralogistic_fit,
+    InverseParalogistic = inverse_paralogistic_fit,
 
     Gompertz = gompertz_fit,
 
@@ -354,16 +423,16 @@ treatment_comparison
 #> # A tibble: 30 × 6
 #>    Treatment Model           Mean_R2 Mean_RMSE Mean_AIC Mean_BIC
 #>    <chr>     <chr>             <dbl>     <dbl>    <dbl>    <dbl>
-#>  1 BLANK     Groot             0.714     1.75      257.     266.
-#>  2 Plant_A   Groot             0.968     2.33      281.     290.
-#>  3 Plant_B   Groot             0.854     1.73      281.     290.
-#>  4 Plant_C   Groot             0.982     2.11      309.     319.
-#>  5 TMR       Groot             0.988     3.14      377.     386.
-#>  6 BLANK     MichaelisMenten   0.972     0.925     201.     210.
-#>  7 Plant_A   MichaelisMenten   0.970     2.32      284.     293.
-#>  8 Plant_B   MichaelisMenten   0.994     1.81      292.     301.
-#>  9 Plant_C   MichaelisMenten   0.983     2.09      313.     322.
-#> 10 TMR       MichaelisMenten   0.989     3.12      381.     390.
+#>  1 Blank     Groot             0.990     1.04      426.     438.
+#>  2 High      Groot             0.998     1.19      457.     469.
+#>  3 Low       Groot             0.998     1.04      420.     432.
+#>  4 Medium    Groot             0.999     0.864     369.     380.
+#>  5 TMR       Groot             0.999     0.827     356.     368.
+#>  6 Blank     MichaelisMenten   0.379     8.82     1050.    1062.
+#>  7 High      MichaelisMenten   0.998     1.18      460.     471.
+#>  8 Low       MichaelisMenten   0.998     1.04      422.     433.
+#>  9 Medium    MichaelisMenten   0.999     0.861     370.     382.
+#> 10 TMR       MichaelisMenten   0.999     0.824     357.     369.
 #> # ℹ 20 more rows
 ```
 
@@ -380,16 +449,16 @@ ranked_treatments
 #> # A tibble: 30 × 10
 #>    Treatment Model         Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE
 #>    <chr>     <chr>           <dbl>     <dbl>    <dbl>    <dbl>   <int>     <int>
-#>  1 BLANK     Groot           0.714     1.75      257.     266.       6         2
-#>  2 Plant_A   Groot           0.968     2.33      281.     290.       2         2
-#>  3 Plant_B   Groot           0.854     1.73      281.     290.       4         1
-#>  4 Plant_C   Groot           0.982     2.11      309.     319.       2         2
-#>  5 TMR       Groot           0.988     3.14      377.     386.       2         2
-#>  6 BLANK     MichaelisMen…   0.972     0.925     201.     210.       1         1
-#>  7 Plant_A   MichaelisMen…   0.970     2.32      284.     293.       1         1
-#>  8 Plant_B   MichaelisMen…   0.994     1.81      292.     301.       1         2
-#>  9 Plant_C   MichaelisMen…   0.983     2.09      313.     322.       1         1
-#> 10 TMR       MichaelisMen…   0.989     3.12      381.     390.       1         1
+#>  1 Blank     Groot           0.990     1.04      426.     438.       3         2
+#>  2 High      Groot           0.998     1.19      457.     469.       3         3
+#>  3 Low       Groot           0.998     1.04      420.     432.       4         4
+#>  4 Medium    Groot           0.999     0.864     369.     380.       2         2
+#>  5 TMR       Groot           0.999     0.827     356.     368.       4         4
+#>  6 Blank     MichaelisMen…   0.379     8.82     1050.    1062.       6         6
+#>  7 High      MichaelisMen…   0.998     1.18      460.     471.       2         2
+#>  8 Low       MichaelisMen…   0.998     1.04      422.     433.       2         3
+#>  9 Medium    MichaelisMen…   0.999     0.861     370.     382.       1         1
+#> 10 TMR       MichaelisMen…   0.999     0.824     357.     369.       3         3
 #> # ℹ 20 more rows
 #> # ℹ 2 more variables: Rank_AIC <int>, Rank_BIC <int>
 ```
@@ -404,18 +473,15 @@ best_models <-
   )
 
 best_models
-#> # A tibble: 9 × 12
+#> # A tibble: 6 × 12
 #>   Treatment Model Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE Rank_AIC
 #>   <chr>     <chr>   <dbl>     <dbl>    <dbl>    <dbl>   <int>     <int>    <int>
-#> 1 BLANK     Mich…   0.972     0.925     201.     210.       1         1        1
-#> 2 Plant_A   Groot   0.968     2.33      281.     290.       2         2        1
-#> 3 Plant_A   Mich…   0.970     2.32      284.     293.       1         1        2
-#> 4 Plant_B   Groot   0.854     1.73      281.     290.       4         1        1
-#> 5 Plant_B   Mich…   0.994     1.81      292.     301.       1         2        2
-#> 6 Plant_C   Groot   0.982     2.11      309.     319.       2         2        1
-#> 7 Plant_C   Mich…   0.983     2.09      313.     322.       1         1        2
-#> 8 TMR       Groot   0.988     3.14      377.     386.       2         2        1
-#> 9 TMR       Mich…   0.989     3.12      381.     390.       1         1        2
+#> 1 Blank     Burr…   0.992     0.997     420.     435.       1         1        1
+#> 2 High      Brody   0.998     1.17      457.     469.       1         1        1
+#> 3 Low       Burr…   0.999     0.790     348.     363.       1         1        2
+#> 4 Medium    Groot   0.999     0.864     369.     380.       2         2        1
+#> 5 Medium    Mich…   0.999     0.861     370.     382.       1         1        2
+#> 6 TMR       Burr…   1.000     0.510     219.     234.       1         1        1
 #> # ℹ 3 more variables: Rank_BIC <int>, Total_Rank <int>, Overall_Rank <int>
 ```
 
@@ -426,11 +492,13 @@ best_models
 model_win_frequency(
   best_models
 )
-#> # A tibble: 2 × 2
+#> # A tibble: 4 × 2
 #>   Model           Treatments_Won
 #>   <chr>                    <int>
-#> 1 MichaelisMenten              5
-#> 2 Groot                        4
+#> 1 BurrXII                      3
+#> 2 Brody                        1
+#> 3 Groot                        1
+#> 4 MichaelisMenten              1
 ```
 
 ## Quality Control Workflow

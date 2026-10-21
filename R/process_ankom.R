@@ -11,12 +11,19 @@
 #'   \item Removes Head 0 (the ANKOM receiver/base station)
 #'   \item Converts pressure measurements to gas volumes
 #'   \item Applies headspace and temperature corrections
+#'   \item Optionally corrects gas production using blank bottles
 #'   \item Produces a standardized \code{rumen_gp} object
 #' }
 #'
 #' Head 0 is reserved by the ANKOM RF system as the
 #' receiver/base station and is automatically removed
 #' during processing.
+#'
+#' Blank correction is optional and is not applied
+#' unless explicitly requested. When blank correction
+#' is enabled, the mean gas production of bottles
+#' labeled \code{Treatment = "Blank"} is subtracted
+#' from all nonblank bottles at each observation time.
 #'
 #' @param raw_data Raw ANKOM data table.
 #'
@@ -29,6 +36,18 @@
 #' @param zero_negative_pressure Logical. If \code{TRUE},
 #' negative pressure values are converted to zero before
 #' gas-volume calculations.
+#'
+#' @param blank_correction Character.
+#' Blank-correction method.
+#' One of:
+#' \itemize{
+#'   \item \code{"none"} (default)
+#'   \item \code{"subtract_mean"}
+#' }
+#'
+#' @param truncate_negative_gas Logical.
+#' If \code{TRUE}, gas production values below zero
+#' after blank correction are set to zero.
 #'
 #' @examples
 #'
@@ -63,6 +82,17 @@
 #'
 #' head(gp_zeroed)
 #'
+#' # Blank-corrected gas production
+#' gp_blank_corrected <- process_ankom(
+#'   raw_data,
+#'   metadata,
+#'   headspace_ml = 210,
+#'   temperature_c = 39,
+#'   blank_correction = "subtract_mean"
+#' )
+#'
+#' head(gp_blank_corrected)
+#'
 #' @return A \code{rumen_gp} object containing:
 #' \itemize{
 #'   \item Time points
@@ -70,6 +100,7 @@
 #'   \item Bottle identifiers
 #'   \item Treatment assignments
 #'   \item Additional metadata
+#'   \item Processing settings
 #' }
 #'
 #' @seealso
@@ -84,7 +115,12 @@ process_ankom <- function(
     metadata = NULL,
     headspace_ml = 210,
     temperature_c = 39,
-    zero_negative_pressure = FALSE
+    zero_negative_pressure = FALSE,
+    blank_correction = c(
+      "none",
+      "subtract_mean"
+    ),
+    truncate_negative_gas = TRUE
 ) {
 
   # ----------------------------
@@ -98,12 +134,16 @@ process_ankom <- function(
   if (!is.numeric(headspace_ml) ||
       length(headspace_ml) != 1 ||
       headspace_ml <= 0) {
-    stop("headspace_ml must be a positive number.")
+    stop(
+      "headspace_ml must be a positive number."
+    )
   }
 
   if (!is.numeric(temperature_c) ||
       length(temperature_c) != 1) {
-    stop("temperature_c must be numeric.")
+    stop(
+      "temperature_c must be numeric."
+    )
   }
 
   if (!is.logical(zero_negative_pressure) ||
@@ -111,6 +151,19 @@ process_ankom <- function(
     stop(
       "zero_negative_pressure must be TRUE or FALSE."
     )
+  }
+
+  blank_correction <- match.arg(
+    blank_correction
+  )
+
+  if (!is.logical(truncate_negative_gas) ||
+      length(truncate_negative_gas) != 1) {
+
+    stop(
+      "truncate_negative_gas must be TRUE or FALSE."
+    )
+
   }
 
   # ----------------------------
@@ -152,7 +205,7 @@ process_ankom <- function(
       Head = as.character(Head)
     ) |>
 
-    # Remove ANKOM receiver/head 0
+    # Remove ANKOM receiver/base station
     dplyr::filter(
       Head != "0"
     ) |>
@@ -185,7 +238,7 @@ process_ankom <- function(
   df <- df |>
     dplyr::mutate(
 
-      # PSI to kPa
+      # PSI -> kPa
       Gas_kPa =
         Gas_PSI * psi_to_kpa,
 
@@ -200,11 +253,12 @@ process_ankom <- function(
             )
         ),
 
-      # Avogadro conversion
+      # Convert to mL gas
       Gas_mL =
         Gas_moles *
         22.4 *
         1000
+
     )
 
   # ----------------------------
@@ -248,11 +302,94 @@ process_ankom <- function(
       by = "Head"
     )
 
-    # Keep only valid bottles
+    # Remove unassigned bottles
     df <- df |>
       dplyr::filter(
         !is.na(Treatment)
       )
+
+  }
+
+  # ----------------------------
+  # Optional blank correction
+  # ----------------------------
+
+  if (
+    blank_correction == "subtract_mean"
+  ) {
+
+    if (
+      !"Treatment" %in% names(df)
+    ) {
+
+      stop(
+        paste(
+          "blank_correction = 'subtract_mean'",
+          "requires a Treatment column."
+        )
+      )
+
+    }
+
+    if (
+      !any(df$Treatment == "Blank")
+    ) {
+
+      stop(
+        paste(
+          "No bottles with",
+          "Treatment = 'Blank' were found."
+        )
+      )
+
+    }
+
+    blank_curve <- df |>
+      dplyr::filter(
+        Treatment == "Blank"
+      ) |>
+      dplyr::group_by(
+        Time_h
+      ) |>
+      dplyr::summarise(
+        Blank_Gas_mL = mean(
+          Gas_mL,
+          na.rm = TRUE
+        ),
+        .groups = "drop"
+      )
+
+    df <- df |>
+      dplyr::left_join(
+        blank_curve,
+        by = "Time_h"
+      ) |>
+      dplyr::mutate(
+
+        Gas_mL = dplyr::if_else(
+
+          Treatment == "Blank",
+
+          Gas_mL,
+
+          Gas_mL -
+            Blank_Gas_mL
+
+        )
+
+      )
+
+    if (truncate_negative_gas) {
+
+      df <- df |>
+        dplyr::mutate(
+          Gas_mL = pmax(
+            Gas_mL,
+            0
+          )
+        )
+
+    }
 
   }
 
@@ -265,7 +402,12 @@ process_ankom <- function(
     temperature_c = temperature_c,
     psi_to_kpa = psi_to_kpa,
     gas_constant = R_constant,
-    zero_negative_pressure = zero_negative_pressure
+    zero_negative_pressure =
+      zero_negative_pressure,
+    blank_correction =
+      blank_correction,
+    truncate_negative_gas =
+      truncate_negative_gas
   )
 
   # ----------------------------
@@ -278,4 +420,5 @@ process_ankom <- function(
   )
 
   df
+
 }

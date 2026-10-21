@@ -73,19 +73,19 @@ gp <- process_ankom(
 groot_fit <- fit_groot(
   gp
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 gompertz_fit <- fit_gompertz(
   gp
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 comparison <- compare_models(
@@ -96,10 +96,10 @@ comparison <- compare_models(
 rank_models(
   comparison
 )
-#>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS
-#> 1    Groot      24              23           1 0.9768621  2.230506  518.1984
-#> 2 Gompertz      24              24           0 0.9134729  4.305830 1838.9408
+#>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE Mean_RSS
+#> 1    Groot      25              24           1 0.9430432  2.016908 3365.539
+#> 2 Gompertz      25              24           1 0.9292455  3.922136 3438.554
 #>   Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC Rank_BIC
-#> 1 302.3719 311.4785               0       1         1        1        1
-#> 2 400.7494 409.9112               8       2         2        2        2
+#> 1 450.3568 462.2290               0       1         1        1        1
+#> 2 761.3896 773.2882              22       2         2        2        2
 ```

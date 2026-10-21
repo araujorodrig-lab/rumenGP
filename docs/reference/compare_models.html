@@ -119,19 +119,19 @@ of fit and model complexity.</p>
 <span class="r-in"><span><span class="va">groot_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="fit_groot.html">fit_groot</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">gp</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> rumenGP data validation passed.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 1752</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 24</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3618</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 25</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Treatments: 5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">gompertz_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="fit_gompertz.html">fit_gompertz</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">gp</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> rumenGP data validation passed.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 1752</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 24</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3618</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 25</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Treatments: 5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu">compare_models</span><span class="op">(</span></span></span>
@@ -140,12 +140,12 @@ of fit and model complexity.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">comparison</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Groot      24              23           1 0.9768621  2.230506  518.1984</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Gompertz      24              24           0 0.9134729  4.305830 1838.9408</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE Mean_RSS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Groot      25              24           1 0.9430432  2.016908 3365.539</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Gompertz      25              24           1 0.9292455  3.922136 3438.554</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Mean_AIC Mean_BIC Lambda_Boundary</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 302.3719 311.4785               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 400.7494 409.9112               8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 450.3568 462.2290               0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 761.3896 773.2882              22</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

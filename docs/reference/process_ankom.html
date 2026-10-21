@@ -61,7 +61,9 @@ dataset suitable for rumenGP analyses.</p>
 <span>  metadata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  headspace_ml <span class="op">=</span> <span class="fl">210</span>,</span>
 <span>  temperature_c <span class="op">=</span> <span class="fl">39</span>,</span>
-<span>  zero_negative_pressure <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  zero_negative_pressure <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  blank_correction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"subtract_mean"</span><span class="op">)</span>,</span>
+<span>  truncate_negative_gas <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -90,6 +92,20 @@ dataset suitable for rumenGP analyses.</p>
 negative pressure values are converted to zero before
 gas-volume calculations.</p></dd>
 
+
+<dt id="arg-blank-correction">blank_correction<a class="anchor" aria-label="anchor" href="#arg-blank-correction"></a></dt>
+<dd><p>Character.
+Blank-correction method.
+One of:</p><ul><li><p><code>"none"</code> (default)</p></li>
+<li><p><code>"subtract_mean"</code></p></li>
+</ul></dd>
+
+
+<dt id="arg-truncate-negative-gas">truncate_negative_gas<a class="anchor" aria-label="anchor" href="#arg-truncate-negative-gas"></a></dt>
+<dd><p>Logical.
+If <code>TRUE</code>, gas production values below zero
+after blank correction are set to zero.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -98,6 +114,7 @@ gas-volume calculations.</p></dd>
 <li><p>Bottle identifiers</p></li>
 <li><p>Treatment assignments</p></li>
 <li><p>Additional metadata</p></li>
+<li><p>Processing settings</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -106,10 +123,16 @@ gas-volume calculations.</p></dd>
 <li><p>Removes Head 0 (the ANKOM receiver/base station)</p></li>
 <li><p>Converts pressure measurements to gas volumes</p></li>
 <li><p>Applies headspace and temperature corrections</p></li>
+<li><p>Optionally corrects gas production using blank bottles</p></li>
 <li><p>Produces a standardized <code>rumen_gp</code> object</p></li>
 </ul><p>Head 0 is reserved by the ANKOM RF system as the
 receiver/base station and is automatically removed
 during processing.</p>
+<p>Blank correction is optional and is not applied
+unless explicitly requested. When blank correction
+is enabled, the mean gas production of bottles
+labeled <code>Treatment = "Blank"</code> is subtracted
+from all nonblank bottles at each observation time.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -140,16 +163,15 @@ during processing.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 10</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   time_raw Time_h Head  Gas_PSI Gas_kPa Gas_moles Gas_mL Bottle   Rep Treatment</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 10:29:34      0 1           0       0         0      0      1     1 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 10:29:34      0 2           0       0         0      0      2     2 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 10:29:34      0 3           0       0         0      0      3     3 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 10:29:34      0 4           0       0         0      0      4     4 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 10:29:34      0 5           0       0         0      0      5     5 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 10:29:34      0 6           0       0         0      0      6     6 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: pH &lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 10:54:01      0 1           0       0         0      0      1     1 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 10:54:01      0 2           0       0         0      0      2     1 Blank    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 10:54:01      0 3           0       0         0      0      3     2 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 10:54:01      0 4           0       0         0      0      4     3 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 10:54:01      0 6           0       0         0      0      6     4 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 10:54:01      0 7           0       0         0      0      7     5 TMR      </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Alternative behavior:</span></span></span>
 <span class="r-in"><span><span class="co"># convert negative pressures to zero</span></span></span>
@@ -162,16 +184,36 @@ during processing.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gp_zeroed</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 10</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   time_raw Time_h Head  Gas_PSI Gas_kPa Gas_moles Gas_mL Bottle   Rep Treatment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 10:54:01      0 1           0       0         0      0      1     1 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 10:54:01      0 2           0       0         0      0      2     1 Blank    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 10:54:01      0 3           0       0         0      0      3     2 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 10:54:01      0 4           0       0         0      0      4     3 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 10:54:01      0 6           0       0         0      0      6     4 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 10:54:01      0 7           0       0         0      0      7     5 TMR      </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Blank-corrected gas production</span></span></span>
+<span class="r-in"><span><span class="va">gp_blank_corrected</span> <span class="op">&lt;-</span> <span class="fu">process_ankom</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">raw_data</span>,</span></span>
+<span class="r-in"><span>  <span class="va">metadata</span>,</span></span>
+<span class="r-in"><span>  headspace_ml <span class="op">=</span> <span class="fl">210</span>,</span></span>
+<span class="r-in"><span>  temperature_c <span class="op">=</span> <span class="fl">39</span>,</span></span>
+<span class="r-in"><span>  blank_correction <span class="op">=</span> <span class="st">"subtract_mean"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gp_blank_corrected</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 11</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   time_raw Time_h Head  Gas_PSI Gas_kPa Gas_moles Gas_mL Bottle   Rep Treatment</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 10:29:34      0 1           0       0         0      0      1     1 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 10:29:34      0 2           0       0         0      0      2     2 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 10:29:34      0 3           0       0         0      0      3     3 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 10:29:34      0 4           0       0         0      0      4     4 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 10:29:34      0 5           0       0         0      0      5     5 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 10:29:34      0 6           0       0         0      0      6     6 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: pH &lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 10:54:01      0 1           0       0         0      0      1     1 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 10:54:01      0 2           0       0         0      0      2     1 Blank    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 10:54:01      0 3           0       0         0      0      3     2 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 10:54:01      0 4           0       0         0      0      4     3 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 10:54:01      0 6           0       0         0      0      6     4 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 10:54:01      0 7           0       0         0      0      7     5 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: Blank_Gas_mL &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

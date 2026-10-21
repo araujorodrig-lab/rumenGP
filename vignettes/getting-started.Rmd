@@ -42,10 +42,11 @@ library(rumenGP)
 
 The package includes a small example dataset.
 
-```{r}
+```{r, results = FALSE}
 files <- example_data()
 
 files
+
 ```
 
 # Import ANKOM Data
@@ -86,14 +87,36 @@ gp <- process_ankom(
 )
 ```
 
+Optional blank correction:
+
+```{r}
+gp_blank_corrected <- process_ankom(
+  raw_data,
+  metadata,
+  headspace_ml = 210,
+  temperature_c = 39,
+  zero_negative_pressure = TRUE,
+  blank_correction = "subtract_mean"
+)
+```
+
+When blank correction is enabled, the mean gas
+production of bottles identified as
+`Treatment = "Blank"` is subtracted from all
+nonblank bottles at each observation time.
+
 # Validate Processed Data
 
-The resulting dataset is a standardized
-`rumen_gp` object.
+The resulting datasets are standardized
+`rumen_gp` objects.
 
 ```{r}
 gp <- validate_ankom(
   gp
+)
+
+gp_blank_corrected <- validate_ankom(
+  gp_blank_corrected
 )
 
 class(gp)
@@ -109,30 +132,73 @@ head(gp)
 
 Individual bottle profiles can be visualized.
 
-```{r, eval = FALSE}
+```{r}
 plot_gp(
-  gp,
-  head = "1"
+  gp
 )
 ```
+
+Remove Abnormal heads
+
+```{r}
+gp_clean <- exclude_heads(
+  gp,
+  heads = c("1", "2", "4", "20"),
+  reason = "Sensor malfunction"
+)
+
+plot_gp(
+  gp_clean
+)
+```
+
+Treatment-level observations can also be visualized.
+
+```{r}
+plot_gp(
+  gp_clean,
+  treatment = "TMR"
+)
+```
+
+Mean treatment profiles can be displayed using:
+
+```{r}
+plot_gp(
+  gp_clean,
+  treatment = "TMR",
+  mean_treatment = TRUE
+)
+```
+
+## Note on Blank Correction
+
+Blank correction is optional because laboratories
+often follow different preprocessing procedures.
+
+By default, rumenGP retains the original
+gas-production values. When
+`blank_correction = "subtract_mean"` is used,
+the mean gas production of blank bottles is
+subtracted from all nonblank bottles prior to
+model fitting and comparison.
 
 # Fit Kinetic Models
 
 Several built-in models are available.
 
 ```{r}
-groot_fit <- fit_groot(gp)
+groot_fit <- fit_groot(gp_clean)
 
-mm_fit <- fit_mm(gp)
+mm_fit <- fit_mm(gp_clean)
 
-gompertz_fit <- fit_gompertz(gp)
+gompertz_fit <- fit_gompertz(gp_clean)
 
-brody_fit <- fit_brody(gp)
+brody_fit <- fit_brody(gp_clean)
 
-burr_fit <- fit_burr_xii(gp)
+burr_fit <- fit_burr_xii(gp_clean)
 
-inverse_paralogistic_fit <-
-  fit_inverse_paralogistic(gp)
+inverse_paralogistic_fit <-  fit_inverse_paralogistic(gp_clean)
 ```
 
 # Summarize Model Fits
@@ -161,7 +227,7 @@ Observed and predicted values can be visualized.
 ```{r, eval = FALSE}
 plot_fit(
   groot_fit,
-  head = "1"
+  head = "6"
 )
 ```
 
@@ -172,7 +238,7 @@ Residual plots help identify systematic deviations.
 ```{r, eval = FALSE}
 plot_residuals(
   groot_fit,
-  head = "1"
+  head = "6"
 )
 ```
 
@@ -189,8 +255,7 @@ comparison <- compare_models(
 
   BurrXII = burr_fit,
 
-  InverseParalogistic =
-    inverse_paralogistic_fit,
+  InverseParalogistic = inverse_paralogistic_fit,
 
   Gompertz = gompertz_fit,
 
@@ -223,8 +288,7 @@ rank_models(
 Treatment-level comparisons are also available.
 
 ```{r}
-treatment_comparison <-
-  compare_models_by_treatment(
+treatment_comparison <-  compare_models_by_treatment(
 
     Groot = groot_fit,
 
@@ -232,8 +296,7 @@ treatment_comparison <-
 
     BurrXII = burr_fit,
 
-    InverseParalogistic =
-      inverse_paralogistic_fit,
+    InverseParalogistic = inverse_paralogistic_fit,
 
     Gompertz = gompertz_fit,
 

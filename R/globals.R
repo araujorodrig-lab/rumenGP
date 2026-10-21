@@ -40,6 +40,10 @@ utils::globalVariables(
     "Treatments_Won",
     "Value",
     "n",
-    "time_raw"
+    "time_raw",
+    "Mean_Gas",
+    "SD_Gas",
+    "Blank_Gas_mL",
+    "Replicate"
   )
 )

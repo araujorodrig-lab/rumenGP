@@ -11,7 +11,9 @@ process_ankom(
   metadata = NULL,
   headspace_ml = 210,
   temperature_c = 39,
-  zero_negative_pressure = FALSE
+  zero_negative_pressure = FALSE,
+  blank_correction = c("none", "subtract_mean"),
+  truncate_negative_gas = TRUE
 )
 ```
 
@@ -38,6 +40,19 @@ process_ankom(
   Logical. If `TRUE`, negative pressure values are converted to zero
   before gas-volume calculations.
 
+- blank_correction:
+
+  Character. Blank-correction method. One of:
+
+  - `"none"` (default)
+
+  - `"subtract_mean"`
+
+- truncate_negative_gas:
+
+  Logical. If `TRUE`, gas production values below zero after blank
+  correction are set to zero.
+
 ## Value
 
 A `rumen_gp` object containing:
@@ -52,6 +67,8 @@ A `rumen_gp` object containing:
 
 - Additional metadata
 
+- Processing settings
+
 ## Details
 
 The function:
@@ -64,10 +81,17 @@ The function:
 
 - Applies headspace and temperature corrections
 
+- Optionally corrects gas production using blank bottles
+
 - Produces a standardized `rumen_gp` object
 
 Head 0 is reserved by the ANKOM RF system as the receiver/base station
 and is automatically removed during processing.
+
+Blank correction is optional and is not applied unless explicitly
+requested. When blank correction is enabled, the mean gas production of
+bottles labeled `Treatment = "Blank"` is subtracted from all nonblank
+bottles at each observation time.
 
 ## See also
 
@@ -98,16 +122,15 @@ gp <- process_ankom(
 )
 
 head(gp)
-#> # A tibble: 6 × 11
+#> # A tibble: 6 × 10
 #>   time_raw Time_h Head  Gas_PSI Gas_kPa Gas_moles Gas_mL Bottle   Rep Treatment
 #>   <chr>     <dbl> <chr>   <dbl>   <dbl>     <dbl>  <dbl>  <dbl> <dbl> <chr>    
-#> 1 10:29:34      0 1           0       0         0      0      1     1 Plant_A  
-#> 2 10:29:34      0 2           0       0         0      0      2     2 Plant_A  
-#> 3 10:29:34      0 3           0       0         0      0      3     3 Plant_A  
-#> 4 10:29:34      0 4           0       0         0      0      4     4 Plant_A  
-#> 5 10:29:34      0 5           0       0         0      0      5     5 Plant_A  
-#> 6 10:29:34      0 6           0       0         0      0      6     6 Plant_A  
-#> # ℹ 1 more variable: pH <dbl>
+#> 1 10:54:01      0 1           0       0         0      0      1     1 TMR      
+#> 2 10:54:01      0 2           0       0         0      0      2     1 Blank    
+#> 3 10:54:01      0 3           0       0         0      0      3     2 TMR      
+#> 4 10:54:01      0 4           0       0         0      0      4     3 TMR      
+#> 5 10:54:01      0 6           0       0         0      0      6     4 TMR      
+#> 6 10:54:01      0 7           0       0         0      0      7     5 TMR      
 
 # Alternative behavior:
 # convert negative pressures to zero
@@ -120,14 +143,34 @@ gp_zeroed <- process_ankom(
 )
 
 head(gp_zeroed)
+#> # A tibble: 6 × 10
+#>   time_raw Time_h Head  Gas_PSI Gas_kPa Gas_moles Gas_mL Bottle   Rep Treatment
+#>   <chr>     <dbl> <chr>   <dbl>   <dbl>     <dbl>  <dbl>  <dbl> <dbl> <chr>    
+#> 1 10:54:01      0 1           0       0         0      0      1     1 TMR      
+#> 2 10:54:01      0 2           0       0         0      0      2     1 Blank    
+#> 3 10:54:01      0 3           0       0         0      0      3     2 TMR      
+#> 4 10:54:01      0 4           0       0         0      0      4     3 TMR      
+#> 5 10:54:01      0 6           0       0         0      0      6     4 TMR      
+#> 6 10:54:01      0 7           0       0         0      0      7     5 TMR      
+
+# Blank-corrected gas production
+gp_blank_corrected <- process_ankom(
+  raw_data,
+  metadata,
+  headspace_ml = 210,
+  temperature_c = 39,
+  blank_correction = "subtract_mean"
+)
+
+head(gp_blank_corrected)
 #> # A tibble: 6 × 11
 #>   time_raw Time_h Head  Gas_PSI Gas_kPa Gas_moles Gas_mL Bottle   Rep Treatment
 #>   <chr>     <dbl> <chr>   <dbl>   <dbl>     <dbl>  <dbl>  <dbl> <dbl> <chr>    
-#> 1 10:29:34      0 1           0       0         0      0      1     1 Plant_A  
-#> 2 10:29:34      0 2           0       0         0      0      2     2 Plant_A  
-#> 3 10:29:34      0 3           0       0         0      0      3     3 Plant_A  
-#> 4 10:29:34      0 4           0       0         0      0      4     4 Plant_A  
-#> 5 10:29:34      0 5           0       0         0      0      5     5 Plant_A  
-#> 6 10:29:34      0 6           0       0         0      0      6     6 Plant_A  
-#> # ℹ 1 more variable: pH <dbl>
+#> 1 10:54:01      0 1           0       0         0      0      1     1 TMR      
+#> 2 10:54:01      0 2           0       0         0      0      2     1 Blank    
+#> 3 10:54:01      0 3           0       0         0      0      3     2 TMR      
+#> 4 10:54:01      0 4           0       0         0      0      4     3 TMR      
+#> 5 10:54:01      0 6           0       0         0      0      6     4 TMR      
+#> 6 10:54:01      0 7           0       0         0      0      7     5 TMR      
+#> # ℹ 1 more variable: Blank_Gas_mL <dbl>
 ```

@@ -69,16 +69,16 @@ gp <- process_ankom(
 fit <- fit_groot(
   gp
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 # Plot a specific bottle
 plot_fit(
   fit,
-  head = 1
+  head = 6
 )
 
 ```

@@ -64,7 +64,7 @@ fit <- fit_groot(
 
 plot_residuals(
   fit,
-  head = 1
+  head = 6
 )
 
 }

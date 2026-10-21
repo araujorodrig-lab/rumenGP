@@ -1,6 +1,6 @@
 # Fit Custom Nonlinear Model
 
-Fits a user-defined nonlinear model to each bottle in a rumen_gp
+Fits a user-defined nonlinear model to each bottle in a `rumen_gp`
 dataset.
 
 ## Usage
@@ -20,7 +20,7 @@ fit_custom(
 
 - data:
 
-  A rumen_gp object.
+  A `rumen_gp` object.
 
 - formula:
 
@@ -79,6 +79,8 @@ Custom models integrate directly with:
 - [`plot_residuals()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_residuals.md)
 
 - [`compare_models()`](https://araujorodrig-lab.github.io/rumenGP/reference/compare_models.md)
+
+- [`rank_models()`](https://araujorodrig-lab.github.io/rumenGP/reference/rank_models.md)
 
 making them fully compatible with the rumenGP modeling framework.
 
@@ -144,6 +146,8 @@ parameter estimates.
 
 - Apply parameter bounds when appropriate
 
+- Inspect convergence diagnostics
+
 - Compare custom models against built-in models
 
 - Evaluate both fit quality and parameter interpretability
@@ -152,6 +156,7 @@ parameter estimates.
 
 [`fit_groot`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_groot.md),
 [`fit_mm`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_mm.md),
+[`fit_burr_xii`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_burr_xii.md),
 [`compare_models`](https://araujorodrig-lab.github.io/rumenGP/reference/compare_models.md),
 [`plot_fit`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_fit.md),
 [`plot_residuals`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_residuals.md)
@@ -159,7 +164,6 @@ parameter estimates.
 ## Examples
 
 ``` r
-
 
 files <- example_data()
 
@@ -206,10 +210,10 @@ custom_fit <- fit_custom(
   model_name = "Hyperbolic"
 
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 summary(custom_fit)
@@ -221,44 +225,61 @@ summary(custom_fit)
 #> Formula:
 #> Gas_mL ~ A * (Time_h/(Time_h + K))
 #> 
-#> Total bottles: 24
+#> Total bottles: 25
 #> Successful fits: 23
-#> Failed fits: 1
-#> Mean R-squared: 0.8911
-#> Mean RMSE: 3.6575
-#> Mean AIC: 393.3084
-#> Mean BIC: 400.1798
+#> Failed fits: 2
+#> Mean R-squared: 0.9439
+#> Mean RMSE: 1.4049
+#> Mean AIC: 469.519
+#> Mean BIC: 478.4427
 #> 
+
+# Find a bottle with a successful fit
+successful_head <-
+  custom_fit$diagnostics |>
+  dplyr::filter(
+    Converged
+  ) |>
+  dplyr::slice(1) |>
+  dplyr::pull(
+    Head
+  )
 
 plot_fit(
   custom_fit,
-  head = 1
+  head = successful_head
 )
 
 
 plot_residuals(
   custom_fit,
-  head = 1
+  head = successful_head
 )
 #> `geom_smooth()` using formula = 'y ~ x'
 
 
-# Compare with built-in models
+# Compare against built-in models
 compare_models(
   Groot = fit_groot(gp),
+  BurrXII = fit_burr_xii(gp),
   Hyperbolic = custom_fit
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
+#> Treatments: 5
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
+#> rumenGP data validation passed.
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 #>        Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS
-#> 1      Groot      24              23           1 0.9768621  2.230506  518.1984
-#> 2 Hyperbolic      24              23           1 0.8911079  3.657539 1108.4600
+#> 1      Groot      25              24           1 0.9430432  2.016908 3365.5394
+#> 2    BurrXII      25              24           1 0.8939477  2.461144 4305.4660
+#> 3 Hyperbolic      25              23           2 0.9438970  1.404890  419.9683
 #>   Mean_AIC Mean_BIC Lambda_Boundary
-#> 1 302.3719 311.4785               0
-#> 2 393.3084 400.1798               0
-
-
+#> 1 450.3568 462.2290               0
+#> 2 476.8434 491.7167               0
+#> 3 469.5190 478.4427               0
 ```

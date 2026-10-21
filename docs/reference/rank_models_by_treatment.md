@@ -71,19 +71,19 @@ gp <- process_ankom(
 groot_fit <- fit_groot(
   gp
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 gompertz_fit <- fit_gompertz(
   gp
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 comparison <- compare_models_by_treatment(
@@ -97,15 +97,15 @@ rank_models_by_treatment(
 #> # A tibble: 10 × 10
 #>    Treatment Model    Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE
 #>    <chr>     <chr>      <dbl>     <dbl>    <dbl>    <dbl>   <int>     <int>
-#>  1 BLANK     Groot      0.969     0.943     201.     210.       1         1
-#>  2 Plant_A   Groot      0.968     2.40      287.     297.       1         1
-#>  3 Plant_B   Groot      0.990     2.27      315.     324.       1         1
-#>  4 Plant_C   Groot      0.974     2.22      320.     329.       1         1
-#>  5 TMR       Groot      0.988     3.14      377.     386.       1         1
-#>  6 BLANK     Gompertz   0.942     2.02      294.     303.       2         2
-#>  7 Plant_A   Gompertz   0.935     5.11      421.     430.       2         2
-#>  8 Plant_B   Gompertz   0.810     4.35      411.     420.       2         2
-#>  9 Plant_C   Gompertz   0.959     3.84      392.     401.       2         2
-#> 10 TMR       Gompertz   0.957     5.83      464.     473.       2         2
+#>  1 Blank     Groot      0.792     0.890     355.     366.       1         1
+#>  2 High      Groot      0.976     5.55      639.     651.       1         1
+#>  3 Low       Groot      0.998     1.04      420.     432.       1         1
+#>  4 Medium    Groot      0.999     0.864     369.     380.       1         1
+#>  5 TMR       Groot      0.952     1.67      475.     487.       2         1
+#>  6 Blank     Gompertz   0.774     2.10      564.     576.       2         2
+#>  7 High      Gompertz   0.970     6.56      901.     913.       2         2
+#>  8 Low       Gompertz   0.984     3.02      721.     733.       2         2
+#>  9 Medium    Gompertz   0.970     4.42      850.     862.       2         2
+#> 10 TMR       Gompertz   0.954     3.40      773.     784.       1         2
 #> # ℹ 2 more variables: Rank_AIC <int>, Rank_BIC <int>
 ```

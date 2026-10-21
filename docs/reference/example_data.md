@@ -42,10 +42,10 @@ files <- example_data()
 
 files
 #> $ankom
-#> [1] "C:/Users/Arlan/AppData/Local/Temp/Rtmp06LOeG/temp_libpath4a54715263dc/rumenGP/extdata/example_ankom.xlsx"
+#> [1] "C:/Users/Arlan/AppData/Local/R/win-library/4.5/rumenGP/extdata/example_ankom.xlsx"
 #> 
 #> $metadata
-#> [1] "C:/Users/Arlan/AppData/Local/Temp/Rtmp06LOeG/temp_libpath4a54715263dc/rumenGP/extdata/example_metadata.xlsx"
+#> [1] "C:/Users/Arlan/AppData/Local/R/win-library/4.5/rumenGP/extdata/example_metadata.xlsx"
 #> 
 
 raw_data <- read_ankom(
@@ -66,24 +66,23 @@ gp <- process_ankom(
 head(
   gp
 )
-#> # A tibble: 6 × 11
+#> # A tibble: 6 × 10
 #>   time_raw Time_h Head  Gas_PSI Gas_kPa Gas_moles Gas_mL Bottle   Rep Treatment
 #>   <chr>     <dbl> <chr>   <dbl>   <dbl>     <dbl>  <dbl>  <dbl> <dbl> <chr>    
-#> 1 10:29:34      0 1           0       0         0      0      1     1 Plant_A  
-#> 2 10:29:34      0 2           0       0         0      0      2     2 Plant_A  
-#> 3 10:29:34      0 3           0       0         0      0      3     3 Plant_A  
-#> 4 10:29:34      0 4           0       0         0      0      4     4 Plant_A  
-#> 5 10:29:34      0 5           0       0         0      0      5     5 Plant_A  
-#> 6 10:29:34      0 6           0       0         0      0      6     6 Plant_A  
-#> # ℹ 1 more variable: pH <dbl>
+#> 1 10:54:01      0 1           0       0         0      0      1     1 TMR      
+#> 2 10:54:01      0 2           0       0         0      0      2     1 Blank    
+#> 3 10:54:01      0 3           0       0         0      0      3     2 TMR      
+#> 4 10:54:01      0 4           0       0         0      0      4     3 TMR      
+#> 5 10:54:01      0 6           0       0         0      0      6     4 TMR      
+#> 6 10:54:01      0 7           0       0         0      0      7     5 TMR      
 
 fit <- fit_groot(
   gp
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 summary(
@@ -92,9 +91,9 @@ summary(
 #> 
 #> Groot model summary
 #> -------------------
-#> Total bottles: 24
-#> Successful fits: 23
+#> Total bottles: 25
+#> Successful fits: 24
 #> Failed fits: 1
-#> Low R-squared (< 0.90): 2
+#> Low R-squared (< 0.90): 3
 #> 
 ```

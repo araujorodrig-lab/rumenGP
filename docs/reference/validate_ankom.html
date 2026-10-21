@@ -120,26 +120,25 @@ visualization, and model comparison workflows.</p>
 <span class="r-in"><span><span class="fu">validate_ankom</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">gp</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> rumenGP data validation passed.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 1752</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 24</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3618</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 25</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Treatments: 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,752 × 11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3,618 × 10</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    time_raw Time_h Head  Gas_PSI Gas_kPa Gas_moles Gas_mL Bottle   Rep Treatment</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 10:29:34      0 1           0       0         0      0      1     1 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 10:29:34      0 2           0       0         0      0      2     2 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 10:29:34      0 3           0       0         0      0      3     3 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 10:29:34      0 4           0       0         0      0      4     4 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 10:29:34      0 5           0       0         0      0      5     5 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 10:29:34      0 6           0       0         0      0      6     6 Plant_A  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 10:29:34      0 7           0       0         0      0      7     1 Plant_B  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 10:29:34      0 8           0       0         0      0      8     2 Plant_B  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 10:29:34      0 9           0       0         0      0      9     3 Plant_B  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 10:29:34      0 10          0       0         0      0     10     4 Plant_B  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,742 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: pH &lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 10:54:01      0 1           0       0         0      0      1     1 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 10:54:01      0 2           0       0         0      0      2     1 Blank    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 10:54:01      0 3           0       0         0      0      3     2 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 10:54:01      0 4           0       0         0      0      4     3 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 10:54:01      0 6           0       0         0      0      6     4 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 10:54:01      0 7           0       0         0      0      7     5 TMR      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 10:54:01      0 9           0       0         0      0      9     1 Low      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 10:54:01      0 10          0       0         0      0     10     2 Low      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 10:54:01      0 11          0       0         0      0     11     3 Low      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 10:54:01      0 12          0       0         0      0     12     4 Low      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3,608 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Validation also supports datasets</span></span></span>
 <span class="r-in"><span><span class="co"># created using as_rumen_gp()</span></span></span>

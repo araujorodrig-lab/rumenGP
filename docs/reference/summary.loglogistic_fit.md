@@ -104,10 +104,10 @@ gp <- process_ankom(
 fit <- fit_loglogistic(
   gp
 )
-#> Warning: Large negative pressure values detected. Minimum PSI = -1.274 . Please inspect the affected bottles.
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 1752
-#> Heads: 24
+#> Observations: 3618
+#> Heads: 25
 #> Treatments: 5
 
 summary(
@@ -116,9 +116,9 @@ summary(
 #> 
 #> Log-logistic model summary
 #> --------------------------
-#> Total bottles: 24
-#> Successful fits: 24
+#> Total bottles: 25
+#> Successful fits: 25
 #> Failed fits: 0
-#> Low R-squared (< 0.90): 3
+#> Low R-squared (< 0.90): 4
 #> 
 ```
