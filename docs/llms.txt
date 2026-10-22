@@ -305,26 +305,53 @@ the same conversion framework used by
 
 ------------------------------------------------------------------------
 
+## Remove Abnormal heads
+
+``` r
+
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+    ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
+)
+
+plot_gp(
+  gp_clean
+  )
+```
+
+![](reference/figures/README-unnamed-chunk-13-1.png)
+
 ## Model Fitting
 
 ``` r
 
-groot_fit <- fit_groot(gp)
+groot_fit <- fit_groot(gp_clean)
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
-brody_fit <- fit_brody(gp)
+brody_fit <- fit_brody(gp_clean)
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
-gompertz_fit <- fit_gompertz(gp)
+gompertz_fit <- fit_gompertz(gp_clean)
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 ```
 
@@ -336,10 +363,10 @@ summary(groot_fit)
 #> 
 #> Groot model summary
 #> -------------------
-#> Total bottles: 25
-#> Successful fits: 25
+#> Total bottles: 21
+#> Successful fits: 21
 #> Failed fits: 0
-#> Low R-squared (< 0.90): 4
+#> Low R-squared (< 0.90): 0
 ```
 
 ------------------------------------------------------------------------
@@ -350,35 +377,35 @@ summary(groot_fit)
 
 comparison <- compare_models(
 
-  Groot = fit_groot(gp),
+  Groot = fit_groot(gp_clean),
 
-  Brody = fit_brody(gp),
+  Brody = fit_brody(gp_clean),
 
-  Gompertz = fit_gompertz(gp)
+  Gompertz = fit_gompertz(gp_clean)
 
 )
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 comparison
-#>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE Mean_RSS
-#> 1    Groot      25              25           0 0.9053385  1.945126 3229.918
-#> 2    Brody      25              23           2 0.9863461  2.027406 3500.071
-#> 3 Gompertz      25              24           1 0.9292863  3.916214 3433.728
+#>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS
+#> 1    Groot      21              21           0 0.9967371 0.9955345  150.1038
+#> 2    Brody      21              21           0 0.9969746 0.9479644  144.1933
+#> 3 Gompertz      21              21           0 0.9722322 3.4802686 1868.7759
 #>   Mean_AIC Mean_BIC Lambda_Boundary
-#> 1 436.0919 447.9643               0
-#> 2 445.7973 457.6956               0
-#> 3 760.7782 772.6769              22
+#> 1 406.9209 418.7920               0
+#> 2 386.1759 398.0734               0
+#> 3 769.2312 781.1287              21
 ```
 
 ### Rank Models
@@ -388,14 +415,14 @@ comparison
 rank_models(
   comparison
 )
-#>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE Mean_RSS
-#> 1    Groot      25              25           0 0.9053385  1.945126 3229.918
-#> 2    Brody      25              23           2 0.9863461  2.027406 3500.071
-#> 3 Gompertz      25              24           1 0.9292863  3.916214 3433.728
+#>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS
+#> 1    Groot      21              21           0 0.9967371 0.9955345  150.1038
+#> 2    Brody      21              21           0 0.9969746 0.9479644  144.1933
+#> 3 Gompertz      21              21           0 0.9722322 3.4802686 1868.7759
 #>   Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC Rank_BIC
-#> 1 436.0919 447.9643               0       3         1        1        1
-#> 2 445.7973 457.6956               0       1         2        2        2
-#> 3 760.7782 772.6769              22       2         3        3        3
+#> 1 406.9209 418.7920               0       2         2        2        2
+#> 2 386.1759 398.0734               0       1         1        1        1
+#> 3 769.2312 781.1287              21       3         3        3        3
 ```
 
 ------------------------------------------------------------------------
@@ -407,24 +434,24 @@ rank_models(
 treatment_comparison <-
   compare_models_by_treatment(
 
-    Groot = fit_groot(gp),
+    Groot = fit_groot(gp_clean),
 
-    Brody = fit_brody(gp),
+    Brody = fit_brody(gp_clean),
 
-    Gompertz = fit_gompertz(gp)
+    Gompertz = fit_gompertz(gp_clean)
 
   )
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 ranked_treatments <-
@@ -435,15 +462,14 @@ ranked_treatments <-
 best_model_by_treatment(
   ranked_treatments
 )
-#> # A tibble: 6 × 12
+#> # A tibble: 5 × 12
 #>   Treatment Model Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE Rank_AIC
 #>   <chr>     <chr>   <dbl>     <dbl>    <dbl>    <dbl>   <int>     <int>    <int>
-#> 1 Blank     Groot   0.792     0.890     355.     366.       2         1        1
-#> 2 High      Groot   0.976     5.51      629.     641.       2         2        1
-#> 3 High      Brody   0.977     5.49      631.     643.       1         1        2
-#> 4 Low       Brody   0.998     0.870     340.     352.       1         1        1
-#> 5 Medium    Groot   0.999     0.864     369.     380.       1         1        1
-#> 6 TMR       Brody   0.964     1.42      397.     409.       1         2        1
+#> 1 Blank     Groot   0.990     1.04      426.     438.       2         1        1
+#> 2 High      Brody   0.998     1.17      457.     469.       1         1        1
+#> 3 Low       Brody   0.998     0.870     340.     352.       1         1        1
+#> 4 Medium    Groot   0.999     0.864     369.     380.       1         1        1
+#> 5 TMR       Brody   0.999     0.582     256.     268.       1         1        1
 #> # ℹ 3 more variables: Rank_BIC <int>, Total_Rank <int>, Overall_Rank <int>
 ```
 
@@ -458,7 +484,7 @@ Researchers can fit their own kinetic equations using
 
 custom_fit <- fit_custom(
 
-  data = gp,
+  data = gp_clean,
 
   formula =
     Gas_mL ~
@@ -484,8 +510,8 @@ custom_fit <- fit_custom(
 
 )
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 summary(custom_fit)
@@ -497,13 +523,13 @@ summary(custom_fit)
 #> Formula:
 #> Gas_mL ~ A * (Time_h/(Time_h + K))
 #> 
-#> Total bottles: 25
-#> Successful fits: 24
-#> Failed fits: 1
-#> Mean R-squared: 0.9046
-#> Mean RMSE: 1.3572
-#> Mean AIC: 455.0445
-#> Mean BIC: 463.9685
+#> Total bottles: 21
+#> Successful fits: 21
+#> Failed fits: 0
+#> Mean R-squared: 0.9951
+#> Mean RMSE: 1.2661
+#> Mean AIC: 467.6569
+#> Mean BIC: 476.5801
 ```
 
 Compare custom and built-in models:
@@ -512,29 +538,29 @@ Compare custom and built-in models:
 
 compare_models(
 
-  Groot = fit_groot(gp),
+  Groot = fit_groot(gp_clean),
 
-  Brody = fit_brody(gp),
+  Brody = fit_brody(gp_clean),
 
   Hyperbolic = custom_fit
 
 )
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
-#>        Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS
-#> 1      Groot      25              25           0 0.9053385  1.945126 3229.9183
-#> 2      Brody      25              23           2 0.9863461  2.027406 3500.0705
-#> 3 Hyperbolic      25              24           1 0.9046316  1.357169  400.0963
+#>        Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE Mean_RSS
+#> 1      Groot      21              21           0 0.9967371 0.9955345 150.1038
+#> 2      Brody      21              21           0 0.9969746 0.9479644 144.1933
+#> 3 Hyperbolic      21              21           0 0.9950893 1.2660681 260.8922
 #>   Mean_AIC Mean_BIC Lambda_Boundary
-#> 1 436.0919 447.9643               0
-#> 2 445.7973 457.6956               0
-#> 3 455.0445 463.9685               0
+#> 1 406.9209 418.7920               0
+#> 2 386.1759 398.0734               0
+#> 3 467.6569 476.5801               0
 ```
 
 ------------------------------------------------------------------------
@@ -546,7 +572,7 @@ compare_models(
 ``` r
 
 plot_gp(
-  gp,
+  gp_clean,
   head = "6"
 )
 ```
@@ -575,10 +601,10 @@ plot_residuals(
 
 ``` r
 
-plot_treatment_mean(
-  Groot = fit_groot(gp),
-  Brody = fit_brody(gp),
-  treatment = "Control"
+plot_fit(
+  Groot = fit_groot(gp_clean),
+  Brody = fit_brody(gp_clean),
+  treatment = "TMR"
 )
 ```
 
@@ -604,17 +630,6 @@ Document exclusions
 Refit models
     ↓
 Compare models
-```
-
-Example:
-
-``` r
-
-gp_clean <- exclude_heads(
-  gp,
-  heads = c("10"),
-  reason = "Sensor malfunction"
-)
 ```
 
 ------------------------------------------------------------------------
@@ -818,7 +833,6 @@ provides this curve family through those existing parameterizations.
 - [`plot_gp()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_gp.md)
 - [`plot_fit()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_fit.md)
 - [`plot_residuals()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_residuals.md)
-- [`plot_treatment_mean()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_treatment_mean.md)
 
 ### Model Comparison
 
@@ -958,8 +972,6 @@ statistical workflows.
   : Plot Fitted Model
 - [`plot_residuals()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_residuals.md)
   : Plot Model Residuals
-- [`plot_treatment_mean()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_treatment_mean.md)
-  : Plot Treatment Means Across Models
 - [`plot_model_comparison()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_comparison.md)
   : Compare Model Fits
 - [`plot_model_rankings()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_rankings.md)
@@ -967,22 +979,12 @@ statistical workflows.
 
 ## Advanced Visualization
 
-- [`plot_all_fits()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_all_fits.md)
-  : Plot All Fitted Curves
-- [`plot_all_treatment_means()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_all_treatment_means.md)
-  : Plot Treatment Means for All Treatments
 - [`plot_diagnostics()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_diagnostics.md)
   : Plot Diagnostic Summaries
 - [`plot_dual_pools()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_dual_pools.md)
   : Plot Dual-Pool Logistic Decomposition
-- [`plot_model_comparison_all()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_comparison_all.md)
-  : Compare Models for All Bottles
-- [`plot_model_comparison_treatment()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_comparison_treatment.md)
-  : Compare Models Within a Treatment
 - [`plot_model_performance()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_performance.md)
   : Plot Model Performance
-- [`plot_residual_comparison()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_residual_comparison.md)
-  : Compare Residuals Across Models
 
 ## Summary Methods
 

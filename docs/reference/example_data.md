@@ -63,26 +63,42 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+  ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
+)
+
 head(
-  gp
+  gp_clean
 )
 #> # A tibble: 6 × 10
 #>   time_raw Time_h Head  Gas_PSI Gas_kPa Gas_moles Gas_mL Bottle   Rep Treatment
 #>   <chr>     <dbl> <chr>   <dbl>   <dbl>     <dbl>  <dbl>  <dbl> <dbl> <chr>    
-#> 1 10:54:01      0 1           0       0         0      0      1     1 TMR      
-#> 2 10:54:01      0 2           0       0         0      0      2     1 Blank    
-#> 3 10:54:01      0 3           0       0         0      0      3     2 TMR      
-#> 4 10:54:01      0 4           0       0         0      0      4     3 TMR      
-#> 5 10:54:01      0 6           0       0         0      0      6     4 TMR      
-#> 6 10:54:01      0 7           0       0         0      0      7     5 TMR      
+#> 1 10:54:01      0 3           0       0         0      0      3     2 TMR      
+#> 2 10:54:01      0 6           0       0         0      0      6     4 TMR      
+#> 3 10:54:01      0 7           0       0         0      0      7     5 TMR      
+#> 4 10:54:01      0 9           0       0         0      0      9     1 Low      
+#> 5 10:54:01      0 10          0       0         0      0     10     2 Low      
+#> 6 10:54:01      0 11          0       0         0      0     11     3 Low      
 
 fit <- fit_groot(
-  gp
+  gp_clean
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 summary(
@@ -91,9 +107,9 @@ summary(
 #> 
 #> Groot model summary
 #> -------------------
-#> Total bottles: 25
-#> Successful fits: 24
-#> Failed fits: 1
-#> Low R-squared (< 0.90): 3
+#> Total bottles: 21
+#> Successful fits: 21
+#> Failed fits: 0
+#> Low R-squared (< 0.90): 0
 #> 
 ```

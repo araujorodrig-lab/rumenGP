@@ -166,30 +166,46 @@ models</p></li>
 <span class="r-in"><span>  temperature_c <span class="op">=</span> <span class="fl">39</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">gp_clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="exclude_heads.html">exclude_heads</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">gp</span>,</span></span>
+<span class="r-in"><span>  heads <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"1"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"2"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"4"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"20"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  reason <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Fit using package default starting values</span></span></span>
 <span class="r-in"><span><span class="va">fit_default</span> <span class="op">&lt;-</span> <span class="fu">fit_logistic</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">gp</span></span></span>
+<span class="r-in"><span>  <span class="va">gp_clean</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> rumenGP data validation passed.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3618</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 25</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3038</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 21</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Treatments: 5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_default</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Logistic model summary</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total bottles: 25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Successful fits: 24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Failed fits: 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Low R-squared (&lt; 0.90): 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Lambda at boundary: 23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total bottles: 21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Successful fits: 21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Failed fits: 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Low R-squared (&lt; 0.90): 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Lambda at boundary: 21</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Fit using custom starting values</span></span></span>
 <span class="r-in"><span><span class="va">fit_custom_start</span> <span class="op">&lt;-</span> <span class="fu">fit_logistic</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">gp</span>,</span></span>
+<span class="r-in"><span>  <span class="va">gp_clean</span>,</span></span>
 <span class="r-in"><span>  start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    A <span class="op">=</span> <span class="fl">120</span>,</span></span>
 <span class="r-in"><span>    k <span class="op">=</span> <span class="fl">0.05</span>,</span></span>
@@ -198,19 +214,19 @@ models</p></li>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> rumenGP data validation passed.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3618</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 25</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3038</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 21</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Treatments: 5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_custom_start</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Logistic model summary</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total bottles: 25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Successful fits: 24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Failed fits: 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Low R-squared (&lt; 0.90): 22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Lambda at boundary: 23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total bottles: 21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Successful fits: 21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Failed fits: 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Low R-squared (&lt; 0.90): 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Lambda at boundary: 21</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>

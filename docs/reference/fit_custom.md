@@ -182,10 +182,26 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+  ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
+)
+
 # Hyperbolic model
 custom_fit <- fit_custom(
 
-  data = gp,
+  data = gp_clean,
 
   formula =
     Gas_mL ~
@@ -212,8 +228,8 @@ custom_fit <- fit_custom(
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 summary(custom_fit)
@@ -225,13 +241,13 @@ summary(custom_fit)
 #> Formula:
 #> Gas_mL ~ A * (Time_h/(Time_h + K))
 #> 
-#> Total bottles: 25
-#> Successful fits: 23
-#> Failed fits: 2
-#> Mean R-squared: 0.9439
-#> Mean RMSE: 1.4049
-#> Mean AIC: 469.519
-#> Mean BIC: 478.4427
+#> Total bottles: 21
+#> Successful fits: 21
+#> Failed fits: 0
+#> Mean R-squared: 0.9951
+#> Mean RMSE: 1.2719
+#> Mean AIC: 468.4219
+#> Mean BIC: 477.345
 #> 
 
 # Find a bottle with a successful fit
@@ -260,26 +276,26 @@ plot_residuals(
 
 # Compare against built-in models
 compare_models(
-  Groot = fit_groot(gp),
-  BurrXII = fit_burr_xii(gp),
+  Groot = fit_groot(gp_clean),
+  BurrXII = fit_burr_xii(gp_clean),
   Hyperbolic = custom_fit
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
-#>        Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS
-#> 1      Groot      25              24           1 0.9430432  2.016908 3365.5394
-#> 2    BurrXII      25              24           1 0.8939477  2.461144 4305.4660
-#> 3 Hyperbolic      25              23           2 0.9438970  1.404890  419.9683
+#>        Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE Mean_RSS
+#> 1      Groot      21              21           0 0.9967168  1.003186 152.2996
+#> 2    BurrXII      21              21           0 0.9965901  1.107550 211.2021
+#> 3 Hyperbolic      21              21           0 0.9950576  1.271883 264.6107
 #>   Mean_AIC Mean_BIC Lambda_Boundary
-#> 1 450.3568 462.2290               0
-#> 2 476.8434 491.7167               0
-#> 3 469.5190 478.4427               0
+#> 1 409.1374 421.0085               0
+#> 2 423.7023 438.5742               0
+#> 3 468.4219 477.3450               0
 ```

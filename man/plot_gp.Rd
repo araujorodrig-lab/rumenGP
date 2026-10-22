@@ -125,6 +125,5 @@ plot_gp(
 \seealso{
 \code{\link{plot_fit}},
 \code{\link{plot_residuals}},
-\code{\link{plot_treatment_mean}},
 \code{\link{process_ankom}}
 }

@@ -68,22 +68,38 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+  ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
+)
+
 groot_fit <- fit_groot(
-  gp
+  gp_clean
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 gompertz_fit <- fit_gompertz(
-  gp
+  gp_clean
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 compare_models_by_treatment(
@@ -93,14 +109,14 @@ compare_models_by_treatment(
 #> # A tibble: 10 × 6
 #>    Treatment Model    Mean_R2 Mean_RMSE Mean_AIC Mean_BIC
 #>    <chr>     <chr>      <dbl>     <dbl>    <dbl>    <dbl>
-#>  1 Blank     Groot      0.792     0.890     355.     366.
-#>  2 High      Groot      0.976     5.55      639.     651.
+#>  1 Blank     Groot      0.990     1.04      426.     438.
+#>  2 High      Groot      0.998     1.23      469.     481.
 #>  3 Low       Groot      0.998     1.04      420.     432.
 #>  4 Medium    Groot      0.999     0.864     369.     380.
-#>  5 TMR       Groot      0.952     1.67      475.     487.
-#>  6 Blank     Gompertz   0.774     2.10      564.     576.
-#>  7 High      Gompertz   0.970     6.56      901.     913.
+#>  5 TMR       Groot      0.999     0.827     356.     368.
+#>  6 Blank     Gompertz   0.948     2.55      690.     701.
+#>  7 High      Gompertz   0.977     4.00      817.     828.
 #>  8 Low       Gompertz   0.984     3.02      721.     733.
 #>  9 Medium    Gompertz   0.970     4.42      850.     862.
-#> 10 TMR       Gompertz   0.954     3.40      773.     784.
+#> 10 TMR       Gompertz   0.981     3.28      762.     774.
 ```

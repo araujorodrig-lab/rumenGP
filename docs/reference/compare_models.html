@@ -116,22 +116,38 @@ of fit and model complexity.</p>
 <span class="r-in"><span>  temperature_c <span class="op">=</span> <span class="fl">39</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">gp_clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="exclude_heads.html">exclude_heads</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">gp</span>,</span></span>
+<span class="r-in"><span>  heads <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"1"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"2"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"4"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"20"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  reason <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">groot_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="fit_groot.html">fit_groot</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">gp</span></span></span>
+<span class="r-in"><span>  <span class="va">gp_clean</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> rumenGP data validation passed.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3618</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 25</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3038</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 21</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Treatments: 5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">gompertz_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="fit_gompertz.html">fit_gompertz</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">gp</span></span></span>
+<span class="r-in"><span>  <span class="va">gp_clean</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> rumenGP data validation passed.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3618</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 25</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3038</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 21</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Treatments: 5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu">compare_models</span><span class="op">(</span></span></span>
@@ -140,12 +156,12 @@ of fit and model complexity.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">comparison</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE Mean_RSS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Groot      25              24           1 0.9430432  2.016908 3365.539</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Gompertz      25              24           1 0.9292455  3.922136 3438.554</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Groot      21              21           0 0.9967168  1.003186  152.2996</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Gompertz      21              21           0 0.9721855  3.487037 1874.2911</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Mean_AIC Mean_BIC Lambda_Boundary</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 450.3568 462.2290               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 761.3896 773.2882              22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 409.1374 421.0085               0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 769.9299 781.8275              21</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

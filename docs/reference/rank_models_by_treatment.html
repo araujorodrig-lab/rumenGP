@@ -117,22 +117,38 @@ varies among treatments.</p>
 <span class="r-in"><span>  temperature_c <span class="op">=</span> <span class="fl">39</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">gp_clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="exclude_heads.html">exclude_heads</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">gp</span>,</span></span>
+<span class="r-in"><span>  heads <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"1"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"2"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"4"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"20"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  reason <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">groot_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="fit_groot.html">fit_groot</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">gp</span></span></span>
+<span class="r-in"><span>  <span class="va">gp_clean</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> rumenGP data validation passed.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3618</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 25</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3038</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 21</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Treatments: 5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">gompertz_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="fit_gompertz.html">fit_gompertz</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">gp</span></span></span>
+<span class="r-in"><span>  <span class="va">gp_clean</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> rumenGP data validation passed.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3618</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 25</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3038</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 21</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Treatments: 5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="compare_models_by_treatment.html">compare_models_by_treatment</a></span><span class="op">(</span></span></span>
@@ -146,16 +162,16 @@ varies among treatments.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 10</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Treatment Model    Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Blank     Groot      0.792     0.890     355.     366.       1         1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> High      Groot      0.976     5.55      639.     651.       1         1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Blank     Groot      0.990     1.04      426.     438.       1         1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> High      Groot      0.998     1.23      469.     481.       1         1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Low       Groot      0.998     1.04      420.     432.       1         1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Medium    Groot      0.999     0.864     369.     380.       1         1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> TMR       Groot      0.952     1.67      475.     487.       2         1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Blank     Gompertz   0.774     2.10      564.     576.       2         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> High      Gompertz   0.970     6.56      901.     913.       2         2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> TMR       Groot      0.999     0.827     356.     368.       1         1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Blank     Gompertz   0.948     2.55      690.     701.       2         2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> High      Gompertz   0.977     4.00      817.     828.       2         2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Low       Gompertz   0.984     3.02      721.     733.       2         2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Medium    Gompertz   0.970     4.42      850.     862.       2         2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> TMR       Gompertz   0.954     3.40      773.     784.       1         2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> TMR       Gompertz   0.981     3.28      762.     774.       2         2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: Rank_AIC &lt;int&gt;, Rank_BIC &lt;int&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

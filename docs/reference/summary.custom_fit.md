@@ -75,8 +75,24 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+  ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
+)
+
 custom_fit <- fit_custom(
-  data = gp,
+  data = gp_clean,
   formula =
     Gas_mL ~
       A *
@@ -98,8 +114,8 @@ custom_fit <- fit_custom(
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 summary(
@@ -113,12 +129,12 @@ summary(
 #> Formula:
 #> Gas_mL ~ A * (Time_h/(Time_h + K))
 #> 
-#> Total bottles: 25
-#> Successful fits: 23
-#> Failed fits: 2
-#> Mean R-squared: 0.9439
-#> Mean RMSE: 1.4049
-#> Mean AIC: 469.519
-#> Mean BIC: 478.4427
+#> Total bottles: 21
+#> Successful fits: 21
+#> Failed fits: 0
+#> Mean R-squared: 0.9951
+#> Mean RMSE: 1.2719
+#> Mean AIC: 468.4219
+#> Mean BIC: 477.345
 #> 
 ```

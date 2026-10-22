@@ -71,31 +71,35 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
-gp_filtered <- exclude_heads(
-  data = gp,
+gp_clean <- exclude_heads(
+  gp,
   heads = c(
-    "12",
-    "18"
+    "1",
+    "2",
+    "4",
+    "20"
   ),
   reason = c(
-    "Bottle leak",
-    "Sensor malfunction"
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
   )
 )
 
-gp_filtered
-#> # A tibble: 3,473 × 10
+gp_clean
+#> # A tibble: 3,038 × 10
 #>    time_raw Time_h Head  Gas_PSI Gas_kPa Gas_moles Gas_mL Bottle   Rep Treatment
 #>    <chr>     <dbl> <chr>   <dbl>   <dbl>     <dbl>  <dbl>  <dbl> <dbl> <chr>    
-#>  1 10:54:01      0 1           0       0         0      0      1     1 TMR      
-#>  2 10:54:01      0 2           0       0         0      0      2     1 Blank    
-#>  3 10:54:01      0 3           0       0         0      0      3     2 TMR      
-#>  4 10:54:01      0 4           0       0         0      0      4     3 TMR      
-#>  5 10:54:01      0 6           0       0         0      0      6     4 TMR      
-#>  6 10:54:01      0 7           0       0         0      0      7     5 TMR      
-#>  7 10:54:01      0 9           0       0         0      0      9     1 Low      
-#>  8 10:54:01      0 10          0       0         0      0     10     2 Low      
-#>  9 10:54:01      0 11          0       0         0      0     11     3 Low      
-#> 10 10:54:01      0 13          0       0         0      0     13     1 Medium   
-#> # ℹ 3,463 more rows
+#>  1 10:54:01      0 3           0       0         0      0      3     2 TMR      
+#>  2 10:54:01      0 6           0       0         0      0      6     4 TMR      
+#>  3 10:54:01      0 7           0       0         0      0      7     5 TMR      
+#>  4 10:54:01      0 9           0       0         0      0      9     1 Low      
+#>  5 10:54:01      0 10          0       0         0      0     10     2 Low      
+#>  6 10:54:01      0 11          0       0         0      0     11     3 Low      
+#>  7 10:54:01      0 12          0       0         0      0     12     4 Low      
+#>  8 10:54:01      0 13          0       0         0      0     13     1 Medium   
+#>  9 10:54:01      0 14          0       0         0      0     14     2 Medium   
+#> 10 10:54:01      0 15          0       0         0      0     15     3 Medium   
+#> # ℹ 3,028 more rows
 ```

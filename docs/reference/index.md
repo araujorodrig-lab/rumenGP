@@ -86,8 +86,6 @@
   : Plot Fitted Model
 - [`plot_residuals()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_residuals.md)
   : Plot Model Residuals
-- [`plot_treatment_mean()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_treatment_mean.md)
-  : Plot Treatment Means Across Models
 - [`plot_model_comparison()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_comparison.md)
   : Compare Model Fits
 - [`plot_model_rankings()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_rankings.md)
@@ -95,22 +93,12 @@
 
 ## Advanced Visualization
 
-- [`plot_all_fits()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_all_fits.md)
-  : Plot All Fitted Curves
-- [`plot_all_treatment_means()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_all_treatment_means.md)
-  : Plot Treatment Means for All Treatments
 - [`plot_diagnostics()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_diagnostics.md)
   : Plot Diagnostic Summaries
 - [`plot_dual_pools()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_dual_pools.md)
   : Plot Dual-Pool Logistic Decomposition
-- [`plot_model_comparison_all()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_comparison_all.md)
-  : Compare Models for All Bottles
-- [`plot_model_comparison_treatment()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_comparison_treatment.md)
-  : Compare Models Within a Treatment
 - [`plot_model_performance()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_performance.md)
   : Plot Model Performance
-- [`plot_residual_comparison()`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_residual_comparison.md)
-  : Compare Residuals Across Models
 
 ## Summary Methods
 

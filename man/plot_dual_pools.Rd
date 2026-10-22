@@ -140,5 +140,4 @@ plot_dual_pools(
 \code{\link{plot_fit}},
 \code{\link{plot_gp}},
 \code{\link{plot_residuals}},
-\code{\link{plot_treatment_mean}}
 }

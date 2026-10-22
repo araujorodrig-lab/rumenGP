@@ -127,8 +127,6 @@
 #' \code{\link{compare_models}},
 #' \code{\link{plot_fit}},
 #' \code{\link{plot_gp}},
-#' \code{\link{plot_model_comparison_all}},
-#' \code{\link{plot_model_comparison_treatment}},
 #' \code{\link{fit_groot}},
 #' \code{\link{fit_gompertz}}
 #'

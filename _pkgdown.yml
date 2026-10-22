@@ -90,20 +90,14 @@ reference:
       - plot_gp
       - plot_fit
       - plot_residuals
-      - plot_treatment_mean
       - plot_model_comparison
       - plot_model_rankings
 
   - title: Advanced Visualization
     contents:
-      - plot_all_fits
-      - plot_all_treatment_means
       - plot_diagnostics
       - plot_dual_pools
-      - plot_model_comparison_all
-      - plot_model_comparison_treatment
       - plot_model_performance
-      - plot_residual_comparison
 
   - title: Summary Methods
     contents:

@@ -118,30 +118,46 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+  ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
+)
+
 # Fit using package default starting values
 fit_default <- fit_dual_logistic(
-  gp
+  gp_clean
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 summary(fit_default)
 #> 
 #> Dual-pool Logistic model summary
 #> --------------------------------
-#> Total bottles: 25
-#> Successful fits: 22
-#> Failed fits: 3
+#> Total bottles: 21
+#> Successful fits: 21
+#> Failed fits: 0
 #> Low R-squared (< 0.90): 0
 #> Lambda at boundary: 0
 #> 
 
 # Fit using custom starting values
 fit_custom_start <- fit_dual_logistic(
-  gp,
+  gp_clean,
   start = list(
     V1F = 30,
     V2F = 70,
@@ -152,18 +168,18 @@ fit_custom_start <- fit_dual_logistic(
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 summary(fit_custom_start)
 #> 
 #> Dual-pool Logistic model summary
 #> --------------------------------
-#> Total bottles: 25
-#> Successful fits: 23
-#> Failed fits: 2
-#> Low R-squared (< 0.90): 1
+#> Total bottles: 21
+#> Successful fits: 21
+#> Failed fits: 0
+#> Low R-squared (< 0.90): 0
 #> Lambda at boundary: 0
 #> 
 

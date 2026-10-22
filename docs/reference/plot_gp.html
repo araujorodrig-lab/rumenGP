@@ -81,8 +81,12 @@ to the selected treatment are plotted.</p></dd>
 
 <dt id="arg-mean-treatment">mean_treatment<a class="anchor" aria-label="anchor" href="#arg-mean-treatment"></a></dt>
 <dd><p>Logical.
-If <code>TRUE</code>, plots the mean gas-production
-profile of the selected treatment.</p></dd>
+If <code>TRUE</code>, treatment means are plotted.</p>
+<p>When used together with <code>treatment</code>,
+the function displays the mean gas-production
+profile of the selected treatment.</p>
+<p>When <code>treatment = NULL</code>, mean profiles
+are displayed for all treatments.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -95,19 +99,20 @@ profile of the selected treatment.</p></dd>
 <ul><li><p>A single bottle</p></li>
 <li><p>All bottles in the dataset</p></li>
 <li><p>All bottles within a treatment</p></li>
-<li><p>Mean treatment gas-production profiles</p></li>
+<li><p>The mean profile of a single treatment</p></li>
+<li><p>Mean profiles of all treatments</p></li>
 </ul><p>This visualization is useful for:</p>
 <ul><li><p>Inspecting fermentation dynamics</p></li>
 <li><p>Identifying unusual observations</p></li>
 <li><p>Evaluating data quality</p></li>
 <li><p>Comparing bottle-level responses</p></li>
 <li><p>Comparing treatment-level responses</p></li>
+<li><p>Exploring treatment means and variability</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="plot_fit.html">plot_fit</a></code>,
 <code><a href="plot_residuals.html">plot_residuals</a></code>,
-<code><a href="plot_treatment_mean.html">plot_treatment_mean</a></code>,
 <code><a href="process_ankom.html">process_ankom</a></code></p></div>
     </div>
 
@@ -131,33 +136,56 @@ profile of the selected treatment.</p></dd>
 <span class="r-in"><span>  temperature_c <span class="op">=</span> <span class="fl">39</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">gp_clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="exclude_heads.html">exclude_heads</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">gp</span>,</span></span>
+<span class="r-in"><span>heads <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span> <span class="st">"1"</span>,</span></span>
+<span class="r-in"><span> <span class="st">"2"</span>,</span></span>
+<span class="r-in"><span> <span class="st">"4"</span>,</span></span>
+<span class="r-in"><span> <span class="st">"20"</span></span></span>
+<span class="r-in"><span> <span class="op">)</span>,</span></span>
+<span class="r-in"><span>reason <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span> <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span> <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span> <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span> <span class="st">"Abnormal gas profile"</span></span></span>
+<span class="r-in"><span> <span class="op">)</span></span></span>
+<span class="r-in"><span> <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Single bottle</span></span></span>
 <span class="r-in"><span><span class="fu">plot_gp</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">gp</span>,</span></span>
-<span class="r-in"><span>  head <span class="op">=</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span>  <span class="va">gp_clean</span>,</span></span>
+<span class="r-in"><span>  head <span class="op">=</span> <span class="fl">6</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_gp-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># All bottles</span></span></span>
 <span class="r-in"><span><span class="fu">plot_gp</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">gp</span></span></span>
+<span class="r-in"><span>  <span class="va">gp_clean</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_gp-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># All bottles within a treatment</span></span></span>
 <span class="r-in"><span><span class="fu">plot_gp</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">gp</span>,</span></span>
+<span class="r-in"><span>  <span class="va">gp_clean</span>,</span></span>
 <span class="r-in"><span>  treatment <span class="op">=</span> <span class="st">"TMR"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_gp-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Mean treatment profile</span></span></span>
+<span class="r-in"><span><span class="co"># Mean profile for one treatment</span></span></span>
 <span class="r-in"><span><span class="fu">plot_gp</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">gp</span>,</span></span>
+<span class="r-in"><span>  <span class="va">gp_clean</span>,</span></span>
 <span class="r-in"><span>  treatment <span class="op">=</span> <span class="st">"TMR"</span>,</span></span>
 <span class="r-in"><span>  mean_treatment <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_gp-4.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Mean profiles for all treatments</span></span></span>
+<span class="r-in"><span><span class="fu">plot_gp</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">gp_clean</span>,</span></span>
+<span class="r-in"><span>  mean_treatment <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_gp-5.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

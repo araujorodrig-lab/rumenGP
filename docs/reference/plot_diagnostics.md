@@ -61,28 +61,41 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
+gp_clean <- exclude_heads(
+gp,
+heads = c(
+ "1",
+ "2",
+ "4",
+ "20"
+ ),
+reason = c(
+ "Abnormal gas profile",
+ "Abnormal gas profile",
+ "Abnormal gas profile",
+ "Abnormal gas profile"
+ )
+ )
+
 fit <- fit_groot(
-  gp
+  gp_clean
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 plot_diagnostics(
   fit
 )
 #> $R2
-#> Warning: Removed 1 row containing non-finite outside the scale range (`stat_bin()`).
 
 #> 
 #> $RMSE
-#> Warning: Removed 1 row containing non-finite outside the scale range (`stat_bin()`).
 
 #> 
 #> $AIC
-#> Warning: Removed 1 row containing non-finite outside the scale range (`stat_bin()`).
 
 #> 
 ```

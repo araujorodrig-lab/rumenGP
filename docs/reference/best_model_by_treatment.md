@@ -67,22 +67,38 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+  ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
+)
+
 groot_fit <- fit_groot(
-  gp
+  gp_clean
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 gompertz_fit <- fit_gompertz(
-  gp
+  gp_clean
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 comparison <- compare_models_by_treatment(
@@ -100,10 +116,10 @@ best_model_by_treatment(
 #> # A tibble: 5 × 12
 #>   Treatment Model Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE Rank_AIC
 #>   <chr>     <chr>   <dbl>     <dbl>    <dbl>    <dbl>   <int>     <int>    <int>
-#> 1 Blank     Groot   0.792     0.890     355.     366.       1         1        1
-#> 2 High      Groot   0.976     5.55      639.     651.       1         1        1
+#> 1 Blank     Groot   0.990     1.04      426.     438.       1         1        1
+#> 2 High      Groot   0.998     1.23      469.     481.       1         1        1
 #> 3 Low       Groot   0.998     1.04      420.     432.       1         1        1
 #> 4 Medium    Groot   0.999     0.864     369.     380.       1         1        1
-#> 5 TMR       Groot   0.952     1.67      475.     487.       2         1        1
+#> 5 TMR       Groot   0.999     0.827     356.     368.       1         1        1
 #> # ℹ 3 more variables: Rank_BIC <int>, Total_Rank <int>, Overall_Rank <int>
 ```

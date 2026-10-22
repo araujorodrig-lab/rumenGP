@@ -1,23 +1,38 @@
 # Plot Model Residuals
 
-Plots residuals for an individual bottle.
+Plots residuals from one or more fitted models.
 
 ## Usage
 
 ``` r
-plot_residuals(fit, head = NULL)
+plot_residuals(..., head = NULL, treatment = NULL, mean_treatment = FALSE)
 ```
 
 ## Arguments
 
-- fit:
+- ...:
 
-  A fitted model object containing a predictions element.
+  Fitted model objects.
 
 - head:
 
-  Optional Head identifier. If omitted and only one bottle is present,
-  that bottle is plotted automatically.
+  Optional bottle identifier. If supplied, only the selected bottle is
+  plotted.
+
+- treatment:
+
+  Optional treatment name. If supplied, only observations belonging to
+  the selected treatment are plotted.
+
+- mean_treatment:
+
+  Logical. If `TRUE`, treatment means are plotted.
+
+  When used together with `treatment`, the function displays the mean
+  residual profile of the selected treatment.
+
+  When `treatment = NULL`, mean residual profiles are displayed for all
+  treatments.
 
 ## Value
 
@@ -29,6 +44,18 @@ Residuals are calculated as:
 
 \$\$ Residual = Observed - Predicted \$\$
 
+The function can be used to visualize:
+
+- A single bottle
+
+- All bottles within a treatment
+
+- Mean residual profiles for a selected treatment
+
+- Mean residual profiles across all treatments
+
+- Residual patterns from multiple fitted models
+
 Residual plots are useful for:
 
 - Identifying systematic model bias
@@ -39,15 +66,20 @@ Residual plots are useful for:
 
 - Assessing goodness of fit
 
+- Comparing competing kinetic models
+
+- Evaluating treatment-level model performance
+
 Ideally, residuals should be randomly distributed around zero with no
 obvious trend through time.
 
 ## See also
 
 [`plot_fit`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_fit.md),
-[`plot_residual_comparison`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_residual_comparison.md),
-[`plot_diagnostics`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_diagnostics.md),
-[`fit_groot`](https://araujorodrig-lab.github.io/rumenGP/reference/fit_groot.md)
+[`plot_gp`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_gp.md),
+[`plot_model_comparison`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_model_comparison.md),
+[`plot_dual_pools`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_dual_pools.md),
+[`plot_diagnostics`](https://araujorodrig-lab.github.io/rumenGP/reference/plot_diagnostics.md)
 
 ## Examples
 
@@ -70,19 +102,70 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
-fit <- fit_groot(
-  gp
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+  ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
+)
+
+groot_fit <- fit_groot(
+  gp_clean
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
+gompertz_fit <- fit_gompertz(
+  gp_clean
+)
+#> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
+#> rumenGP data validation passed.
+#> Observations: 3038
+#> Heads: 21
+#> Treatments: 5
+
+# Single bottle
 plot_residuals(
-  fit,
+  Groot = groot_fit,
+  Gompertz = gompertz_fit,
   head = 6
 )
-#> `geom_smooth()` using formula = 'y ~ x'
+#> Error in plot_residuals(Groot = groot_fit, Gompertz = gompertz_fit, head = 6): unused arguments (Groot = groot_fit, Gompertz = gompertz_fit)
 
+# Treatment-specific residuals
+plot_residuals(
+  Groot = groot_fit,
+  Gompertz = gompertz_fit,
+  treatment = "TMR"
+)
+#> Error in plot_residuals(Groot = groot_fit, Gompertz = gompertz_fit, treatment = "TMR"): unused arguments (Groot = groot_fit, Gompertz = gompertz_fit, treatment = "TMR")
+
+# Mean residual profile of one treatment
+plot_residuals(
+  Groot = groot_fit,
+  Gompertz = gompertz_fit,
+  treatment = "TMR",
+  mean_treatment = TRUE
+)
+#> Error in plot_residuals(Groot = groot_fit, Gompertz = gompertz_fit, treatment = "TMR",     mean_treatment = TRUE): unused arguments (Groot = groot_fit, Gompertz = gompertz_fit, treatment = "TMR", mean_treatment = TRUE)
+
+# Mean residual profiles of all treatments
+plot_residuals(
+  Groot = groot_fit,
+  Gompertz = gompertz_fit,
+  mean_treatment = TRUE
+)
+#> Error in plot_residuals(Groot = groot_fit, Gompertz = gompertz_fit, mean_treatment = TRUE): unused arguments (Groot = groot_fit, Gompertz = gompertz_fit, mean_treatment = TRUE)
 ```

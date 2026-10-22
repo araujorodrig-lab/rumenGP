@@ -52,12 +52,28 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+  ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
+)
+
 groot_fit <- fit_groot(
-  gp
+  gp_clean
 )
 
 gompertz_fit <- fit_gompertz(
-  gp
+  gp_clean
 )
 
 comparison <- compare_models_by_treatment(

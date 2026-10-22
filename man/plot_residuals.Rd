@@ -7,24 +7,47 @@
 plot_residuals(..., head = NULL, treatment = NULL, mean_treatment = FALSE)
 }
 \arguments{
-\item{head}{Optional Head identifier.
-If omitted and only one bottle is present,
-that bottle is plotted automatically.}
+\item{...}{Fitted model objects.}
 
-\item{fit}{A fitted model object containing a
-predictions element.}
+\item{head}{Optional bottle identifier.
+If supplied, only the selected bottle
+is plotted.}
+
+\item{treatment}{Optional treatment name.
+If supplied, only observations belonging
+to the selected treatment are plotted.}
+
+\item{mean_treatment}{Logical.
+If \code{TRUE}, treatment means are plotted.
+
+When used together with \code{treatment},
+the function displays the mean residual
+profile of the selected treatment.
+
+When \code{treatment = NULL}, mean residual
+profiles are displayed for all treatments.}
 }
 \value{
 A \code{ggplot2} object.
 }
 \description{
-Plots residuals for an individual bottle.
+Plots residuals from one or more fitted models.
 }
 \details{
 Residuals are calculated as:
 
 \deqn{
 Residual = Observed - Predicted
+}
+
+The function can be used to visualize:
+
+\itemize{
+\item A single bottle
+\item All bottles within a treatment
+\item Mean residual profiles for a selected treatment
+\item Mean residual profiles across all treatments
+\item Residual patterns from multiple fitted models
 }
 
 Residual plots are useful for:
@@ -34,6 +57,8 @@ Residual plots are useful for:
 \item Detecting outliers
 \item Evaluating model assumptions
 \item Assessing goodness of fit
+\item Comparing competing kinetic models
+\item Evaluating treatment-level model performance
 }
 
 Ideally, residuals should be randomly distributed
@@ -58,19 +83,64 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
-fit <- fit_groot(
-  gp
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+  ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
 )
 
+groot_fit <- fit_groot(
+  gp_clean
+)
+
+gompertz_fit <- fit_gompertz(
+  gp_clean
+)
+
+# Single bottle
 plot_residuals(
-  fit,
+  Groot = groot_fit,
+  Gompertz = gompertz_fit,
   head = 6
+)
+
+# Treatment-specific residuals
+plot_residuals(
+  Groot = groot_fit,
+  Gompertz = gompertz_fit,
+  treatment = "TMR"
+)
+
+# Mean residual profile of one treatment
+plot_residuals(
+  Groot = groot_fit,
+  Gompertz = gompertz_fit,
+  treatment = "TMR",
+  mean_treatment = TRUE
+)
+
+# Mean residual profiles of all treatments
+plot_residuals(
+  Groot = groot_fit,
+  Gompertz = gompertz_fit,
+  mean_treatment = TRUE
 )
 
 }
 \seealso{
 \code{\link{plot_fit}},
-\code{\link{plot_residual_comparison}},
-\code{\link{plot_diagnostics}},
-\code{\link{fit_groot}}
+\code{\link{plot_gp}},
+\code{\link{plot_model_comparison}},
+\code{\link{plot_dual_pools}},
+\code{\link{plot_diagnostics}}
 }

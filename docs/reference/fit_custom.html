@@ -232,10 +232,26 @@ biologically unrealistic parameter estimates.</p>
 <span class="r-in"><span>  temperature_c <span class="op">=</span> <span class="fl">39</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">gp_clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="exclude_heads.html">exclude_heads</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">gp</span>,</span></span>
+<span class="r-in"><span>  heads <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"1"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"2"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"4"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"20"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  reason <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Abnormal gas profile"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Hyperbolic model</span></span></span>
 <span class="r-in"><span><span class="va">custom_fit</span> <span class="op">&lt;-</span> <span class="fu">fit_custom</span><span class="op">(</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  data <span class="op">=</span> <span class="va">gp</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">gp_clean</span>,</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  formula <span class="op">=</span></span></span>
 <span class="r-in"><span>    <span class="va">Gas_mL</span> <span class="op">~</span></span></span>
@@ -262,8 +278,8 @@ biologically unrealistic parameter estimates.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> rumenGP data validation passed.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3618</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 25</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3038</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 21</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Treatments: 5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">custom_fit</span><span class="op">)</span></span></span>
@@ -275,13 +291,13 @@ biologically unrealistic parameter estimates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Gas_mL ~ A * (Time_h/(Time_h + K))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total bottles: 25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Successful fits: 23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Failed fits: 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean R-squared: 0.9439</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean RMSE: 1.4049</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean AIC: 469.519</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean BIC: 478.4427</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total bottles: 21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Successful fits: 21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Failed fits: 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean R-squared: 0.9951</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean RMSE: 1.2719</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean AIC: 468.4219</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean BIC: 477.345</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Find a bottle with a successful fit</span></span></span>
@@ -310,28 +326,28 @@ biologically unrealistic parameter estimates.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Compare against built-in models</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="compare_models.html">compare_models</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  Groot <span class="op">=</span> <span class="fu"><a href="fit_groot.html">fit_groot</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  BurrXII <span class="op">=</span> <span class="fu"><a href="fit_burr_xii.html">fit_burr_xii</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  Groot <span class="op">=</span> <span class="fu"><a href="fit_groot.html">fit_groot</a></span><span class="op">(</span><span class="va">gp_clean</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  BurrXII <span class="op">=</span> <span class="fu"><a href="fit_burr_xii.html">fit_burr_xii</a></span><span class="op">(</span><span class="va">gp_clean</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  Hyperbolic <span class="op">=</span> <span class="va">custom_fit</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> rumenGP data validation passed.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3618</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 25</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3038</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 21</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Treatments: 5</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> rumenGP data validation passed.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3618</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 25</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Observations: 3038</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Heads: 21</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Treatments: 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      Groot      25              24           1 0.9430432  2.016908 3365.5394</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    BurrXII      25              24           1 0.8939477  2.461144 4305.4660</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Hyperbolic      25              23           2 0.9438970  1.404890  419.9683</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE Mean_RSS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      Groot      21              21           0 0.9967168  1.003186 152.2996</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    BurrXII      21              21           0 0.9965901  1.107550 211.2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Hyperbolic      21              21           0 0.9950576  1.271883 264.6107</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Mean_AIC Mean_BIC Lambda_Boundary</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 450.3568 462.2290               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 476.8434 491.7167               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 469.5190 478.4427               0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 409.1374 421.0085               0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 423.7023 438.5742               0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 468.4219 477.3450               0</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

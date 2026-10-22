@@ -267,14 +267,38 @@ used by `process_ankom()`.
 
 ---
 
+## Remove Abnormal heads
+
+```{r}
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+    ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
+)
+
+plot_gp(
+  gp_clean
+  )
+```
+
 ## Model Fitting
 
 ```{r}
-groot_fit <- fit_groot(gp)
+groot_fit <- fit_groot(gp_clean)
 
-brody_fit <- fit_brody(gp)
+brody_fit <- fit_brody(gp_clean)
 
-gompertz_fit <- fit_gompertz(gp)
+gompertz_fit <- fit_gompertz(gp_clean)
 ```
 
 ### Model summaries
@@ -290,11 +314,11 @@ summary(groot_fit)
 ```{r}
 comparison <- compare_models(
 
-  Groot = fit_groot(gp),
+  Groot = fit_groot(gp_clean),
 
-  Brody = fit_brody(gp),
+  Brody = fit_brody(gp_clean),
 
-  Gompertz = fit_gompertz(gp)
+  Gompertz = fit_gompertz(gp_clean)
 
 )
 
@@ -317,11 +341,11 @@ rank_models(
 treatment_comparison <-
   compare_models_by_treatment(
 
-    Groot = fit_groot(gp),
+    Groot = fit_groot(gp_clean),
 
-    Brody = fit_brody(gp),
+    Brody = fit_brody(gp_clean),
 
-    Gompertz = fit_gompertz(gp)
+    Gompertz = fit_gompertz(gp_clean)
 
   )
 
@@ -345,7 +369,7 @@ using `fit_custom()`.
 ```{r}
 custom_fit <- fit_custom(
 
-  data = gp,
+  data = gp_clean,
 
   formula =
     Gas_mL ~
@@ -379,9 +403,9 @@ Compare custom and built-in models:
 ```{r}
 compare_models(
 
-  Groot = fit_groot(gp),
+  Groot = fit_groot(gp_clean),
 
-  Brody = fit_brody(gp),
+  Brody = fit_brody(gp_clean),
 
   Hyperbolic = custom_fit
 
@@ -396,7 +420,7 @@ compare_models(
 
 ```{r, eval = FALSE}
 plot_gp(
-  gp,
+  gp_clean,
   head = "6"
 )
 ```
@@ -422,10 +446,10 @@ plot_residuals(
 ### Treatment means
 
 ```{r, eval = FALSE}
-plot_treatment_mean(
-  Groot = fit_groot(gp),
-  Brody = fit_brody(gp),
-  treatment = "Control"
+plot_fit(
+  Groot = fit_groot(gp_clean),
+  Brody = fit_brody(gp_clean),
+  treatment = "TMR"
 )
 ```
 
@@ -451,16 +475,6 @@ Document exclusions
 Refit models
     ↓
 Compare models
-```
-
-Example:
-
-```{r, eval = FALSE}
-gp_clean <- exclude_heads(
-  gp,
-  heads = c("10"),
-  reason = "Sensor malfunction"
-)
 ```
 
 ---
@@ -670,7 +684,6 @@ those existing parameterizations.
 - `plot_gp()`
 - `plot_fit()`
 - `plot_residuals()`
-- `plot_treatment_mean()`
 
 ### Model Comparison
 

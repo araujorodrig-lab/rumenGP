@@ -109,30 +109,46 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+  ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
+)
+
 # Fit using package default starting values
 fit_default <- fit_mitscherlich(
-  gp
+  gp_clean
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 summary(fit_default)
 #> 
 #> Mitscherlich model summary
 #> ---------------------------
-#> Total bottles: 25
-#> Successful fits: 24
-#> Failed fits: 1
-#> Low R-squared (< 0.90): 3
+#> Total bottles: 21
+#> Successful fits: 21
+#> Failed fits: 0
+#> Low R-squared (< 0.90): 0
 #> Lambda at boundary: 9
 #> 
 
 # Fit using custom starting values
 fit_custom_start <- fit_mitscherlich(
-  gp,
+  gp_clean,
   start = list(
     A = 120,
     k = 0.05,
@@ -142,19 +158,19 @@ fit_custom_start <- fit_mitscherlich(
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 summary(fit_custom_start)
 #> 
 #> Mitscherlich model summary
 #> ---------------------------
-#> Total bottles: 25
-#> Successful fits: 24
-#> Failed fits: 1
-#> Low R-squared (< 0.90): 5
-#> Lambda at boundary: 13
+#> Total bottles: 21
+#> Successful fits: 21
+#> Failed fits: 0
+#> Low R-squared (< 0.90): 2
+#> Lambda at boundary: 11
 #> 
 
 

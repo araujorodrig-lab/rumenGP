@@ -132,8 +132,6 @@ plot_fit(
 }
 \seealso{
 \code{\link{plot_gp}},
-\code{\link{plot_all_fits}},
 \code{\link{plot_residuals}},
-\code{\link{plot_treatment_mean}},
 \code{\link{fit_groot}}
 }

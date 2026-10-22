@@ -70,22 +70,38 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+  ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
+)
+
 groot_fit <- fit_groot(
-  gp
+  gp_clean
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 gompertz_fit <- fit_gompertz(
-  gp
+  gp_clean
 )
 #> Minor negative pressure values detected. Minimum PSI = -0.255 . These may reflect normal sensor variation.
 #> rumenGP data validation passed.
-#> Observations: 3618
-#> Heads: 25
+#> Observations: 3038
+#> Heads: 21
 #> Treatments: 5
 
 comparison <- compare_models(
@@ -96,10 +112,10 @@ comparison <- compare_models(
 rank_models(
   comparison
 )
-#>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE Mean_RSS
-#> 1    Groot      25              24           1 0.9430432  2.016908 3365.539
-#> 2 Gompertz      25              24           1 0.9292455  3.922136 3438.554
+#>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS
+#> 1    Groot      21              21           0 0.9967168  1.003186  152.2996
+#> 2 Gompertz      21              21           0 0.9721855  3.487037 1874.2911
 #>   Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC Rank_BIC
-#> 1 450.3568 462.2290               0       1         1        1        1
-#> 2 761.3896 773.2882              22       2         2        2        2
+#> 1 409.1374 421.0085               0       1         1        1        1
+#> 2 769.9299 781.8275              21       2         2        2        2
 ```
