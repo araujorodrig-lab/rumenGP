@@ -10,7 +10,8 @@
 #'   \item A single bottle
 #'   \item All bottles in the dataset
 #'   \item All bottles within a treatment
-#'   \item Mean treatment gas-production profiles
+#'   \item The mean profile of a single treatment
+#'   \item Mean profiles of all treatments
 #' }
 #'
 #' This visualization is useful for:
@@ -21,6 +22,7 @@
 #'   \item Evaluating data quality
 #'   \item Comparing bottle-level responses
 #'   \item Comparing treatment-level responses
+#'   \item Exploring treatment means and variability
 #' }
 #'
 #' @param data A \code{rumen_gp} object.
@@ -34,8 +36,14 @@
 #' to the selected treatment are plotted.
 #'
 #' @param mean_treatment Logical.
-#' If \code{TRUE}, plots the mean gas-production
+#' If \code{TRUE}, treatment means are plotted.
+#'
+#' When used together with \code{treatment},
+#' the function displays the mean gas-production
 #' profile of the selected treatment.
+#'
+#' When \code{treatment = NULL}, mean profiles
+#' are displayed for all treatments.
 #'
 #' @examples
 #'
@@ -56,27 +64,49 @@
 #'   temperature_c = 39
 #' )
 #'
+#' gp_clean <- exclude_heads(
+#' gp,
+#' heads = c(
+#'  "1",
+#'  "2",
+#'  "4",
+#'  "20"
+#'  ),
+#' reason = c(
+#'  "Abnormal gas profile",
+#'  "Abnormal gas profile",
+#'  "Abnormal gas profile",
+#'  "Abnormal gas profile"
+#'  )
+#'  )
+#'
 #' # Single bottle
 #' plot_gp(
-#'   gp,
-#'   head = 1
+#'   gp_clean,
+#'   head = 6
 #' )
 #'
 #' # All bottles
 #' plot_gp(
-#'   gp
+#'   gp_clean
 #' )
 #'
 #' # All bottles within a treatment
 #' plot_gp(
-#'   gp,
+#'   gp_clean,
 #'   treatment = "TMR"
 #' )
 #'
-#' # Mean treatment profile
+#' # Mean profile for one treatment
 #' plot_gp(
-#'   gp,
+#'   gp_clean,
 #'   treatment = "TMR",
+#'   mean_treatment = TRUE
+#' )
+#'
+#' # Mean profiles for all treatments
+#' plot_gp(
+#'   gp_clean,
 #'   mean_treatment = TRUE
 #' )
 #'
@@ -165,13 +195,80 @@ plot_gp <- function(
     )
 
   # ----------------------------------
-  # Treatment means
+  # Mean treatment profile(s)
   # ----------------------------------
 
   if (mean_treatment) {
 
+    # ----------------------------
+    # Single treatment mean
+    # ----------------------------
+
+    if (!is.null(treatment)) {
+
+      df_mean <- df |>
+        dplyr::group_by(
+          Time_h
+        ) |>
+        dplyr::summarise(
+          Mean_Gas =
+            mean(
+              Gas_mL,
+              na.rm = TRUE
+            ),
+          SD_Gas =
+            stats::sd(
+              Gas_mL,
+              na.rm = TRUE
+            ),
+          .groups = "drop"
+        )
+
+      return(
+
+        ggplot2::ggplot(
+          df_mean,
+          ggplot2::aes(
+            x = Time_h,
+            y = Mean_Gas
+          )
+        ) +
+
+          ggplot2::geom_ribbon(
+            ggplot2::aes(
+              ymin = Mean_Gas - SD_Gas,
+              ymax = Mean_Gas + SD_Gas
+            ),
+            alpha = 0.20
+          ) +
+
+          ggplot2::geom_line(
+            linewidth = 1
+          ) +
+
+          ggplot2::labs(
+            title = "Mean gas production",
+            subtitle = paste(
+              "Treatment:",
+              treatment
+            ),
+            x = "Time (h)",
+            y = "Gas production (mL)"
+          ) +
+
+          ggplot2::theme_minimal()
+
+      )
+
+    }
+
+    # ----------------------------
+    # Means of all treatments
+    # ----------------------------
+
     df_mean <- df |>
       dplyr::group_by(
+        Treatment,
         Time_h
       ) |>
       dplyr::summarise(
@@ -188,44 +285,42 @@ plot_gp <- function(
         .groups = "drop"
       )
 
-    p <- ggplot2::ggplot(
-      df_mean,
-      ggplot2::aes(
-        x = Time_h,
-        y = Mean_Gas
-      )
-    ) +
+    return(
 
-      ggplot2::geom_ribbon(
+      ggplot2::ggplot(
+        df_mean,
         ggplot2::aes(
-          ymin = Mean_Gas - SD_Gas,
-          ymax = Mean_Gas + SD_Gas
-        ),
-        alpha = 0.20
+          x = Time_h,
+          y = Mean_Gas
+        )
       ) +
 
-      ggplot2::geom_line(
-        linewidth = 1
-      ) +
+        ggplot2::geom_ribbon(
+          ggplot2::aes(
+            ymin = Mean_Gas - SD_Gas,
+            ymax = Mean_Gas + SD_Gas
+          ),
+          alpha = 0.20
+        ) +
 
-      ggplot2::labs(
-        title = if (
-          is.null(treatment)
-        ) {
-          "Mean gas production"
-        } else {
-          paste(
-            "Mean gas production -",
-            treatment
-          )
-        },
-        x = "Time (h)",
-        y = "Gas production (mL)"
-      ) +
+        ggplot2::geom_line(
+          linewidth = 1
+        ) +
 
-      ggplot2::theme_minimal()
+        ggplot2::facet_wrap(
+          ~ Treatment
 
-    return(p)
+        ) +
+
+        ggplot2::labs(
+          title = "Mean gas production",
+          x = "Time (h)",
+          y = "Gas production (mL)"
+        ) +
+
+        ggplot2::theme_minimal()
+
+    )
 
   }
 

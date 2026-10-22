@@ -4,26 +4,50 @@
 \alias{plot_fit}
 \title{Plot Fitted Model}
 \usage{
-plot_fit(fit, head = NULL)
+plot_fit(fit, head = NULL, treatment = NULL, mean_treatment = FALSE)
 }
 \arguments{
 \item{fit}{A fitted model object.}
 
-\item{head}{Optional Head identifier.
-If omitted and only one bottle is present,
-that bottle is plotted automatically.}
+\item{head}{Optional bottle identifier.
+If supplied, only the selected bottle
+is plotted.}
+
+\item{treatment}{Optional treatment name.
+If supplied, only observations belonging
+to the selected treatment are plotted.}
+
+\item{mean_treatment}{Logical.
+If \code{TRUE}, treatment means are plotted.
+
+When used together with \code{treatment},
+the function displays the mean observed and
+predicted profile of the selected treatment.
+
+When \code{treatment = NULL}, mean profiles
+are displayed for all treatments.}
 }
 \value{
 A \code{ggplot2} object.
 }
 \description{
-Plots observed and predicted gas production
-values for an individual bottle.
+Plots observed and predicted gas-production
+values from a fitted model object.
 }
 \details{
 Observed measurements are displayed alongside
-the fitted model curve, allowing visual
+fitted model predictions, allowing visual
 assessment of model performance.
+
+The function can be used to visualize:
+
+\itemize{
+\item A single bottle
+\item All bottles in the fitted dataset
+\item All bottles within a treatment
+\item The mean fitted profile of a single treatment
+\item Mean fitted profiles of all treatments
+}
 
 This visualization is useful for:
 
@@ -32,6 +56,8 @@ This visualization is useful for:
 \item Identifying systematic deviations
 \item Inspecting individual fermentation profiles
 \item Comparing observed and predicted values
+\item Comparing treatment-level responses
+\item Evaluating treatment means
 }
 }
 \examples{
@@ -53,19 +79,61 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
-fit <- fit_groot(
-  gp
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+  ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
 )
 
-# Plot a specific bottle
+fit <- fit_groot(
+  gp_clean
+)
+
+# Single bottle
 plot_fit(
   fit,
   head = 6
 )
 
+# All bottles
+plot_fit(
+  fit
+)
+
+# Treatment-specific bottles
+plot_fit(
+  fit,
+  treatment = "TMR"
+)
+
+# Mean fit for one treatment
+plot_fit(
+  fit,
+  treatment = "TMR",
+  mean_treatment = TRUE
+)
+
+# Mean fits for all treatments
+plot_fit(
+  fit,
+  mean_treatment = TRUE
+)
+
 }
 \seealso{
+\code{\link{plot_gp}},
 \code{\link{plot_all_fits}},
 \code{\link{plot_residuals}},
+\code{\link{plot_treatment_mean}},
 \code{\link{fit_groot}}
 }

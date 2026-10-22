@@ -69,16 +69,32 @@
 #'   temperature_c = 39
 #' )
 #'
+#' gp_clean <- exclude_heads(
+#'   gp,
+#'   heads = c(
+#'     "1",
+#'     "2",
+#'     "4",
+#'     "20"
+#'   ),
+#'   reason = c(
+#'     "Abnormal gas profile",
+#'     "Abnormal gas profile",
+#'     "Abnormal gas profile",
+#'     "Abnormal gas profile"
+#'   )
+#' )
+#'
 #' # Fit using package defaults
 #' fit_default <- fit_exp0(
-#'   gp
+#'   gp_clean
 #' )
 #'
 #' summary(fit_default)
 #'
 #' # Fit using user-defined starting values
 #' fit_custom_start <- fit_exp0(
-#'   gp,
+#'   gp_clean,
 #'   start = list(
 #'     Vf = 120,
 #'     k = 0.05

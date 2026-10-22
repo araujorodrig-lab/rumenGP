@@ -4,18 +4,29 @@
 \alias{plot_dual_pools}
 \title{Plot Dual-Pool Logistic Decomposition}
 \usage{
-plot_dual_pools(fit, head = NULL, treatment = NULL)
+plot_dual_pools(fit, head = NULL, treatment = NULL, mean_treatment = FALSE)
 }
 \arguments{
 \item{fit}{A \code{dual_logistic_fit} object.}
 
 \item{head}{Optional bottle identifier.
-If supplied, only that bottle will
-be plotted.}
+If supplied, only the selected bottle
+is plotted.}
 
 \item{treatment}{Optional treatment name.
-If supplied, a representative bottle
-from that treatment will be plotted.}
+If supplied, only observations belonging
+to the selected treatment are plotted.}
+
+\item{mean_treatment}{Logical.
+If \code{TRUE}, treatment means are plotted.
+
+When used together with \code{treatment},
+the function displays the mean dual-pool
+decomposition of the selected treatment.
+
+When \code{treatment = NULL}, mean
+decompositions are displayed for all
+treatments.}
 }
 \value{
 A \code{ggplot2} object.
@@ -23,13 +34,22 @@ A \code{ggplot2} object.
 \description{
 Visualizes the rapid pool, slow pool,
 total predicted gas production, and
-observed gas production for a fitted
+observed gas production from a fitted
 dual-pool logistic model.
 }
 \details{
 The plot helps interpret the relative
 contributions of rapidly and slowly
 fermentable fractions through time.
+
+The function can be used to visualize:
+
+\itemize{
+\item A single bottle
+\item All bottles within a treatment
+\item Mean decomposition for a selected treatment
+\item Mean decompositions for all treatments
+}
 
 Components displayed include:
 
@@ -40,9 +60,15 @@ Components displayed include:
 \item Slow fermentation pool
 }
 
-This visualization is useful for
-understanding substrate heterogeneity
-and fermentation dynamics.
+This visualization is useful for:
+
+\itemize{
+\item Understanding substrate heterogeneity
+\item Investigating fermentation dynamics
+\item Comparing treatment-level responses
+\item Evaluating the relative contribution
+of rapid and slow fermentation pools
+}
 }
 \examples{
 
@@ -63,18 +89,56 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
-fit <- fit_dual_logistic(
-  gp
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+  ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
 )
 
+fit <- fit_dual_logistic(
+  gp_clean
+)
+
+# Single bottle
 plot_dual_pools(
   fit,
-  head = 1
+  head = 6
+)
+
+# All bottles from a treatment
+plot_dual_pools(
+  fit,
+  treatment = "TMR"
+)
+
+# Mean decomposition of one treatment
+plot_dual_pools(
+  fit,
+  treatment = "TMR",
+  mean_treatment = TRUE
+)
+
+# Mean decompositions of all treatments
+plot_dual_pools(
+  fit,
+  mean_treatment = TRUE
 )
 
 }
 \seealso{
 \code{\link{fit_dual_logistic}},
 \code{\link{plot_fit}},
-\code{\link{plot_residuals}}
+\code{\link{plot_gp}},
+\code{\link{plot_residuals}},
+\code{\link{plot_treatment_mean}}
 }

@@ -44,8 +44,24 @@
 #'   temperature_c = 39
 #' )
 #'
+#' gp_clean <- exclude_heads(
+#'   gp,
+#'   heads = c(
+#'     "1",
+#'     "2",
+#'     "4",
+#'     "20"
+#'   ),
+#'   reason = c(
+#'     "Abnormal gas profile",
+#'     "Abnormal gas profile",
+#'     "Abnormal gas profile",
+#'     "Abnormal gas profile"
+#'   )
+#' )
+#'
 #' custom_fit <- fit_custom(
-#'   data = gp,
+#'   data = gp_clean,
 #'   formula =
 #'     Gas_mL ~
 #'       A *

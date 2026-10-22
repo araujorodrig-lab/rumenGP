@@ -3,12 +3,21 @@
 #'
 #' Visualizes the rapid pool, slow pool,
 #' total predicted gas production, and
-#' observed gas production for a fitted
+#' observed gas production from a fitted
 #' dual-pool logistic model.
 #'
 #' The plot helps interpret the relative
 #' contributions of rapidly and slowly
 #' fermentable fractions through time.
+#'
+#' The function can be used to visualize:
+#'
+#' \itemize{
+#'   \item A single bottle
+#'   \item All bottles within a treatment
+#'   \item Mean decomposition for a selected treatment
+#'   \item Mean decompositions for all treatments
+#' }
 #'
 #' Components displayed include:
 #'
@@ -19,19 +28,36 @@
 #'   \item Slow fermentation pool
 #' }
 #'
-#' This visualization is useful for
-#' understanding substrate heterogeneity
-#' and fermentation dynamics.
+#' This visualization is useful for:
+#'
+#' \itemize{
+#'   \item Understanding substrate heterogeneity
+#'   \item Investigating fermentation dynamics
+#'   \item Comparing treatment-level responses
+#'   \item Evaluating the relative contribution
+#'         of rapid and slow fermentation pools
+#' }
 #'
 #' @param fit A \code{dual_logistic_fit} object.
 #'
 #' @param head Optional bottle identifier.
-#' If supplied, only that bottle will
-#' be plotted.
+#' If supplied, only the selected bottle
+#' is plotted.
 #'
 #' @param treatment Optional treatment name.
-#' If supplied, a representative bottle
-#' from that treatment will be plotted.
+#' If supplied, only observations belonging
+#' to the selected treatment are plotted.
+#'
+#' @param mean_treatment Logical.
+#' If \code{TRUE}, treatment means are plotted.
+#'
+#' When used together with \code{treatment},
+#' the function displays the mean dual-pool
+#' decomposition of the selected treatment.
+#'
+#' When \code{treatment = NULL}, mean
+#' decompositions are displayed for all
+#' treatments.
 #'
 #' @examples
 #'
@@ -52,13 +78,49 @@
 #'   temperature_c = 39
 #' )
 #'
-#' fit <- fit_dual_logistic(
-#'   gp
+#' gp_clean <- exclude_heads(
+#'   gp,
+#'   heads = c(
+#'     "1",
+#'     "2",
+#'     "4",
+#'     "20"
+#'   ),
+#'   reason = c(
+#'     "Abnormal gas profile",
+#'     "Abnormal gas profile",
+#'     "Abnormal gas profile",
+#'     "Abnormal gas profile"
+#'   )
 #' )
 #'
+#' fit <- fit_dual_logistic(
+#'   gp_clean
+#' )
+#'
+#' # Single bottle
 #' plot_dual_pools(
 #'   fit,
-#'   head = 1
+#'   head = 6
+#' )
+#'
+#' # All bottles from a treatment
+#' plot_dual_pools(
+#'   fit,
+#'   treatment = "TMR"
+#' )
+#'
+#' # Mean decomposition of one treatment
+#' plot_dual_pools(
+#'   fit,
+#'   treatment = "TMR",
+#'   mean_treatment = TRUE
+#' )
+#'
+#' # Mean decompositions of all treatments
+#' plot_dual_pools(
+#'   fit,
+#'   mean_treatment = TRUE
 #' )
 #'
 #' @return A \code{ggplot2} object.
@@ -66,13 +128,16 @@
 #' @seealso
 #' \code{\link{fit_dual_logistic}},
 #' \code{\link{plot_fit}},
-#' \code{\link{plot_residuals}}
+#' \code{\link{plot_gp}},
+#' \code{\link{plot_residuals}},
+#' \code{\link{plot_treatment_mean}}
 #'
 #' @export
 plot_dual_pools <- function(
     fit,
     head = NULL,
-    treatment = NULL
+    treatment = NULL,
+    mean_treatment = FALSE
 ) {
 
   if (!inherits(
@@ -86,8 +151,10 @@ plot_dual_pools <- function(
 
   }
 
-  if (!is.null(head) &&
-      !is.null(treatment)) {
+  if (
+    !is.null(head) &&
+    !is.null(treatment)
+  ) {
 
     stop(
       "Provide either head or treatment, not both."
@@ -204,6 +271,14 @@ plot_dual_pools <- function(
           linewidth = 1
         ) +
 
+        ggplot2::scale_color_manual(
+          values = c(
+            "Total" = "black",
+            "Rapid pool" = "#1b9e77",
+            "Slow pool" = "#d95f02"
+          )
+        ) +
+
         ggplot2::labs(
           title = paste(
             "Dual-pool Logistic:",
@@ -222,7 +297,7 @@ plot_dual_pools <- function(
   }
 
   # ----------------------------------
-  # One treatment
+  # Treatment filtering
   # ----------------------------------
 
   if (!is.null(treatment)) {
@@ -248,12 +323,13 @@ plot_dual_pools <- function(
   }
 
   # ----------------------------------
-  # Treatment means
+  # Pool calculations
   # ----------------------------------
 
   pool_data <- preds |>
 
     dplyr::left_join(
+
       pars |>
         dplyr::select(
           Head,
@@ -263,7 +339,9 @@ plot_dual_pools <- function(
           k2,
           lambda
         ),
+
       by = "Head"
+
     ) |>
 
     dplyr::mutate(
@@ -296,117 +374,277 @@ plot_dual_pools <- function(
 
     )
 
-  treatment_means <- pool_data |>
+  # ----------------------------------
+  # Mean treatment profiles
+  # ----------------------------------
 
-    dplyr::group_by(
-      Treatment,
-      Time_h
-    ) |>
+  if (mean_treatment) {
 
-    dplyr::summarise(
+    # One treatment
 
-      Observed =
-        mean(
-          Observed,
-          na.rm = TRUE
-        ),
+    if (!is.null(treatment)) {
 
-      Predicted =
-        mean(
-          Predicted,
-          na.rm = TRUE
-        ),
+      treatment_means <-
 
-      Rapid_Pool =
-        mean(
-          Rapid_Pool,
-          na.rm = TRUE
-        ),
+        pool_data |>
 
-      Slow_Pool =
-        mean(
-          Slow_Pool,
-          na.rm = TRUE
-        ),
+        dplyr::group_by(
+          Time_h
+        ) |>
 
-      .groups = "drop"
+        dplyr::summarise(
+
+          Observed =
+            mean(
+              Observed,
+              na.rm = TRUE
+            ),
+
+          Predicted =
+            mean(
+              Predicted,
+              na.rm = TRUE
+            ),
+
+          Rapid_Pool =
+            mean(
+              Rapid_Pool,
+              na.rm = TRUE
+            ),
+
+          Slow_Pool =
+            mean(
+              Slow_Pool,
+              na.rm = TRUE
+            ),
+
+          .groups = "drop"
+
+        )
+
+      return(
+
+        ggplot2::ggplot() +
+
+          ggplot2::geom_point(
+            data = treatment_means,
+            ggplot2::aes(
+              Time_h,
+              Observed
+            ),
+            size = 1.5
+          ) +
+
+          ggplot2::geom_line(
+            data = treatment_means,
+            ggplot2::aes(
+              Time_h,
+              Predicted,
+              color = "Total"
+            ),
+            linewidth = 1.2
+          ) +
+
+          ggplot2::geom_line(
+            data = treatment_means,
+            ggplot2::aes(
+              Time_h,
+              Rapid_Pool,
+              color = "Rapid pool"
+            ),
+            linewidth = 1
+          ) +
+
+          ggplot2::geom_line(
+            data = treatment_means,
+            ggplot2::aes(
+              Time_h,
+              Slow_Pool,
+              color = "Slow pool"
+            ),
+            linewidth = 1
+          ) +
+
+          ggplot2::scale_color_manual(
+            values = c(
+              "Total" = "black",
+              "Rapid pool" = "#1b9e77",
+              "Slow pool" = "#d95f02"
+            )
+          ) +
+
+          ggplot2::labs(
+            title = "Dual-pool Logistic decomposition",
+            subtitle = paste(
+              "Treatment:",
+              treatment
+            ),
+            x = "Time (h)",
+            y = "Gas production (mL)",
+            color = NULL
+          ) +
+
+          ggplot2::theme_minimal()
+
+      )
+
+    }
+
+    # All treatments
+
+    treatment_means <-
+
+      pool_data |>
+
+      dplyr::group_by(
+        Treatment,
+        Time_h
+      ) |>
+
+      dplyr::summarise(
+
+        Observed =
+          mean(
+            Observed,
+            na.rm = TRUE
+          ),
+
+        Predicted =
+          mean(
+            Predicted,
+            na.rm = TRUE
+          ),
+
+        Rapid_Pool =
+          mean(
+            Rapid_Pool,
+            na.rm = TRUE
+          ),
+
+        Slow_Pool =
+          mean(
+            Slow_Pool,
+            na.rm = TRUE
+          ),
+
+        .groups = "drop"
+
+      )
+
+    return(
+
+      ggplot2::ggplot() +
+
+        ggplot2::geom_point(
+          data = treatment_means,
+          ggplot2::aes(
+            Time_h,
+            Observed
+          ),
+          size = 1.5
+        ) +
+
+        ggplot2::geom_line(
+          data = treatment_means,
+          ggplot2::aes(
+            Time_h,
+            Predicted,
+            color = "Total"
+          ),
+          linewidth = 1.2
+        ) +
+
+        ggplot2::geom_line(
+          data = treatment_means,
+          ggplot2::aes(
+            Time_h,
+            Rapid_Pool,
+            color = "Rapid pool"
+          ),
+          linewidth = 1
+        ) +
+
+        ggplot2::geom_line(
+          data = treatment_means,
+          ggplot2::aes(
+            Time_h,
+            Slow_Pool,
+            color = "Slow pool"
+          ),
+          linewidth = 1
+        ) +
+
+        ggplot2::facet_wrap(
+          ~ Treatment,
+          scales = "free_y"
+        ) +
+
+        ggplot2::scale_color_manual(
+          values = c(
+            "Total" = "black",
+            "Rapid pool" = "#1b9e77",
+            "Slow pool" = "#d95f02"
+          )
+        ) +
+
+        ggplot2::labs(
+          title =
+            "Dual-pool Logistic decomposition by treatment",
+          x = "Time (h)",
+          y = "Gas production (mL)",
+          color = NULL
+        ) +
+
+        ggplot2::theme_minimal()
+
     )
 
-  p <- ggplot2::ggplot() +
+  }
+
+  # ----------------------------------
+  # Treatment-level bottles
+  # ----------------------------------
+
+  ggplot2::ggplot() +
 
     ggplot2::geom_point(
-      data = treatment_means,
+      data = pool_data,
       ggplot2::aes(
         Time_h,
         Observed
       ),
-      size = 1.5
+      size = 0.8
     ) +
 
     ggplot2::geom_line(
-      data = treatment_means,
+      data = pool_data,
       ggplot2::aes(
         Time_h,
-        Predicted,
-        color = "Total"
+        Predicted
       ),
-      linewidth = 1.2
+      color = "black",
+      linewidth = 0.8
     ) +
 
-    ggplot2::geom_line(
-      data = treatment_means,
-      ggplot2::aes(
-        Time_h,
-        Rapid_Pool,
-        color = "Rapid pool"
-      ),
-      linewidth = 1
-    ) +
-
-    ggplot2::geom_line(
-      data = treatment_means,
-      ggplot2::aes(
-        Time_h,
-        Slow_Pool,
-        color = "Slow pool"
-      ),
-      linewidth = 1
+    ggplot2::facet_wrap(
+      ~ Head
     ) +
 
     ggplot2::labs(
+      title =
+        "Dual-pool Logistic decomposition",
+      subtitle =
+        if (!is.null(treatment))
+          paste(
+            "Treatment:",
+            treatment
+          )
+      else
+        NULL,
       x = "Time (h)",
-      y = "Gas production (mL)",
-      color = NULL
+      y = "Gas production (mL)"
     ) +
 
     ggplot2::theme_minimal()
-
-  if (!is.null(treatment)) {
-
-    p <- p +
-
-      ggplot2::labs(
-        title = paste(
-          "Dual-pool Logistic:",
-          treatment
-        )
-      )
-
-  } else {
-
-    p <- p +
-
-      ggplot2::labs(
-        title =
-          "Dual-pool Logistic decomposition by treatment"
-      ) +
-
-      ggplot2::facet_wrap(
-        ~ Treatment
-      )
-
-  }
-
-  p
 
 }

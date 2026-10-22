@@ -131,10 +131,26 @@
 #'   temperature_c = 39
 #' )
 #'
+#' gp_clean <- exclude_heads(
+#'   gp,
+#'   heads = c(
+#'     "1",
+#'     "2",
+#'     "4",
+#'     "20"
+#'   ),
+#'   reason = c(
+#'     "Abnormal gas profile",
+#'     "Abnormal gas profile",
+#'     "Abnormal gas profile",
+#'     "Abnormal gas profile"
+#'   )
+#' )
+#'
 #' # Hyperbolic model
 #' custom_fit <- fit_custom(
 #'
-#'   data = gp,
+#'   data = gp_clean,
 #'
 #'   formula =
 #'     Gas_mL ~
@@ -185,8 +201,8 @@
 #'
 #' # Compare against built-in models
 #' compare_models(
-#'   Groot = fit_groot(gp),
-#'   BurrXII = fit_burr_xii(gp),
+#'   Groot = fit_groot(gp_clean),
+#'   BurrXII = fit_burr_xii(gp_clean),
 #'   Hyperbolic = custom_fit
 #' )
 #'

@@ -18,8 +18,14 @@ If supplied, only observations belonging
 to the selected treatment are plotted.}
 
 \item{mean_treatment}{Logical.
-If \code{TRUE}, plots the mean gas-production
-profile of the selected treatment.}
+If \code{TRUE}, treatment means are plotted.
+
+When used together with \code{treatment},
+the function displays the mean gas-production
+profile of the selected treatment.
+
+When \code{treatment = NULL}, mean profiles
+are displayed for all treatments.}
 }
 \value{
 A \code{ggplot2} object.
@@ -35,7 +41,8 @@ The function can be used to visualize:
 \item A single bottle
 \item All bottles in the dataset
 \item All bottles within a treatment
-\item Mean treatment gas-production profiles
+\item The mean profile of a single treatment
+\item Mean profiles of all treatments
 }
 
 This visualization is useful for:
@@ -46,6 +53,7 @@ This visualization is useful for:
 \item Evaluating data quality
 \item Comparing bottle-level responses
 \item Comparing treatment-level responses
+\item Exploring treatment means and variability
 }
 }
 \examples{
@@ -67,27 +75,49 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
+gp_clean <- exclude_heads(
+gp,
+heads = c(
+ "1",
+ "2",
+ "4",
+ "20"
+ ),
+reason = c(
+ "Abnormal gas profile",
+ "Abnormal gas profile",
+ "Abnormal gas profile",
+ "Abnormal gas profile"
+ )
+ )
+
 # Single bottle
 plot_gp(
-  gp,
-  head = 1
+  gp_clean,
+  head = 6
 )
 
 # All bottles
 plot_gp(
-  gp
+  gp_clean
 )
 
 # All bottles within a treatment
 plot_gp(
-  gp,
+  gp_clean,
   treatment = "TMR"
 )
 
-# Mean treatment profile
+# Mean profile for one treatment
 plot_gp(
-  gp,
+  gp_clean,
   treatment = "TMR",
+  mean_treatment = TRUE
+)
+
+# Mean profiles for all treatments
+plot_gp(
+  gp_clean,
   mean_treatment = TRUE
 )
 

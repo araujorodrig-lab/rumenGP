@@ -4,34 +4,66 @@
 \alias{plot_model_comparison}
 \title{Compare Model Fits}
 \usage{
-plot_model_comparison(..., head)
+plot_model_comparison(
+  ...,
+  head = NULL,
+  treatment = NULL,
+  mean_treatment = FALSE
+)
 }
 \arguments{
 \item{...}{Fitted model objects.}
 
-\item{head}{Head identifier.}
+\item{head}{Optional bottle identifier.
+If supplied, only the selected bottle
+is plotted.}
+
+\item{treatment}{Optional treatment name.
+If supplied, only observations belonging
+to the selected treatment are plotted.}
+
+\item{mean_treatment}{Logical.
+If \code{TRUE}, treatment means are plotted.
+
+When used together with \code{treatment},
+the function displays the mean observed and
+predicted profiles for the selected treatment.
+
+When \code{treatment = NULL}, mean profiles
+are displayed for all treatments.}
 }
 \value{
 A \code{ggplot2} object.
 }
 \description{
-Displays observed gas production values together
-with predictions from multiple fitted models for
-a single bottle.
+Displays observed gas-production values together
+with predictions from multiple fitted models.
 }
 \details{
+Observed measurements are displayed alongside
+predictions from each supplied model, allowing
+direct visual comparison of competing kinetic
+formulations.
+
+The function can be used to visualize:
+
+\itemize{
+\item A single bottle
+\item All bottles within a treatment
+\item The mean response of a selected treatment
+\item Mean responses across all treatments
+}
+
 This visualization is useful for:
 
 \itemize{
 \item Comparing competing kinetic models
 \item Evaluating model performance
 \item Identifying differences among fitted curves
-\item Assessing model agreement with observations
+\item Assessing agreement with observations
+\item Comparing treatment-level responses
+\item Evaluating treatment means
 }
-
-Observed measurements are displayed alongside
-predictions from each supplied model, allowing
-direct visual comparison.
 }
 \examples{
 
@@ -52,23 +84,64 @@ gp <- process_ankom(
   temperature_c = 39
 )
 
+gp_clean <- exclude_heads(
+  gp,
+  heads = c(
+    "1",
+    "2",
+    "4",
+    "20"
+  ),
+  reason = c(
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile",
+    "Abnormal gas profile"
+  )
+)
+
 groot_fit <- fit_groot(
-  gp
+  gp_clean
 )
 
 gompertz_fit <- fit_gompertz(
-  gp
+  gp_clean
 )
 
+# Single bottle
 plot_model_comparison(
   Groot = groot_fit,
   Gompertz = gompertz_fit,
   head = 6
 )
 
+# All bottles from one treatment
+plot_model_comparison(
+  Groot = groot_fit,
+  Gompertz = gompertz_fit,
+  treatment = "TMR"
+)
+
+# Mean comparison for one treatment
+plot_model_comparison(
+  Groot = groot_fit,
+  Gompertz = gompertz_fit,
+  treatment = "TMR",
+  mean_treatment = TRUE
+)
+
+# Mean comparison across all treatments
+plot_model_comparison(
+  Groot = groot_fit,
+  Gompertz = gompertz_fit,
+  mean_treatment = TRUE
+)
+
 }
 \seealso{
 \code{\link{compare_models}},
+\code{\link{plot_fit}},
+\code{\link{plot_gp}},
 \code{\link{plot_model_comparison_all}},
 \code{\link{plot_model_comparison_treatment}},
 \code{\link{fit_groot}},
