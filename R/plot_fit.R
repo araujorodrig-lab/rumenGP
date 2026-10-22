@@ -342,8 +342,7 @@ plot_fit <- function(
         ) +
 
         ggplot2::facet_wrap(
-          ~ Treatment,
-          scales = "free_y"
+          ~ Treatment
         ) +
 
         ggplot2::labs(
