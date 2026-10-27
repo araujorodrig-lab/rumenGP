@@ -229,9 +229,11 @@ fit_groot <- function(
 
     }
 
+    fit_starts <- if (is.null(start)) .gp_starts("groot", df_fit) else list(fit_start)
+
     fit <- tryCatch({
 
-      minpack.lm::nlsLM(
+      .fit_nls_robust(
 
         Gas_mL ~
 
@@ -243,7 +245,7 @@ fit_groot <- function(
 
         data = df_fit,
 
-        start = fit_start,
+        starts = fit_starts,
 
         lower = c(
           VF = 0,
@@ -251,10 +253,7 @@ fit_groot <- function(
           k = 1e-6
         ),
 
-        control =
-          minpack.lm::nls.lm.control(
-            maxiter = 1000
-          )
+        maxiter = 1000
 
       )
 

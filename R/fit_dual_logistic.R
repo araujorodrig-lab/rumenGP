@@ -223,9 +223,11 @@ fit_dual_logistic <- function(
 
     }
 
+    fit_starts <- if (is.null(start)) .gp_starts("dual_logistic", df) else list(fit_start)
+
     fit <- tryCatch({
 
-      minpack.lm::nlsLM(
+      .fit_nls_robust(
 
         Gas_mL ~
 
@@ -253,7 +255,7 @@ fit_dual_logistic <- function(
 
         data = df,
 
-        start = fit_start,
+        starts = fit_starts,
 
         lower = c(
           V1F = 0,
@@ -263,10 +265,7 @@ fit_dual_logistic <- function(
           lambda = 0
         ),
 
-        control =
-          minpack.lm::nls.lm.control(
-            maxiter = 1000
-          )
+        maxiter = 1000
 
       )
 

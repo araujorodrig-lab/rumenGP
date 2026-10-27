@@ -227,9 +227,11 @@ fit_gompertz <- function(
     # Fit model
     # ----------------------------
 
+    fit_starts <- if (is.null(start)) .gp_starts("gompertz", df) else list(fit_start)
+
     fit <- tryCatch({
 
-      minpack.lm::nlsLM(
+      .fit_nls_robust(
 
         Gas_mL ~
 
@@ -243,7 +245,7 @@ fit_gompertz <- function(
 
         data = df,
 
-        start = fit_start,
+        starts = fit_starts,
 
         lower = c(
           A = 0,
@@ -251,10 +253,7 @@ fit_gompertz <- function(
           lambda = 0
         ),
 
-        control =
-          minpack.lm::nls.lm.control(
-            maxiter = 500
-          )
+        maxiter = 1000
 
       )
 

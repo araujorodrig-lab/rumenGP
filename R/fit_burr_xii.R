@@ -212,9 +212,11 @@ fit_burr_xii <- function(
 
     }
 
+    fit_starts <- if (is.null(start)) .gp_starts("burr_xii", df_fit) else list(fit_start)
+
     fit <- tryCatch({
 
-      minpack.lm::nlsLM(
+      .fit_nls_robust(
 
         Gas_mL ~
 
@@ -229,7 +231,7 @@ fit_burr_xii <- function(
 
         data = df_fit,
 
-        start = fit_start,
+        starts = fit_starts,
 
         lower = c(
           VF = 0,
@@ -238,10 +240,7 @@ fit_burr_xii <- function(
           p = 0.1
         ),
 
-        control =
-          minpack.lm::nls.lm.control(
-            maxiter = 1000
-          )
+        maxiter = 1000
 
       )
 

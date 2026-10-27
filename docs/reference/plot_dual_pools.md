@@ -148,12 +148,12 @@ plot_dual_pools(
   treatment = "TMR",
   mean_treatment = TRUE
 )
-#> Error in plot_dual_pools(fit, treatment = "TMR", mean_treatment = TRUE): unused argument (mean_treatment = TRUE)
+
 
 # Mean decompositions of all treatments
 plot_dual_pools(
   fit,
   mean_treatment = TRUE
 )
-#> Error in plot_dual_pools(fit, mean_treatment = TRUE): unused argument (mean_treatment = TRUE)
+
 ```

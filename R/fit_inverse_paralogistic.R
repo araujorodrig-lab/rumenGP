@@ -207,9 +207,11 @@ fit_inverse_paralogistic <- function(
 
     }
 
+    fit_starts <- if (is.null(start)) .gp_starts("inverse_paralogistic", df_fit) else list(fit_start)
+
     fit <- tryCatch({
 
-      minpack.lm::nlsLM(
+      .fit_nls_robust(
 
         Gas_mL ~
 
@@ -221,7 +223,7 @@ fit_inverse_paralogistic <- function(
 
         data = df_fit,
 
-        start = fit_start,
+        starts = fit_starts,
 
         lower = c(
           VF = 0,
@@ -229,10 +231,7 @@ fit_inverse_paralogistic <- function(
           a = 1.000001
         ),
 
-        control =
-          minpack.lm::nls.lm.control(
-            maxiter = 1000
-          )
+        maxiter = 1000
 
       )
 

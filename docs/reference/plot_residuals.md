@@ -142,7 +142,8 @@ plot_residuals(
   Gompertz = gompertz_fit,
   head = 6
 )
-#> Error in plot_residuals(Groot = groot_fit, Gompertz = gompertz_fit, head = 6): unused arguments (Groot = groot_fit, Gompertz = gompertz_fit)
+#> `geom_smooth()` using formula = 'y ~ x'
+
 
 # Treatment-specific residuals
 plot_residuals(
@@ -150,7 +151,8 @@ plot_residuals(
   Gompertz = gompertz_fit,
   treatment = "TMR"
 )
-#> Error in plot_residuals(Groot = groot_fit, Gompertz = gompertz_fit, treatment = "TMR"): unused arguments (Groot = groot_fit, Gompertz = gompertz_fit, treatment = "TMR")
+#> `geom_smooth()` using formula = 'y ~ x'
+
 
 # Mean residual profile of one treatment
 plot_residuals(
@@ -159,7 +161,8 @@ plot_residuals(
   treatment = "TMR",
   mean_treatment = TRUE
 )
-#> Error in plot_residuals(Groot = groot_fit, Gompertz = gompertz_fit, treatment = "TMR",     mean_treatment = TRUE): unused arguments (Groot = groot_fit, Gompertz = gompertz_fit, treatment = "TMR", mean_treatment = TRUE)
+#> `geom_smooth()` using formula = 'y ~ x'
+
 
 # Mean residual profiles of all treatments
 plot_residuals(
@@ -167,5 +170,5 @@ plot_residuals(
   Gompertz = gompertz_fit,
   mean_treatment = TRUE
 )
-#> Error in plot_residuals(Groot = groot_fit, Gompertz = gompertz_fit, mean_treatment = TRUE): unused arguments (Groot = groot_fit, Gompertz = gompertz_fit, mean_treatment = TRUE)
+
 ```

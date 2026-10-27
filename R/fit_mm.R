@@ -230,9 +230,11 @@ fit_mm <- function(
 
     }
 
+    fit_starts <- if (is.null(start)) .gp_starts("mm", df_fit) else list(fit_start)
+
     fit <- tryCatch({
 
-      minpack.lm::nlsLM(
+      .fit_nls_robust(
 
         Gas_mL ~
 
@@ -247,7 +249,7 @@ fit_mm <- function(
 
         data = df_fit,
 
-        start = fit_start,
+        starts = fit_starts,
 
         lower = c(
           A = 0,
@@ -255,10 +257,7 @@ fit_mm <- function(
           c = 1e-6
         ),
 
-        control =
-          minpack.lm::nls.lm.control(
-            maxiter = 1000
-          )
+        maxiter = 1000
 
       )
 

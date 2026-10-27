@@ -151,12 +151,7 @@ plot_model_comparison(
   Gompertz = gompertz_fit,
   treatment = "TMR"
 )
-#> Error in map2(.x, vec_index(.x), .f, ...): ℹ In index: 1.
-#> ℹ With name: Groot.
-#> Caused by error in `dplyr::filter()`:
-#> ℹ In argument: `Head == as.character(head)`.
-#> Caused by error:
-#> ! argument "head" is missing, with no default
+
 
 # Mean comparison for one treatment
 plot_model_comparison(
@@ -165,12 +160,7 @@ plot_model_comparison(
   treatment = "TMR",
   mean_treatment = TRUE
 )
-#> Error in map2(.x, vec_index(.x), .f, ...): ℹ In index: 1.
-#> ℹ With name: Groot.
-#> Caused by error in `dplyr::filter()`:
-#> ℹ In argument: `Head == as.character(head)`.
-#> Caused by error:
-#> ! argument "head" is missing, with no default
+
 
 # Mean comparison across all treatments
 plot_model_comparison(
@@ -178,10 +168,5 @@ plot_model_comparison(
   Gompertz = gompertz_fit,
   mean_treatment = TRUE
 )
-#> Error in map2(.x, vec_index(.x), .f, ...): ℹ In index: 1.
-#> ℹ With name: Groot.
-#> Caused by error in `dplyr::filter()`:
-#> ℹ In argument: `Head == as.character(head)`.
-#> Caused by error:
-#> ! argument "head" is missing, with no default
+
 ```

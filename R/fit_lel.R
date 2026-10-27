@@ -217,51 +217,41 @@ fit_lel <- function(
 
     }
 
-    fit <- tryCatch({
+fit_starts <- if (is.null(start)) .gp_starts("lel", df) else list(fit_start)
 
-      minpack.lm::nlsLM(
+fit <- tryCatch({
 
-        Gas_mL ~
-
+  .fit_nls_robust(
+    Gas_mL ~
+      (
+        A *
           (
-            A *
-              (
-                1 -
-                  exp(
-                    -k *
-                      (Time_h - lambda)
-                  )
-              )
-          ) /
-
-          (
-            1 +
+            1 -
               exp(
-                log(1 / d) -
-                  k *
+                -k *
                   (Time_h - lambda)
               )
-          ),
-
-        data = df,
-
-        start = fit_start,
-
-        lower = c(
-          A = 0,
-          k = 0,
-          d = 1e-6,
-          lambda = 0
-        ),
-
-        control =
-          minpack.lm::nls.lm.control(
-            maxiter = 500
           )
-
-      )
-
-    }, error = function(e) NULL)
+      ) /
+      (
+        1 +
+          exp(
+            log(1 / d) -
+              k *
+              (Time_h - lambda)
+          )
+      ),
+    data = df,
+    starts = fit_starts,
+    lower = c(
+      A = 0,
+      k = 0,
+      d = 1e-6,
+      lambda = 0
+    ),
+    maxiter = 1000
+  )
+}, error = function(e) NULL)
 
     if (is.null(fit)) {
 

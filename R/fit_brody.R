@@ -192,9 +192,11 @@ fit_brody <- function(
 
     }
 
+    fit_starts <- if (is.null(start)) .gp_starts("brody", df) else list(fit_start)
+
     fit <- tryCatch({
 
-      minpack.lm::nlsLM(
+      .fit_nls_robust(
 
         Gas_mL ~
 
@@ -209,7 +211,7 @@ fit_brody <- function(
 
         data = df,
 
-        start = fit_start,
+        starts = fit_starts,
 
         lower = c(
           A = 0,
@@ -223,10 +225,7 @@ fit_brody <- function(
           k = Inf
         ),
 
-        control =
-          minpack.lm::nls.lm.control(
-            maxiter = 500
-          )
+        maxiter = 1000
 
       )
 

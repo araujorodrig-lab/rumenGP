@@ -189,9 +189,11 @@ fit_expl <- function(
 
     }
 
+    fit_starts <- if (is.null(start)) .gp_starts("expl", df) else list(fit_start)
+
     fit <- tryCatch({
 
-      minpack.lm::nlsLM(
+      .fit_nls_robust(
 
         Gas_mL ~
 
@@ -206,7 +208,7 @@ fit_expl <- function(
 
         data = df,
 
-        start = fit_start,
+        starts = fit_starts,
 
         lower = c(
           Vf = 0,
@@ -214,10 +216,7 @@ fit_expl <- function(
           lambda = 0
         ),
 
-        control =
-          minpack.lm::nls.lm.control(
-            maxiter = 500
-          )
+        maxiter = 1000
 
       )
 
