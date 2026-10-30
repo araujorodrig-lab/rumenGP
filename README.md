@@ -396,11 +396,11 @@ comparison
 #>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS
 #> 1    Groot      21              21           0 0.9967371 0.9955345  150.1038
 #> 2    Brody      21              21           0 0.9969746 0.9479644  144.1933
-#> 3 Gompertz      21              21           0 0.9722322 3.4802686 1868.7759
+#> 3 Gompertz      21              21           0 0.9725272 3.4607979 1848.1946
 #>   Mean_AIC Mean_BIC Lambda_Boundary
 #> 1 406.9209 418.7920               0
 #> 2 386.1759 398.0734               0
-#> 3 769.2312 781.1287              21
+#> 3 767.6180 779.5156              21
 ```
 
 ### Rank Models
@@ -412,11 +412,11 @@ rank_models(
 #>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS
 #> 1    Groot      21              21           0 0.9967371 0.9955345  150.1038
 #> 2    Brody      21              21           0 0.9969746 0.9479644  144.1933
-#> 3 Gompertz      21              21           0 0.9722322 3.4802686 1868.7759
+#> 3 Gompertz      21              21           0 0.9725272 3.4607979 1848.1946
 #>   Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC Rank_BIC
 #> 1 406.9209 418.7920               0       2         2        2        2
 #> 2 386.1759 398.0734               0       1         1        1        1
-#> 3 769.2312 781.1287              21       3         3        3        3
+#> 3 767.6180 779.5156              21       3         3        3        3
 ```
 
 ------------------------------------------------------------------------
@@ -650,11 +650,26 @@ publications prefer different parameterizations.
 
 The Groot model
 
-V(t) = VF / \[1 + (b/t)^k\]
+$$
+V(t)
+=
+\frac{VF}
+{
+1+\left(\frac{b}{t}\right)^k
+}
+$$
 
 is mathematically equivalent to the generalized Michaelis-Menten model
 
-V(t) = A t^c / (t^c + K^c)
+$$
+V(t)
+=
+A
+\frac{t^{c}}
+{
+t^{c}+K^{c}
+}
+$$
 
 for positive values of time.
 
@@ -678,11 +693,27 @@ commonly used in their field.
 
 The Log-logistic model
 
-V(t) = VF(rt)^a / \[1 + (rt)^a\]
+$$
+V(t)
+=
+VF
+\frac{(rt)^a}
+{
+1 + (rt)^a
+}
+$$
 
 can be rewritten as
 
-V(t) = VF t^a / \[t^a + (1/r)^a\]
+$$
+V(t)
+=
+VF
+\frac{t^a}
+{
+t^a + (1/r)^a
+}
+$$
 
 which is mathematically equivalent to both the Groot and generalized
 Michaelis-Menten formulations for positive values of time.
@@ -715,7 +746,18 @@ recognizing their underlying mathematical equivalence.
 
 Equation:
 
-V(t) = VF \[1 - (1 + (rt)<sup>a)</sup>(-p)\]
+$$
+V(t)
+=
+VF
+\left[
+1
+-
+\left(
+1+(rt)^a
+\right)^{-p}
+\right]
+$$
 
 Parameters:
 
@@ -741,7 +783,16 @@ Limitations:
 
 Equation:
 
-V(t) = VF \[1 + (rt)^(-a)\]^(-a)
+$$
+V(t)
+=
+VF
+\left[
+1
++
+(rt)^{-a}
+\right]^{-a}
+$$
 
 Parameters:
 

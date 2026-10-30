@@ -222,7 +222,7 @@ b
 </div>
 </div>
 <div class="section level3">
-<h3 id="exp0">EXP0<a class="anchor" aria-label="anchor" href="#exp0"></a>
+<h3 id="exp0-exponential-without-lag-phase">EXP0 (Exponential Without Lag Phase)<a class="anchor" aria-label="anchor" href="#exp0-exponential-without-lag-phase"></a>
 </h3>
 <div class="section level4">
 <h4 id="equation-2">Equation<a class="anchor" aria-label="anchor" href="#equation-2"></a>
@@ -275,7 +275,7 @@ V_f
 </div>
 </div>
 <div class="section level3">
-<h3 id="expl">EXPL<a class="anchor" aria-label="anchor" href="#expl"></a>
+<h3 id="expl-exponential-with-lag-phase">EXPL (Exponential With Lag Phase)<a class="anchor" aria-label="anchor" href="#expl-exponential-with-lag-phase"></a>
 </h3>
 <div class="section level4">
 <h4 id="equation-3">Equation<a class="anchor" aria-label="anchor" href="#equation-3"></a>
@@ -336,22 +336,7 @@ V_f
 <div class="section level4">
 <h4 id="equation-4">Equation<a class="anchor" aria-label="anchor" href="#equation-4"></a>
 </h4>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mrow><mi mathvariant="normal">exp</mi><mo>⁡</mo></mrow><mrow><mo stretchy="true" form="prefix">[</mo><mi>−</mi><mi mathvariant="normal">exp</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mi>μ</mi><mi>e</mi></mrow><mi>A</mi></mfrac><mo stretchy="false" form="prefix">(</mo><mi>λ</mi><mo>−</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
-V(t)
-=
-A
-\exp
-\left[
--
-\exp
-\left(
-\frac{\mu e}{A}
-(\lambda-t)
-+
-1
-\right)
-\right]
-</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><msup><mi>e</mi><mrow><mi>−</mi><msup><mi>e</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mi>μ</mi><mi>e</mi></mrow><mi>A</mi></mfrac><mo stretchy="false" form="prefix">(</mo><mi>λ</mi><mo>−</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msup></mrow></msup></mrow><annotation encoding="application/x-tex"> V(t) = A e^{ - e^{ \left( \frac{\mu e}{A} (\lambda-t) + 1 \right) } } </annotation></semantics></math></p>
 </div>
 <div class="section level4">
 <h4 id="parameters-4">Parameters<a class="anchor" aria-label="anchor" href="#parameters-4"></a>
@@ -401,12 +386,12 @@ A
 <div class="section level4">
 <h4 id="equation-5">Equation<a class="anchor" aria-label="anchor" href="#equation-5"></a>
 </h4>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mi>A</mi><mrow><mn>1</mn><mo>+</mo><mrow><mi mathvariant="normal">exp</mi><mo>⁡</mo></mrow><mrow><mo stretchy="true" form="prefix">[</mo><mn>2</mn><mo>+</mo><mn>4</mn><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>λ</mi><mo>−</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="true" form="postfix">]</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mi>A</mi><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mo stretchy="true" form="prefix">[</mo><mn>2</mn><mo>+</mo><mn>4</mn><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>λ</mi><mo>−</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="true" form="postfix">]</mo></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
 V(t)
 =
 \frac{A}
 {
-1+\exp
+1+e^
 \left[
 2+
 4k(\lambda-t)
@@ -461,14 +446,14 @@ V(t)
 <div class="section level4">
 <h4 id="equation-6">Equation<a class="anchor" aria-label="anchor" href="#equation-6"></a>
 </h4>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>−</mo><mi mathvariant="normal">exp</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>−</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>λ</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>d</mi><mrow><mo stretchy="true" form="prefix">(</mo><msqrt><mrow><mi>t</mi><mo>+</mo><mn>0.001</mn></mrow></msqrt><mo>−</mo><msqrt><mrow><mi>λ</mi><mo>+</mo><mn>0.001</mn></mrow></msqrt><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>−</mo><msup><mi>e</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>−</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>λ</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>d</mi><mrow><mo stretchy="true" form="prefix">(</mo><msqrt><mrow><mi>t</mi><mo>+</mo><mn>0.001</mn></mrow></msqrt><mo>−</mo><msqrt><mrow><mi>λ</mi><mo>+</mo><mn>0.001</mn></mrow></msqrt><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></msup><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
 V(t)
 =
 A
 \left[
 1
 -
-\exp
+e^
 \left(
 -k(t-\lambda)
 -
@@ -534,7 +519,7 @@ d
 <div class="section level4">
 <h4 id="equation-7">Equation<a class="anchor" aria-label="anchor" href="#equation-7"></a>
 </h4>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mi>A</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>e</mi><mrow><mi>−</mi><mi>k</mi><mi>t</mi></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mn>1</mn><mo>+</mo><mrow><mi mathvariant="normal">exp</mi><mo>⁡</mo></mrow><mrow><mo stretchy="true" form="prefix">[</mo><mi mathvariant="normal">ln</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mi>d</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mi>k</mi><mi>t</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mi>A</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>e</mi><mrow><mi>−</mi><mi>k</mi><mi>t</mi></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi mathvariant="normal">ln</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mi>d</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mi>k</mi><mi>t</mi><mo stretchy="true" form="postfix">]</mo></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
 V(t)
 =
 \frac{
@@ -544,7 +529,7 @@ A
 \right)
 }
 {
-1+\exp
+1+e^
 \left[
 \ln\left(\frac{1}{d}\right)-kt
 \right]
@@ -598,7 +583,7 @@ A
 <div class="section level4">
 <h4 id="equation-8">Equation<a class="anchor" aria-label="anchor" href="#equation-8"></a>
 </h4>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mi>A</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>e</mi><mrow><mi>−</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>λ</mi><mo stretchy="false" form="postfix">)</mo></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mn>1</mn><mo>+</mo><mrow><mi mathvariant="normal">exp</mi><mo>⁡</mo></mrow><mrow><mo stretchy="true" form="prefix">[</mo><mi mathvariant="normal">ln</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mi>d</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>λ</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="true" form="postfix">]</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mi>A</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>e</mi><mrow><mi>−</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>λ</mi><mo stretchy="false" form="postfix">)</mo></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi mathvariant="normal">ln</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mi>d</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>λ</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="true" form="postfix">]</mo></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
 V(t)
 =
 \frac{
@@ -608,7 +593,7 @@ A
 \right)
 }
 {
-1+\exp
+1+e^
 \left[
 \ln\left(\frac{1}{d}\right)
 -
@@ -777,10 +762,71 @@ V(t)
 </div>
 </div>
 <div class="section level3">
-<h3 id="burr-xii">Burr XII<a class="anchor" aria-label="anchor" href="#burr-xii"></a>
+<h3 id="log-logistic">Log-Logistic<a class="anchor" aria-label="anchor" href="#log-logistic"></a>
 </h3>
 <div class="section level4">
 <h4 id="equation-11">Equation<a class="anchor" aria-label="anchor" href="#equation-11"></a>
+</h4>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>a</mi></msup></mrow><mrow><mn>1</mn><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>a</mi></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+V(t)
+=
+A
+\frac{(rt)^{a}}
+{
+1+(rt)^{a}
+}
+</annotation></semantics></math></p>
+</div>
+<div class="section level4">
+<h4 id="parameters-11">Parameters<a class="anchor" aria-label="anchor" href="#parameters-11"></a>
+</h4>
+<table class="table">
+<thead><tr class="header">
+<th>Parameter</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>Asymptotic gas production</td>
+</tr>
+<tr class="even">
+<td>r</td>
+<td>Rate parameter (1/half-time)</td>
+</tr>
+<tr class="odd">
+<td>a</td>
+<td>Shape parameter</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level4">
+<h4 id="advantages-11">Advantages<a class="anchor" aria-label="anchor" href="#advantages-11"></a>
+</h4>
+<ul>
+<li>Flexible sigmoidal behavior</li>
+<li>Parameters have straightforward interpretation</li>
+<li>Mathematically equivalent to the generalized Michaelis-Menten and
+Groot models under reparameterization</li>
+<li>Can accommodate a wide range of fermentation profiles</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="limitations-11">Limitations<a class="anchor" aria-label="anchor" href="#limitations-11"></a>
+</h4>
+<ul>
+<li>Shape parameter may be difficult to interpret biologically</li>
+<li>No explicit lag-time parameter</li>
+</ul>
+<hr>
+</div>
+</div>
+<div class="section level3">
+<h3 id="burr-xii">Burr XII<a class="anchor" aria-label="anchor" href="#burr-xii"></a>
+</h3>
+<div class="section level4">
+<h4 id="equation-12">Equation<a class="anchor" aria-label="anchor" href="#equation-12"></a>
 </h4>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>V</mi><mi>F</mi><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>−</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>a</mi></msup><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mi>p</mi></mrow></msup><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
 V(t)
@@ -796,7 +842,7 @@ VF
 </annotation></semantics></math></p>
 </div>
 <div class="section level4">
-<h4 id="parameters-11">Parameters<a class="anchor" aria-label="anchor" href="#parameters-11"></a>
+<h4 id="parameters-12">Parameters<a class="anchor" aria-label="anchor" href="#parameters-12"></a>
 </h4>
 <table class="table">
 <thead><tr class="header">
@@ -847,7 +893,7 @@ and
 jointly influence curve shape, asymmetry, and inflection behavior.</p>
 </div>
 <div class="section level4">
-<h4 id="advantages-11">Advantages<a class="anchor" aria-label="anchor" href="#advantages-11"></a>
+<h4 id="advantages-12">Advantages<a class="anchor" aria-label="anchor" href="#advantages-12"></a>
 </h4>
 <ul>
 <li>Highly flexible curve shape</li>
@@ -857,7 +903,7 @@ jointly influence curve shape, asymmetry, and inflection behavior.</p>
 </ul>
 </div>
 <div class="section level4">
-<h4 id="limitations-11">Limitations<a class="anchor" aria-label="anchor" href="#limitations-11"></a>
+<h4 id="limitations-12">Limitations<a class="anchor" aria-label="anchor" href="#limitations-12"></a>
 </h4>
 <ul>
 <li>More parameters than simpler models</li>
@@ -887,7 +933,7 @@ evaluated using information-criterion-based selection methods.</p>
 <h3 id="inverse-paralogistic">Inverse Paralogistic<a class="anchor" aria-label="anchor" href="#inverse-paralogistic"></a>
 </h3>
 <div class="section level4">
-<h4 id="equation-12">Equation<a class="anchor" aria-label="anchor" href="#equation-12"></a>
+<h4 id="equation-13">Equation<a class="anchor" aria-label="anchor" href="#equation-13"></a>
 </h4>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>V</mi><mi>F</mi><msup><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mrow><mi>−</mi><mi>a</mi></mrow></msup><mo stretchy="true" form="postfix">]</mo></mrow><mrow><mi>−</mi><mi>a</mi></mrow></msup></mrow><annotation encoding="application/x-tex">
 V(t)
@@ -901,7 +947,7 @@ VF
 </annotation></semantics></math></p>
 </div>
 <div class="section level4">
-<h4 id="parameters-12">Parameters<a class="anchor" aria-label="anchor" href="#parameters-12"></a>
+<h4 id="parameters-13">Parameters<a class="anchor" aria-label="anchor" href="#parameters-13"></a>
 </h4>
 <table class="table">
 <thead><tr class="header">
@@ -943,7 +989,7 @@ controls production speed, while
 controls curve shape and steepness.</p>
 </div>
 <div class="section level4">
-<h4 id="advantages-12">Advantages<a class="anchor" aria-label="anchor" href="#advantages-12"></a>
+<h4 id="advantages-13">Advantages<a class="anchor" aria-label="anchor" href="#advantages-13"></a>
 </h4>
 <ul>
 <li>Flexible sigmoidal behavior</li>
@@ -952,7 +998,7 @@ controls curve shape and steepness.</p>
 </ul>
 </div>
 <div class="section level4">
-<h4 id="limitations-12">Limitations<a class="anchor" aria-label="anchor" href="#limitations-12"></a>
+<h4 id="limitations-13">Limitations<a class="anchor" aria-label="anchor" href="#limitations-13"></a>
 </h4>
 <ul>
 <li>Less common in rumen literature</li>
@@ -985,14 +1031,14 @@ the strongest-performing models across diverse feed categories.</p>
 <h3 id="dual-logistic">Dual Logistic<a class="anchor" aria-label="anchor" href="#dual-logistic"></a>
 </h3>
 <div class="section level4">
-<h4 id="equation-13">Equation<a class="anchor" aria-label="anchor" href="#equation-13"></a>
+<h4 id="equation-14">Equation<a class="anchor" aria-label="anchor" href="#equation-14"></a>
 </h4>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><msub><mi>V</mi><mrow><mn>1</mn><mi>F</mi></mrow></msub><mrow><mn>1</mn><mo>+</mo><mrow><mi mathvariant="normal">exp</mi><mo>⁡</mo></mrow><mrow><mo stretchy="true" form="prefix">[</mo><mn>2</mn><mo>−</mo><mn>4</mn><msub><mi>k</mi><mn>1</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>λ</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="true" form="postfix">]</mo></mrow></mrow></mfrac><mo>+</mo><mfrac><msub><mi>V</mi><mrow><mn>2</mn><mi>F</mi></mrow></msub><mrow><mn>1</mn><mo>+</mo><mrow><mi mathvariant="normal">exp</mi><mo>⁡</mo></mrow><mrow><mo stretchy="true" form="prefix">[</mo><mn>2</mn><mo>−</mo><mn>4</mn><msub><mi>k</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>λ</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="true" form="postfix">]</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><msub><mi>V</mi><mrow><mn>1</mn><mi>F</mi></mrow></msub><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mo stretchy="true" form="prefix">[</mo><mn>2</mn><mo>−</mo><mn>4</mn><msub><mi>k</mi><mn>1</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>λ</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="true" form="postfix">]</mo></mrow></msup></mrow></mfrac><mo>+</mo><mfrac><msub><mi>V</mi><mrow><mn>2</mn><mi>F</mi></mrow></msub><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mo stretchy="true" form="prefix">[</mo><mn>2</mn><mo>−</mo><mn>4</mn><msub><mi>k</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>λ</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="true" form="postfix">]</mo></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
 V(t)
 =
 \frac{V_{1F}}
 {
-1+\exp
+1+e^
 \left[
 2-4k_1(t-\lambda)
 \right]
@@ -1000,7 +1046,7 @@ V(t)
 +
 \frac{V_{2F}}
 {
-1+\exp
+1+e^
 \left[
 2-4k_2(t-\lambda)
 \right]
@@ -1008,7 +1054,7 @@ V(t)
 </annotation></semantics></math></p>
 </div>
 <div class="section level4">
-<h4 id="parameters-13">Parameters<a class="anchor" aria-label="anchor" href="#parameters-13"></a>
+<h4 id="parameters-14">Parameters<a class="anchor" aria-label="anchor" href="#parameters-14"></a>
 </h4>
 <table class="table">
 <thead><tr class="header">
@@ -1040,7 +1086,7 @@ V(t)
 </table>
 </div>
 <div class="section level4">
-<h4 id="advantages-13">Advantages<a class="anchor" aria-label="anchor" href="#advantages-13"></a>
+<h4 id="advantages-14">Advantages<a class="anchor" aria-label="anchor" href="#advantages-14"></a>
 </h4>
 <ul>
 <li>Represents multiple fermentation pools</li>
@@ -1048,7 +1094,7 @@ V(t)
 </ul>
 </div>
 <div class="section level4">
-<h4 id="limitations-13">Limitations<a class="anchor" aria-label="anchor" href="#limitations-13"></a>
+<h4 id="limitations-14">Limitations<a class="anchor" aria-label="anchor" href="#limitations-14"></a>
 </h4>
 <ul>
 <li>More parameters</li>

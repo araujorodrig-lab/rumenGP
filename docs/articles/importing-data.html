@@ -354,15 +354,7 @@ caused by sensor noise or instrument variability.</p>
 <p>Once imported, manually collected datasets can be analyzed exactly
 like ANKOM datasets.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">groot_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_groot.html">fit_groot</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 6</span></span>
-<span><span class="co">#&gt; Heads: 2</span></span>
-<span><span class="co">#&gt; Treatments: 2</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
-<span></span>
-<span><span class="va">mm_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_mm.html">fit_mm</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">mm_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_mm.html">fit_mm</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
 <span><span class="co">#&gt; Observations: 6</span></span>
 <span><span class="co">#&gt; Heads: 2</span></span>
@@ -373,27 +365,39 @@ like ANKOM datasets.</p>
 <span><span class="co">#&gt; Observations: 6</span></span>
 <span><span class="co">#&gt; Heads: 2</span></span>
 <span><span class="co">#&gt; Treatments: 2</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
 <span></span>
-<span><span class="va">inverse_paralogistic_fit</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/fit_inverse_paralogistic.html">fit_inverse_paralogistic</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span></span>
+<span><span class="va">gompertz_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_gompertz.html">fit_gompertz</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
 <span><span class="co">#&gt; Observations: 6</span></span>
 <span><span class="co">#&gt; Heads: 2</span></span>
-<span><span class="co">#&gt; Treatments: 2</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span></code></pre></div>
+<span><span class="co">#&gt; Treatments: 2</span></span></code></pre></div>
 <p>Inspect one fitted model:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">groot_fit</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mm_fit</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Groot model summary</span></span>
-<span><span class="co">#&gt; -------------------</span></span>
+<span><span class="co">#&gt; Michaelis-Menten model summary</span></span>
+<span><span class="co">#&gt; ------------------------------</span></span>
+<span><span class="co">#&gt; Total bottles: 2</span></span>
+<span><span class="co">#&gt; Successful fits: 0</span></span>
+<span><span class="co">#&gt; Failed fits: 2</span></span>
+<span><span class="co">#&gt; Low R-squared (&lt; 0.90): 0</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">burr_fit</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Burr XII model summary</span></span>
+<span><span class="co">#&gt; ----------------------</span></span>
+<span><span class="co">#&gt; Total bottles: 2</span></span>
+<span><span class="co">#&gt; Successful fits: 0</span></span>
+<span><span class="co">#&gt; Failed fits: 2</span></span>
+<span><span class="co">#&gt; Low R-squared (&lt; 0.90): 0</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">gompertz_fit</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Gompertz model summary</span></span>
+<span><span class="co">#&gt; ----------------------</span></span>
 <span><span class="co">#&gt; Total bottles: 2</span></span>
 <span><span class="co">#&gt; Successful fits: 2</span></span>
 <span><span class="co">#&gt; Failed fits: 0</span></span>
-<span><span class="co">#&gt; Low R-squared (&lt; 0.90): 2</span></span></code></pre></div>
+<span><span class="co">#&gt; Low R-squared (&lt; 0.90): 0</span></span>
+<span><span class="co">#&gt; Lambda at boundary: 0</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="comparing-models">Comparing Models<a class="anchor" aria-label="anchor" href="#comparing-models"></a>
@@ -403,14 +407,9 @@ statistics.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compare_models.html">compare_models</a></span><span class="op">(</span></span>
 <span></span>
-<span>  Groot <span class="op">=</span> <span class="fu"><a href="../reference/fit_groot.html">fit_groot</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span>,</span>
-<span></span>
 <span>  MichaelisMenten <span class="op">=</span> <span class="fu"><a href="../reference/fit_mm.html">fit_mm</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span>,</span>
 <span></span>
 <span>  BurrXII <span class="op">=</span> <span class="fu"><a href="../reference/fit_burr_xii.html">fit_burr_xii</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span>,</span>
-<span></span>
-<span>  InverseParalogistic <span class="op">=</span></span>
-<span>    <span class="fu"><a href="../reference/fit_inverse_paralogistic.html">fit_inverse_paralogistic</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span>,</span>
 <span></span>
 <span>  Gompertz <span class="op">=</span> <span class="fu"><a href="../reference/fit_gompertz.html">fit_gompertz</a></span><span class="op">(</span><span class="va">gp</span><span class="op">)</span></span>
 <span></span>
@@ -419,42 +418,24 @@ statistics.</p>
 <span><span class="co">#&gt; Observations: 6</span></span>
 <span><span class="co">#&gt; Heads: 2</span></span>
 <span><span class="co">#&gt; Treatments: 2</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
 <span><span class="co">#&gt; Observations: 6</span></span>
 <span><span class="co">#&gt; Heads: 2</span></span>
 <span><span class="co">#&gt; Treatments: 2</span></span>
-<span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 6</span></span>
-<span><span class="co">#&gt; Heads: 2</span></span>
-<span><span class="co">#&gt; Treatments: 2</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
-<span><span class="co">#&gt; rumenGP data validation passed.</span></span>
-<span><span class="co">#&gt; Observations: 6</span></span>
-<span><span class="co">#&gt; Heads: 2</span></span>
-<span><span class="co">#&gt; Treatments: 2</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
-<span><span class="co">#&gt; Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.</span></span>
 <span><span class="co">#&gt; rumenGP data validation passed.</span></span>
 <span><span class="co">#&gt; Observations: 6</span></span>
 <span><span class="co">#&gt; Heads: 2</span></span>
 <span><span class="co">#&gt; Treatments: 2</span></span>
 <span></span>
 <span><span class="va">comparison</span></span>
-<span><span class="co">#&gt;                 Model Bottles Successful_Fits Failed_Fits    Mean_R2 Mean_RMSE</span></span>
-<span><span class="co">#&gt; 1               Groot       2               2           0 -0.8504581  15.39026</span></span>
-<span><span class="co">#&gt; 2     MichaelisMenten       2               0           2        NaN       NaN</span></span>
-<span><span class="co">#&gt; 3             BurrXII       2               0           2        NaN       NaN</span></span>
-<span><span class="co">#&gt; 4 InverseParalogistic       2               2           0 -8.6379664  35.14058</span></span>
-<span><span class="co">#&gt; 5            Gompertz       2               0           2        NaN       NaN</span></span>
-<span><span class="co">#&gt;    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary</span></span>
-<span><span class="co">#&gt; 1  503.3062 24.48171 19.25430               0</span></span>
-<span><span class="co">#&gt; 2       NaN      NaN      NaN               0</span></span>
-<span><span class="co">#&gt; 3       NaN      NaN      NaN               0</span></span>
-<span><span class="co">#&gt; 4 2590.5823 27.81283 22.58542               0</span></span>
-<span><span class="co">#&gt; 5       NaN      NaN      NaN               0</span></span></code></pre></div>
+<span><span class="co">#&gt;             Model Bottles Successful_Fits Failed_Fits Mean_R2    Mean_RMSE</span></span>
+<span><span class="co">#&gt; 1 MichaelisMenten       2               0           2     NaN          NaN</span></span>
+<span><span class="co">#&gt; 2         BurrXII       2               0           2     NaN          NaN</span></span>
+<span><span class="co">#&gt; 3        Gompertz       2               2           0       1 4.951966e-15</span></span>
+<span><span class="co">#&gt;       Mean_RSS Mean_AIC  Mean_BIC Lambda_Boundary</span></span>
+<span><span class="co">#&gt; 1          NaN      NaN       NaN               0</span></span>
+<span><span class="co">#&gt; 2          NaN      NaN       NaN               0</span></span>
+<span><span class="co">#&gt; 3 7.573139e-29  -181.21 -184.8155               0</span></span></code></pre></div>
 <p>The comparison table includes:</p>
 <ul>
 <li>Mean R-squared</li>
@@ -472,24 +453,18 @@ statistics.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/rank_models.html">rank_models</a></span><span class="op">(</span></span>
 <span>  <span class="va">comparison</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt;                 Model Bottles Successful_Fits Failed_Fits    Mean_R2 Mean_RMSE</span></span>
-<span><span class="co">#&gt; 1               Groot       2               2           0 -0.8504581  15.39026</span></span>
-<span><span class="co">#&gt; 2     MichaelisMenten       2               0           2        NaN       NaN</span></span>
-<span><span class="co">#&gt; 3             BurrXII       2               0           2        NaN       NaN</span></span>
-<span><span class="co">#&gt; 4 InverseParalogistic       2               2           0 -8.6379664  35.14058</span></span>
-<span><span class="co">#&gt; 5            Gompertz       2               0           2        NaN       NaN</span></span>
-<span><span class="co">#&gt;    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC</span></span>
-<span><span class="co">#&gt; 1  503.3062 24.48171 19.25430               0       1         1        1</span></span>
-<span><span class="co">#&gt; 2       NaN      NaN      NaN               0       3         3        3</span></span>
-<span><span class="co">#&gt; 3       NaN      NaN      NaN               0       4         4        4</span></span>
-<span><span class="co">#&gt; 4 2590.5823 27.81283 22.58542               0       2         2        2</span></span>
-<span><span class="co">#&gt; 5       NaN      NaN      NaN               0       5         5        5</span></span>
+<span><span class="co">#&gt;             Model Bottles Successful_Fits Failed_Fits Mean_R2    Mean_RMSE</span></span>
+<span><span class="co">#&gt; 1 MichaelisMenten       2               0           2     NaN          NaN</span></span>
+<span><span class="co">#&gt; 2         BurrXII       2               0           2     NaN          NaN</span></span>
+<span><span class="co">#&gt; 3        Gompertz       2               2           0       1 4.951966e-15</span></span>
+<span><span class="co">#&gt;       Mean_RSS Mean_AIC  Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC</span></span>
+<span><span class="co">#&gt; 1          NaN      NaN       NaN               0       2         2        2</span></span>
+<span><span class="co">#&gt; 2          NaN      NaN       NaN               0       3         3        3</span></span>
+<span><span class="co">#&gt; 3 7.573139e-29  -181.21 -184.8155               0       1         1        1</span></span>
 <span><span class="co">#&gt;   Rank_BIC</span></span>
-<span><span class="co">#&gt; 1        1</span></span>
+<span><span class="co">#&gt; 1        2</span></span>
 <span><span class="co">#&gt; 2        3</span></span>
-<span><span class="co">#&gt; 3        4</span></span>
-<span><span class="co">#&gt; 4        2</span></span>
-<span><span class="co">#&gt; 5        5</span></span></code></pre></div>
+<span><span class="co">#&gt; 3        1</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="available-models">Available Models<a class="anchor" aria-label="anchor" href="#available-models"></a>

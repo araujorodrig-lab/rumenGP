@@ -418,11 +418,11 @@
 <span><span class="co">#&gt;      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS</span></span>
 <span><span class="co">#&gt; 1    Groot      21              21           0 0.9967371 0.9955345  150.1038</span></span>
 <span><span class="co">#&gt; 2    Brody      21              21           0 0.9969746 0.9479644  144.1933</span></span>
-<span><span class="co">#&gt; 3 Gompertz      21              21           0 0.9722322 3.4802686 1868.7759</span></span>
+<span><span class="co">#&gt; 3 Gompertz      21              21           0 0.9725272 3.4607979 1848.1946</span></span>
 <span><span class="co">#&gt;   Mean_AIC Mean_BIC Lambda_Boundary</span></span>
 <span><span class="co">#&gt; 1 406.9209 418.7920               0</span></span>
 <span><span class="co">#&gt; 2 386.1759 398.0734               0</span></span>
-<span><span class="co">#&gt; 3 769.2312 781.1287              21</span></span></code></pre></div>
+<span><span class="co">#&gt; 3 767.6180 779.5156              21</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="rank-models">Rank Models<a class="anchor" aria-label="anchor" href="#rank-models"></a>
 </h3>
@@ -433,11 +433,11 @@
 <span><span class="co">#&gt;      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS</span></span>
 <span><span class="co">#&gt; 1    Groot      21              21           0 0.9967371 0.9955345  150.1038</span></span>
 <span><span class="co">#&gt; 2    Brody      21              21           0 0.9969746 0.9479644  144.1933</span></span>
-<span><span class="co">#&gt; 3 Gompertz      21              21           0 0.9722322 3.4802686 1868.7759</span></span>
+<span><span class="co">#&gt; 3 Gompertz      21              21           0 0.9725272 3.4607979 1848.1946</span></span>
 <span><span class="co">#&gt;   Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC Rank_BIC</span></span>
 <span><span class="co">#&gt; 1 406.9209 418.7920               0       2         2        2        2</span></span>
 <span><span class="co">#&gt; 2 386.1759 398.0734               0       1         1        1        1</span></span>
-<span><span class="co">#&gt; 3 769.2312 781.1287              21       3         3        3        3</span></span></code></pre></div>
+<span><span class="co">#&gt; 3 767.6180 779.5156              21       3         3        3        3</span></span></code></pre></div>
 <hr>
 </div>
 </div>
@@ -665,9 +665,24 @@ Compare models</code></pre>
 <h4 id="groot--generalized-michaelis-menten">Groot ↔︎ Generalized Michaelis-Menten<a class="anchor" aria-label="anchor" href="#groot--generalized-michaelis-menten"></a>
 </h4>
 <p>The Groot model</p>
-<p>V(t) = VF / [1 + (b/t)^k]</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mi>V</mi><mi>F</mi></mrow><mrow><mn>1</mn><mo>+</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mi>b</mi><mi>t</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>k</mi></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+V(t)
+=
+\frac{VF}
+{
+1+\left(\frac{b}{t}\right)^k
+}
+</annotation></semantics></math></p>
 <p>is mathematically equivalent to the generalized Michaelis-Menten model</p>
-<p>V(t) = A t^c / (t^c + K^c)</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mfrac><msup><mi>t</mi><mi>c</mi></msup><mrow><msup><mi>t</mi><mi>c</mi></msup><mo>+</mo><msup><mi>K</mi><mi>c</mi></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+V(t)
+=
+A
+\frac{t^{c}}
+{
+t^{c}+K^{c}
+}
+</annotation></semantics></math></p>
 <p>for positive values of time.</p>
 <p>Parameter correspondence:</p>
 <ul>
@@ -683,9 +698,25 @@ Compare models</code></pre>
 <h4 id="groot--generalized-michaelis-menten--log-logistic">Groot ↔︎ Generalized Michaelis-Menten ↔︎ Log-logistic<a class="anchor" aria-label="anchor" href="#groot--generalized-michaelis-menten--log-logistic"></a>
 </h4>
 <p>The Log-logistic model</p>
-<p>V(t) = VF(rt)^a / [1 + (rt)^a]</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>V</mi><mi>F</mi><mfrac><mrow><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>a</mi></msup></mrow><mrow><mn>1</mn><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>a</mi></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+V(t)
+=
+VF
+\frac{(rt)^a}
+{
+1 + (rt)^a
+}
+</annotation></semantics></math></p>
 <p>can be rewritten as</p>
-<p>V(t) = VF t^a / [t^a + (1/r)^a]</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>V</mi><mi>F</mi><mfrac><msup><mi>t</mi><mi>a</mi></msup><mrow><msup><mi>t</mi><mi>a</mi></msup><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mi>/</mi><mi>r</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>a</mi></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+V(t)
+=
+VF
+\frac{t^a}
+{
+t^a + (1/r)^a
+}
+</annotation></semantics></math></p>
 <p>which is mathematically equivalent to both the Groot and generalized Michaelis-Menten formulations for positive values of time.</p>
 <p>Parameter correspondence:</p>
 <table class="table">
@@ -724,7 +755,18 @@ Compare models</code></pre>
 <h4 id="burr-xii">Burr XII<a class="anchor" aria-label="anchor" href="#burr-xii"></a>
 </h4>
 <p>Equation:</p>
-<p>V(t) = VF [1 - (1 + (rt)<sup>a)</sup>(-p)]</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>V</mi><mi>F</mi><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>−</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mi>a</mi></msup><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mi>p</mi></mrow></msup><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+V(t)
+=
+VF
+\left[
+1
+-
+\left(
+1+(rt)^a
+\right)^{-p}
+\right]
+</annotation></semantics></math></p>
 <p>Parameters:</p>
 <ul>
 <li>VF: asymptotic gas production</li>
@@ -750,7 +792,16 @@ Compare models</code></pre>
 <h4 id="inverse-paralogistic">Inverse Paralogistic<a class="anchor" aria-label="anchor" href="#inverse-paralogistic"></a>
 </h4>
 <p>Equation:</p>
-<p>V(t) = VF [1 + (rt)<sup>(-a)]</sup>(-a)</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>V</mi><mi>F</mi><msup><mrow><mo stretchy="true" form="prefix">[</mo><mn>1</mn><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>t</mi><msup><mo stretchy="false" form="postfix">)</mo><mrow><mi>−</mi><mi>a</mi></mrow></msup><mo stretchy="true" form="postfix">]</mo></mrow><mrow><mi>−</mi><mi>a</mi></mrow></msup></mrow><annotation encoding="application/x-tex">
+V(t)
+=
+VF
+\left[
+1
++
+(rt)^{-a}
+\right]^{-a}
+</annotation></semantics></math></p>
 <p>Parameters:</p>
 <ul>
 <li>VF: asymptotic gas production</li>

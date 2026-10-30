@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Getting Started with rumenGP</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Getting Started with rumenGP</h1>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p><strong>rumenGP</strong> provides a complete workflow for analyzing
+<em>in vitro</em> rumen gas production experiments.</p>
+<p>The package supports:</p>
+<ul>
+<li>ANKOM RF datasets</li>
+<li>Manual gas-volume datasets</li>
+<li>Pressure-based datasets</li>
+<li>Fifteen built-in kinetic models</li>
+<li>User-defined kinetic models</li>
+<li>Model comparison and ranking</li>
+<li>Treatment-level model evaluation</li>
+<li>Diagnostic and visualization tools</li>
+</ul>
+<p>This vignette demonstrates a complete workflow using the packaged
+ANKOM example dataset.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rumenGP)</span></code></pre></div>
+</div>
+<div id="load-example-data" class="section level1">
+<h1>Load Example Data</h1>
+<p>The package includes a small example dataset.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">example_data</span>()</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>files</span></code></pre></div>
+</div>
+<div id="import-ankom-data" class="section level1">
+<h1>Import ANKOM Data</h1>
+<p>Import the ANKOM RF output file and metadata table.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> <span class="fu">read_ankom</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  files<span class="sc">$</span>ankom</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">read_metadata</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  files<span class="sc">$</span>metadata</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="validate-metadata" class="section level1">
+<h1>Validate Metadata</h1>
+<p>Before processing data, validate the metadata table.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">validate_metadata</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  metadata</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; Metadata validation passed.</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; Heads: 25</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; Treatment: 5</span></span></code></pre></div>
+</div>
+<div id="process-ankom-data" class="section level1">
+<h1>Process ANKOM Data</h1>
+<p>Convert pressure measurements into cumulative gas production.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>gp <span class="ot">&lt;-</span> <span class="fu">process_ankom</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  raw_data,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  metadata,</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="at">headspace_ml =</span> <span class="dv">210</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="at">temperature_c =</span> <span class="dv">39</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="at">zero_negative_pressure =</span> <span class="cn">TRUE</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>)</span></code></pre></div>
+<p>Optional blank correction:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>gp_blank_corrected <span class="ot">&lt;-</span> <span class="fu">process_ankom</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  raw_data,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  metadata,</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="at">headspace_ml =</span> <span class="dv">210</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  <span class="at">temperature_c =</span> <span class="dv">39</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="at">zero_negative_pressure =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  <span class="at">blank_correction =</span> <span class="st">&quot;subtract_mean&quot;</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>)</span></code></pre></div>
+<p>When blank correction is enabled, the mean gas production of bottles
+identified as <code>Treatment = &quot;Blank&quot;</code> is subtracted from all
+nonblank bottles at each observation time.</p>
+</div>
+<div id="validate-processed-data" class="section level1">
+<h1>Validate Processed Data</h1>
+<p>The resulting datasets are standardized <code>rumen_gp</code>
+objects.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>gp <span class="ot">&lt;-</span> <span class="fu">validate_ankom</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  gp</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; rumenGP data validation passed.</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; Observations: 3618</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; Heads: 25</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; Treatments: 5</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>gp_blank_corrected <span class="ot">&lt;-</span> <span class="fu">validate_ankom</span>(</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>  gp_blank_corrected</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>)</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt; rumenGP data validation passed.</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; Observations: 3618</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; Heads: 25</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; Treatments: 5</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="fu">class</span>(gp)</span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt; [1] &quot;rumen_gp&quot;   &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</span></span></code></pre></div>
+<p>Inspect the data:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">head</span>(gp)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 10</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt;   time_raw Time_h Head  Gas_PSI Gas_kPa Gas_moles Gas_mL Bottle   Rep Treatment</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    </span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; 1 10:54:01      0 1           0       0         0      0      1     1 TMR      </span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; 2 10:54:01      0 2           0       0         0      0      2     1 Blank    </span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 3 10:54:01      0 3           0       0         0      0      3     2 TMR      </span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; 4 10:54:01      0 4           0       0         0      0      4     3 TMR      </span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; 5 10:54:01      0 6           0       0         0      0      6     4 TMR      </span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; 6 10:54:01      0 7           0       0         0      0      7     5 TMR</span></span></code></pre></div>
+</div>
+<div id="visualize-raw-gas-production" class="section level1">
+<h1>Visualize Raw Gas Production</h1>
+<p>Individual bottle profiles can be visualized.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">plot_gp</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  gp</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p>Remove Abnormal heads</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>gp_clean <span class="ot">&lt;-</span> <span class="fu">exclude_heads</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  gp,</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="at">heads =</span> <span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;4&quot;</span>, <span class="st">&quot;20&quot;</span>),</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="at">reason =</span> <span class="st">&quot;Sensor malfunction&quot;</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>)</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="fu">plot_gp</span>(</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>  gp_clean</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p>Treatment-level observations can also be visualized.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">plot_gp</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  gp_clean,</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="at">treatment =</span> <span class="st">&quot;TMR&quot;</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p>Mean treatment profiles can be displayed using:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">plot_gp</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  gp_clean,</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="at">treatment =</span> <span class="st">&quot;TMR&quot;</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  <span class="at">mean_treatment =</span> <span class="cn">TRUE</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<div id="note-on-blank-correction" class="section level2">
+<h2>Note on Blank Correction</h2>
+<p>Blank correction is optional because laboratories often follow
+different preprocessing procedures.</p>
+<p>By default, rumenGP retains the original gas-production values. When
+<code>blank_correction = &quot;subtract_mean&quot;</code> is used, the mean gas
+production of blank bottles is subtracted from all nonblank bottles
+prior to model fitting and comparison.</p>
+</div>
+</div>
+<div id="fit-kinetic-models" class="section level1">
+<h1>Fit Kinetic Models</h1>
+<p>Several built-in models are available.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>groot_fit <span class="ot">&lt;-</span> <span class="fu">fit_groot</span>(gp_clean)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt; rumenGP data validation passed.</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt; Observations: 3038</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; Heads: 21</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#&gt; Treatments: 5</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>mm_fit <span class="ot">&lt;-</span> <span class="fu">fit_mm</span>(gp_clean)</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#&gt; rumenGP data validation passed.</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt; Observations: 3038</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt; Heads: 21</span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; Treatments: 5</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>gompertz_fit <span class="ot">&lt;-</span> <span class="fu">fit_gompertz</span>(gp_clean)</span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt; rumenGP data validation passed.</span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt; Observations: 3038</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt; Heads: 21</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt; Treatments: 5</span></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a>brody_fit <span class="ot">&lt;-</span> <span class="fu">fit_brody</span>(gp_clean)</span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="co">#&gt; rumenGP data validation passed.</span></span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="co">#&gt; Observations: 3038</span></span>
+<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a><span class="co">#&gt; Heads: 21</span></span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a><span class="co">#&gt; Treatments: 5</span></span>
+<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a></span>
+<span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a>burr_fit <span class="ot">&lt;-</span> <span class="fu">fit_burr_xii</span>(gp_clean)</span>
+<span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a><span class="co">#&gt; rumenGP data validation passed.</span></span>
+<span id="cb13-27"><a href="#cb13-27" tabindex="-1"></a><span class="co">#&gt; Observations: 3038</span></span>
+<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a><span class="co">#&gt; Heads: 21</span></span>
+<span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a><span class="co">#&gt; Treatments: 5</span></span>
+<span id="cb13-30"><a href="#cb13-30" tabindex="-1"></a></span>
+<span id="cb13-31"><a href="#cb13-31" tabindex="-1"></a>inverse_paralogistic_fit <span class="ot">&lt;-</span>  <span class="fu">fit_inverse_paralogistic</span>(gp_clean)</span>
+<span id="cb13-32"><a href="#cb13-32" tabindex="-1"></a><span class="co">#&gt; rumenGP data validation passed.</span></span>
+<span id="cb13-33"><a href="#cb13-33" tabindex="-1"></a><span class="co">#&gt; Observations: 3038</span></span>
+<span id="cb13-34"><a href="#cb13-34" tabindex="-1"></a><span class="co">#&gt; Heads: 21</span></span>
+<span id="cb13-35"><a href="#cb13-35" tabindex="-1"></a><span class="co">#&gt; Treatments: 5</span></span></code></pre></div>
+</div>
+<div id="summarize-model-fits" class="section level1">
+<h1>Summarize Model Fits</h1>
+<p>Each model provides parameter estimates and diagnostic
+statistics.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">summary</span>(groot_fit)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt; Groot model summary</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; -------------------</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; Total bottles: 21</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; Successful fits: 21</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; Failed fits: 0</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; Low R-squared (&lt; 0.90): 0</span></span></code></pre></div>
+</div>
+<div id="identify-potentially-problematic-bottles" class="section level1">
+<h1>Identify Potentially Problematic Bottles</h1>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>flags <span class="ot">&lt;-</span> <span class="fu">flag_model</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  groot_fit</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>)</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="fu">head</span>(flags)</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt;   Head Bottle Rep Treatment Converged Status       RSS        R2      RMSE      AIC      BIC Lambda_Boundary Flag_FitFailed Flag_LowR2 Flag_LambdaBoundary</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt; 1   10     10   2       Low      TRUE     OK 150.63376 0.9983872 1.0227745 423.1398 435.0190           FALSE          FALSE      FALSE               FALSE</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#&gt; 2   11     11   3       Low      TRUE     OK 181.51413 0.9978351 1.1227265 449.9932 461.8725           FALSE          FALSE      FALSE               FALSE</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt; 3   12     12   4       Low      TRUE     OK  81.41463 0.9990175 0.7519171 334.5371 346.4164           FALSE          FALSE      FALSE               FALSE</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt; 4   13     13   1    Medium      TRUE     OK  84.42650 0.9989933 0.7656991 339.7681 351.6473           FALSE          FALSE      FALSE               FALSE</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt; 5   14     14   2    Medium      TRUE     OK  60.68699 0.9993438 0.6491821 292.2262 304.1055           FALSE          FALSE      FALSE               FALSE</span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt; 6   15     15   3    Medium      TRUE     OK 153.90377 0.9982583 1.0338163 426.2323 438.1116           FALSE          FALSE      FALSE               FALSE</span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt;   Overall_Flag</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt; 1           OK</span></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co">#&gt; 2           OK</span></span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="co">#&gt; 3           OK</span></span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co">#&gt; 4           OK</span></span>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#&gt; 5           OK</span></span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">#&gt; 6           OK</span></span></code></pre></div>
+</div>
+<div id="plot-model-fits" class="section level1">
+<h1>Plot Model Fits</h1>
+<p>Observed and predicted values can be visualized.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">plot_fit</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  groot_fit,</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="at">head =</span> <span class="st">&quot;6&quot;</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="plot-residuals" class="section level1">
+<h1>Plot Residuals</h1>
+<p>Residual plots help identify systematic deviations.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">plot_residuals</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  groot_fit,</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="at">head =</span> <span class="st">&quot;6&quot;</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="compare-models" class="section level1">
+<h1>Compare Models</h1>
+<p>Compare model performance using multiple metrics.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>comparison <span class="ot">&lt;-</span> <span class="fu">compare_models</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  <span class="at">Groot =</span> groot_fit,</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>  <span class="at">MichaelisMenten =</span> mm_fit,</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>  <span class="at">BurrXII =</span> burr_fit,</span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a>  <span class="at">InverseParalogistic =</span> inverse_paralogistic_fit,</span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a>  <span class="at">Gompertz =</span> gompertz_fit,</span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a>  <span class="at">Brody =</span> brody_fit</span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a>)</span>
+<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" tabindex="-1"></a>comparison</span>
+<span id="cb18-18"><a href="#cb18-18" tabindex="-1"></a><span class="co">#&gt;                 Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary</span></span>
+<span id="cb18-19"><a href="#cb18-19" tabindex="-1"></a><span class="co">#&gt; 1               Groot      21              21           0 0.9967371 0.9955345  150.1038 406.9209 418.7920               0</span></span>
+<span id="cb18-20"><a href="#cb18-20" tabindex="-1"></a><span class="co">#&gt; 2     MichaelisMenten      21              21           0 0.9970271 0.9922540  150.1038 408.6095 420.5070               0</span></span>
+<span id="cb18-21"><a href="#cb18-21" tabindex="-1"></a><span class="co">#&gt; 3             BurrXII      21              21           0 0.9977366 0.8477629  114.4515 358.4086 373.2805               0</span></span>
+<span id="cb18-22"><a href="#cb18-22" tabindex="-1"></a><span class="co">#&gt; 4 InverseParalogistic      21              21           0 0.9965796 1.0215285  158.2528 414.1464 426.0175               0</span></span>
+<span id="cb18-23"><a href="#cb18-23" tabindex="-1"></a><span class="co">#&gt; 5            Gompertz      21              21           0 0.9725272 3.4607979 1848.1946 767.6180 779.5156              21</span></span>
+<span id="cb18-24"><a href="#cb18-24" tabindex="-1"></a><span class="co">#&gt; 6               Brody      21              21           0 0.9969746 0.9479644  144.1933 386.1759 398.0734               0</span></span></code></pre></div>
+<p>The comparison table includes:</p>
+<ul>
+<li>Mean R-squared</li>
+<li>Mean RMSE</li>
+<li>Mean RSS</li>
+<li>Mean AIC</li>
+<li>Mean BIC</li>
+<li>Number of successful fits</li>
+</ul>
+</div>
+<div id="rank-models" class="section level1">
+<h1>Rank Models</h1>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">rank_models</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  comparison</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>)</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co">#&gt;                 Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="co">#&gt; 1               Groot      21              21           0 0.9967371 0.9955345  150.1038 406.9209 418.7920               0       4         4        3</span></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co">#&gt; 2     MichaelisMenten      21              21           0 0.9970271 0.9922540  150.1038 408.6095 420.5070               0       2         3        4</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt; 3             BurrXII      21              21           0 0.9977366 0.8477629  114.4515 358.4086 373.2805               0       1         1        1</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="co">#&gt; 4 InverseParalogistic      21              21           0 0.9965796 1.0215285  158.2528 414.1464 426.0175               0       5         5        5</span></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">#&gt; 5            Gompertz      21              21           0 0.9725272 3.4607979 1848.1946 767.6180 779.5156              21       6         6        6</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">#&gt; 6               Brody      21              21           0 0.9969746 0.9479644  144.1933 386.1759 398.0734               0       3         2        2</span></span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="co">#&gt;   Rank_BIC</span></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a><span class="co">#&gt; 1        3</span></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a><span class="co">#&gt; 2        4</span></span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="co">#&gt; 3        1</span></span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a><span class="co">#&gt; 4        5</span></span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a><span class="co">#&gt; 5        6</span></span>
+<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a><span class="co">#&gt; 6        2</span></span></code></pre></div>
+</div>
+<div id="compare-models-by-treatment" class="section level1">
+<h1>Compare Models by Treatment</h1>
+<p>Treatment-level comparisons are also available.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>treatment_comparison <span class="ot">&lt;-</span>  <span class="fu">compare_models_by_treatment</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>    <span class="at">Groot =</span> groot_fit,</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>    <span class="at">MichaelisMenten =</span> mm_fit,</span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>    <span class="at">BurrXII =</span> burr_fit,</span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a>    <span class="at">InverseParalogistic =</span> inverse_paralogistic_fit,</span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a>    <span class="at">Gompertz =</span> gompertz_fit,</span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a>    <span class="at">Brody =</span> brody_fit</span>
+<span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a>  )</span>
+<span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" tabindex="-1"></a>treatment_comparison</span>
+<span id="cb20-18"><a href="#cb20-18" tabindex="-1"></a><span class="co">#&gt; # A tibble: 30 × 6</span></span>
+<span id="cb20-19"><a href="#cb20-19" tabindex="-1"></a><span class="co">#&gt;    Treatment Model           Mean_R2 Mean_RMSE Mean_AIC Mean_BIC</span></span>
+<span id="cb20-20"><a href="#cb20-20" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span id="cb20-21"><a href="#cb20-21" tabindex="-1"></a><span class="co">#&gt;  1 Blank     Groot             0.990     1.04      426.     438.</span></span>
+<span id="cb20-22"><a href="#cb20-22" tabindex="-1"></a><span class="co">#&gt;  2 High      Groot             0.998     1.19      457.     469.</span></span>
+<span id="cb20-23"><a href="#cb20-23" tabindex="-1"></a><span class="co">#&gt;  3 Low       Groot             0.998     1.04      420.     432.</span></span>
+<span id="cb20-24"><a href="#cb20-24" tabindex="-1"></a><span class="co">#&gt;  4 Medium    Groot             0.999     0.864     369.     380.</span></span>
+<span id="cb20-25"><a href="#cb20-25" tabindex="-1"></a><span class="co">#&gt;  5 TMR       Groot             0.999     0.827     356.     368.</span></span>
+<span id="cb20-26"><a href="#cb20-26" tabindex="-1"></a><span class="co">#&gt;  6 Blank     MichaelisMenten   0.991     1.03      428.     440.</span></span>
+<span id="cb20-27"><a href="#cb20-27" tabindex="-1"></a><span class="co">#&gt;  7 High      MichaelisMenten   0.998     1.18      460.     471.</span></span>
+<span id="cb20-28"><a href="#cb20-28" tabindex="-1"></a><span class="co">#&gt;  8 Low       MichaelisMenten   0.998     1.04      422.     433.</span></span>
+<span id="cb20-29"><a href="#cb20-29" tabindex="-1"></a><span class="co">#&gt;  9 Medium    MichaelisMenten   0.999     0.861     370.     382.</span></span>
+<span id="cb20-30"><a href="#cb20-30" tabindex="-1"></a><span class="co">#&gt; 10 TMR       MichaelisMenten   0.999     0.824     357.     369.</span></span>
+<span id="cb20-31"><a href="#cb20-31" tabindex="-1"></a><span class="co">#&gt; # ℹ 20 more rows</span></span></code></pre></div>
+</div>
+<div id="rank-models-by-treatment" class="section level1">
+<h1>Rank Models by Treatment</h1>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>ranked_treatments <span class="ot">&lt;-</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  <span class="fu">rank_models_by_treatment</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>    treatment_comparison</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>  )</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>ranked_treatments</span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 30 × 10</span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a><span class="co">#&gt;    Treatment Model           Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE Rank_AIC Rank_BIC</span></span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;int&gt;     &lt;int&gt;    &lt;int&gt;    &lt;int&gt;</span></span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a><span class="co">#&gt;  1 Blank     Groot             0.990     1.04      426.     438.       4         3        2        2</span></span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a><span class="co">#&gt;  2 High      Groot             0.998     1.19      457.     469.       4         4        4        4</span></span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a><span class="co">#&gt;  3 Low       Groot             0.998     1.04      420.     432.       4         4        3        3</span></span>
+<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a><span class="co">#&gt;  4 Medium    Groot             0.999     0.864     369.     380.       3         3        2        1</span></span>
+<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a><span class="co">#&gt;  5 TMR       Groot             0.999     0.827     356.     368.       4         4        3        3</span></span>
+<span id="cb21-15"><a href="#cb21-15" tabindex="-1"></a><span class="co">#&gt;  6 Blank     MichaelisMenten   0.991     1.03      428.     440.       2         2        3        3</span></span>
+<span id="cb21-16"><a href="#cb21-16" tabindex="-1"></a><span class="co">#&gt;  7 High      MichaelisMenten   0.998     1.18      460.     471.       3         3        5        5</span></span>
+<span id="cb21-17"><a href="#cb21-17" tabindex="-1"></a><span class="co">#&gt;  8 Low       MichaelisMenten   0.998     1.04      422.     433.       2         3        4        4</span></span>
+<span id="cb21-18"><a href="#cb21-18" tabindex="-1"></a><span class="co">#&gt;  9 Medium    MichaelisMenten   0.999     0.861     370.     382.       2         2        3        3</span></span>
+<span id="cb21-19"><a href="#cb21-19" tabindex="-1"></a><span class="co">#&gt; 10 TMR       MichaelisMenten   0.999     0.824     357.     369.       3         3        4        4</span></span>
+<span id="cb21-20"><a href="#cb21-20" tabindex="-1"></a><span class="co">#&gt; # ℹ 20 more rows</span></span></code></pre></div>
+</div>
+<div id="determine-the-best-model-per-treatment" class="section level1">
+<h1>Determine the Best Model per Treatment</h1>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>best_models <span class="ot">&lt;-</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>  <span class="fu">best_model_by_treatment</span>(</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>    ranked_treatments</span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>  )</span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>best_models</span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 × 12</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="co">#&gt;   Treatment Model   Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE Rank_AIC Rank_BIC Total_Rank Overall_Rank</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;int&gt;     &lt;int&gt;    &lt;int&gt;    &lt;int&gt;      &lt;int&gt;        &lt;int&gt;</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="co">#&gt; 1 Blank     BurrXII   0.993     0.917     396.     411.       1         1        1        1          4            1</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="co">#&gt; 2 High      BurrXII   0.998     1.16      453.     468.       2         1        1        1          5            1</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a><span class="co">#&gt; 3 Low       BurrXII   0.999     0.749     331.     346.       1         1        1        1          4            1</span></span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a><span class="co">#&gt; 4 Medium    BurrXII   0.999     0.850     367.     382.       1         1        1        2          5            1</span></span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a><span class="co">#&gt; 5 TMR       BurrXII   1.000     0.500     214.     229.       1         1        1        1          4            1</span></span></code></pre></div>
+</div>
+<div id="model-win-frequency" class="section level1">
+<h1>Model Win Frequency</h1>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">model_win_frequency</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>  best_models</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>)</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 2</span></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="co">#&gt;   Model   Treatments_Won</span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;            &lt;int&gt;</span></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">#&gt; 1 BurrXII              5</span></span></code></pre></div>
+</div>
+<div id="quality-control-workflow" class="section level1">
+<h1>Quality Control Workflow</h1>
+<p>A typical workflow is:</p>
+<pre class="text"><code>Import data
+    ↓
+Validate metadata
+    ↓
+Process ANKOM data
+    ↓
+Validate processed data
+    ↓
+Fit multiple candidate models
+    ↓
+Flag problematic bottles
+    ↓
+Inspect residuals
+    ↓
+Exclude problematic bottles
+    ↓
+Refit models
+    ↓
+Compare RMSE
+    ↓
+Compare AIC and BIC
+    ↓
+Select final model</code></pre>
+<p>Example bottle exclusion:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>gp_clean <span class="ot">&lt;-</span> <span class="fu">exclude_heads</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  gp,</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>  <span class="at">heads =</span> <span class="fu">c</span>(<span class="st">&quot;10&quot;</span>),</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>  <span class="at">reason =</span> <span class="st">&quot;Sensor malfunction&quot;</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="available-models" class="section level1">
+<h1>Available Models</h1>
+<p>Current built-in models:</p>
+<ul>
+<li>Brody</li>
+<li>Burr XII</li>
+<li>Dual Logistic</li>
+<li>EXP0</li>
+<li>EXPL</li>
+<li>Generalized Michaelis-Menten</li>
+<li>Gompertz</li>
+<li>Groot</li>
+<li>Inverse Paralogistic</li>
+<li>LE0</li>
+<li>LEL</li>
+<li>Logistic</li>
+<li>Log-logistic</li>
+<li>Mitscherlich</li>
+<li>Ørskov and McDonald</li>
+</ul>
+</div>
+<div id="model-equivalence" class="section level1">
+<h1>Model Equivalence</h1>
+<div id="groot-and-generalized-michaelis-menten" class="section level2">
+<h2>Groot and Generalized Michaelis-Menten</h2>
+<p>The Groot and generalized Michaelis-Menten models are mathematically
+equivalent for positive values of time.</p>
+<p>Parameter correspondence:</p>
+<ul>
+<li>VF = A</li>
+<li>b = K</li>
+<li>k = c</li>
+</ul>
+<p>Both formulations describe the same underlying sigmoidal gas
+production curve but differ in parameterization.</p>
+<p>The Groot model contains the term</p>
+<p><span class="math display">\[
+\left(\frac{b}{t}\right)^k
+\]</span></p>
+<p>and is therefore undefined at <span class="math display">\[
+t = 0.
+\]</span></p>
+<p>Consequently, observations collected at <code>Time_h = 0</code> are
+excluded when fitting the Groot model.</p>
+<p>Researchers may choose either formulation depending on the
+terminology commonly used in their field.</p>
+</div>
+<div id="groot-generalized-michaelis-menten-and-log-logistic" class="section level2">
+<h2>Groot, Generalized Michaelis-Menten, and Log-logistic</h2>
+<p>The Log-logistic formulation</p>
+<p><span class="math display">\[
+V(t)
+=
+VF
+\frac{(rt)^a}
+{
+1 + (rt)^a
+}
+\]</span></p>
+<p>can be rewritten as</p>
+<p><span class="math display">\[
+V(t)
+=
+VF
+\frac{t^a}
+{
+t^a + (1/r)^a
+}
+\]</span></p>
+<p>which is mathematically equivalent to both the Groot and generalized
+Michaelis-Menten models for positive values of time.</p>
+<p>Parameter correspondence:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Groot</th>
+<th>Generalized Michaelis-Menten</th>
+<th>Log-logistic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>VF</td>
+<td>A</td>
+<td>VF</td>
+</tr>
+<tr class="even">
+<td>b</td>
+<td>K</td>
+<td>1/r</td>
+</tr>
+<tr class="odd">
+<td>k</td>
+<td>c</td>
+<td>a</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore:</p>
+<pre class="text"><code>Groot
+=
+Generalized Michaelis-Menten
+=
+Log-logistic</code></pre>
+</div>
+</div>
+<div id="recommended-model-selection-workflow" class="section level1">
+<h1>Recommended Model Selection Workflow</h1>
+<p>No single gas-production model should be considered universally
+superior.</p>
+<p>A recommended workflow is:</p>
+<ol style="list-style-type: decimal">
+<li>Fit several biologically plausible models.</li>
+<li>Verify convergence.</li>
+<li>Inspect fitted curves.</li>
+<li>Examine residuals.</li>
+<li>Compare RMSE.</li>
+<li>Compare AIC and BIC.</li>
+<li>Evaluate biological plausibility of parameter estimates.</li>
+<li>Select the model most appropriate for the scientific objective.</li>
+</ol>
+<p>Recent comparative work has identified Burr XII, Inverse
+Paralogistic, and Log-logistic formulations among the strong-performing
+models across diverse feed datasets.</p>
+<p>Because the Log-logistic formulation is mathematically equivalent to
+the existing Groot and generalized Michaelis-Menten models, rumenGP
+already provides this curve family through those parameterizations.</p>
+</div>
+<div id="new-additions" class="section level1">
+<h1>New Additions</h1>
+<div id="burr-xii" class="section level2">
+<h2>Burr XII</h2>
+<p>Equation:</p>
+<p><span class="math display">\[
+V(t)
+=
+VF
+\left[
+1
+-
+\left(
+1+(rt)^a
+\right)^{-p}
+\right]
+\]</span></p>
+<p>Parameters:</p>
+<ul>
+<li>VF: asymptotic gas production</li>
+<li>r: rate parameter</li>
+<li>a: shape parameter</li>
+<li>p: shape parameter</li>
+</ul>
+<p>Potential advantages:</p>
+<ul>
+<li>Highly flexible curve shape</li>
+<li>Accommodates diverse fermentation profiles</li>
+<li>Often produces excellent goodness-of-fit</li>
+<li>Useful for comparative model evaluation</li>
+</ul>
+<p>Potential limitations:</p>
+<ul>
+<li>Four-parameter model</li>
+<li>Greater risk of overfitting than simpler models</li>
+<li>Parameter interpretation may be less intuitive</li>
+</ul>
+</div>
+<div id="inverse-paralogistic" class="section level2">
+<h2>Inverse Paralogistic</h2>
+<p>Equation:</p>
+<p><span class="math display">\[
+V(t)
+=
+VF
+\left[
+1
++
+(rt)^{-a}
+\right]^{-a}
+\]</span></p>
+<p>Parameters:</p>
+<ul>
+<li>VF: asymptotic gas production</li>
+<li>r: rate parameter</li>
+<li>a: shape parameter</li>
+</ul>
+<p>Potential advantages:</p>
+<ul>
+<li>Flexible sigmoidal behavior</li>
+<li>Relatively simple parameterization</li>
+<li>Performs well across diverse kinetic profiles</li>
+</ul>
+<p>Potential limitations:</p>
+<ul>
+<li>Less common in rumen literature</li>
+<li>Shape parameter can be difficult to interpret</li>
+<li>Requires positive incubation times</li>
+</ul>
+<p>Neither Burr XII nor Inverse Paralogistic should be considered
+universally superior.</p>
+<p>Model performance depends on feed type, experimental design, data
+quality, and model-selection criteria.</p>
+</div>
+</div>
+<div id="next-steps" class="section level1">
+<h1>Next Steps</h1>
+<p>Additional package capabilities include:</p>
+<div id="importing-manual-datasets" class="section level2">
+<h2>Importing Manual Datasets</h2>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>gp <span class="ot">&lt;-</span> <span class="fu">as_rumen_gp</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>  <span class="at">data =</span> my_data,</span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>  <span class="at">head_col =</span> <span class="st">&quot;Bottle&quot;</span>,</span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>  <span class="at">time_col =</span> <span class="st">&quot;Time&quot;</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>  <span class="at">gas_col =</span> <span class="st">&quot;Gas&quot;</span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="importing-pressure-data" class="section level2">
+<h2>Importing Pressure Data</h2>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>gp <span class="ot">&lt;-</span> <span class="fu">as_rumen_gp</span>(</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>  <span class="at">data =</span> my_data,</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>  <span class="at">head_col =</span> <span class="st">&quot;Bottle&quot;</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>  <span class="at">time_col =</span> <span class="st">&quot;Time&quot;</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a>  <span class="at">pressure_col =</span> <span class="st">&quot;PSI&quot;</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>  <span class="at">pressure_unit =</span> <span class="st">&quot;psi&quot;</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>  <span class="at">headspace_volume =</span> <span class="dv">60</span></span>
+<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="user-defined-models" class="section level2">
+<h2>User-Defined Models</h2>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>custom_fit <span class="ot">&lt;-</span> <span class="fu">fit_custom</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>  <span class="at">data =</span> gp,</span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>  <span class="at">formula =</span></span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>    Gas_mL <span class="sc">~</span></span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>      A <span class="sc">*</span></span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a>      (</span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>        Time_h <span class="sc">/</span></span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a>        (</span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a>          Time_h <span class="sc">+</span> K</span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a>        )</span>
+<span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a>      ),</span>
+<span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a>  <span class="at">start =</span> <span class="fu">list</span>(</span>
+<span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a>    <span class="at">A =</span> <span class="dv">150</span>,</span>
+<span id="cb29-14"><a href="#cb29-14" tabindex="-1"></a>    <span class="at">K =</span> <span class="dv">10</span></span>
+<span id="cb29-15"><a href="#cb29-15" tabindex="-1"></a>  ),</span>
+<span id="cb29-16"><a href="#cb29-16" tabindex="-1"></a>  <span class="at">lower =</span> <span class="fu">c</span>(</span>
+<span id="cb29-17"><a href="#cb29-17" tabindex="-1"></a>    <span class="at">A =</span> <span class="dv">0</span>,</span>
+<span id="cb29-18"><a href="#cb29-18" tabindex="-1"></a>    <span class="at">K =</span> <span class="dv">0</span></span>
+<span id="cb29-19"><a href="#cb29-19" tabindex="-1"></a>  ),</span>
+<span id="cb29-20"><a href="#cb29-20" tabindex="-1"></a>  <span class="at">model_name =</span> <span class="st">&quot;Hyperbolic&quot;</span></span>
+<span id="cb29-21"><a href="#cb29-21" tabindex="-1"></a>)</span></code></pre></div>
+<p>See:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>?as_rumen_gp</span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>?fit_custom</span></code></pre></div>
+<p>for additional details.</p>
+</div>
+</div>
+<div id="summary" class="section level1">
+<h1>Summary</h1>
+<p>rumenGP provides a complete workflow for importing, processing,
+visualizing, fitting, comparing, and interpreting in vitro rumen
+gas-production data.</p>
+<p>Current capabilities include:</p>
+<ul>
+<li>ANKOM RF workflows</li>
+<li>Manual gas-volume workflows</li>
+<li>Pressure-based workflows</li>
+<li>Fifteen built-in kinetic models</li>
+<li>User-defined models</li>
+<li>Model comparison and ranking</li>
+<li>Treatment-level model evaluation</li>
+<li>Diagnostic tools</li>
+<li>Visualization tools</li>
+</ul>
+<p>Researchers are encouraged to compare multiple biologically plausible
+models and to consider both statistical performance and biological
+interpretation before selecting a final model.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

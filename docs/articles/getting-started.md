@@ -344,17 +344,17 @@ comparison <- compare_models(
 comparison
 #>                 Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE
 #> 1               Groot      21              21           0 0.9967371 0.9955345
-#> 2     MichaelisMenten      21              21           0 0.8804937 2.4761155
-#> 3             BurrXII      21              21           0 0.9966061 1.1008029
-#> 4 InverseParalogistic      21              21           0 0.9565272 3.2532678
-#> 5            Gompertz      21              21           0 0.9722322 3.4802686
+#> 2     MichaelisMenten      21              21           0 0.9970271 0.9922540
+#> 3             BurrXII      21              21           0 0.9977366 0.8477629
+#> 4 InverseParalogistic      21              21           0 0.9965796 1.0215285
+#> 5            Gompertz      21              21           0 0.9725272 3.4607979
 #> 6               Brody      21              21           0 0.9969746 0.9479644
 #>    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary
 #> 1  150.1038 406.9209 418.7920               0
-#> 2 2285.4631 527.0733 538.9708               0
-#> 3  209.4051 421.5674 436.4393               0
-#> 4 3549.5272 589.5483 601.4195               0
-#> 5 1868.7759 769.2312 781.1287              21
+#> 2  150.1038 408.6095 420.5070               0
+#> 3  114.4515 358.4086 373.2805               0
+#> 4  158.2528 414.1464 426.0175               0
+#> 5 1848.1946 767.6180 779.5156              21
 #> 6  144.1933 386.1759 398.0734               0
 ```
 
@@ -376,25 +376,25 @@ rank_models(
 )
 #>                 Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE
 #> 1               Groot      21              21           0 0.9967371 0.9955345
-#> 2     MichaelisMenten      21              21           0 0.8804937 2.4761155
-#> 3             BurrXII      21              21           0 0.9966061 1.1008029
-#> 4 InverseParalogistic      21              21           0 0.9565272 3.2532678
-#> 5            Gompertz      21              21           0 0.9722322 3.4802686
+#> 2     MichaelisMenten      21              21           0 0.9970271 0.9922540
+#> 3             BurrXII      21              21           0 0.9977366 0.8477629
+#> 4 InverseParalogistic      21              21           0 0.9965796 1.0215285
+#> 5            Gompertz      21              21           0 0.9725272 3.4607979
 #> 6               Brody      21              21           0 0.9969746 0.9479644
 #>    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC
-#> 1  150.1038 406.9209 418.7920               0       2         2        2
-#> 2 2285.4631 527.0733 538.9708               0       6         4        4
-#> 3  209.4051 421.5674 436.4393               0       3         3        3
-#> 4 3549.5272 589.5483 601.4195               0       5         5        5
-#> 5 1868.7759 769.2312 781.1287              21       4         6        6
-#> 6  144.1933 386.1759 398.0734               0       1         1        1
+#> 1  150.1038 406.9209 418.7920               0       4         4        3
+#> 2  150.1038 408.6095 420.5070               0       2         3        4
+#> 3  114.4515 358.4086 373.2805               0       1         1        1
+#> 4  158.2528 414.1464 426.0175               0       5         5        5
+#> 5 1848.1946 767.6180 779.5156              21       6         6        6
+#> 6  144.1933 386.1759 398.0734               0       3         2        2
 #>   Rank_BIC
-#> 1        2
+#> 1        3
 #> 2        4
-#> 3        3
+#> 3        1
 #> 4        5
 #> 5        6
-#> 6        1
+#> 6        2
 ```
 
 ## Compare Models by Treatment
@@ -428,7 +428,7 @@ treatment_comparison
 #>  3 Low       Groot             0.998     1.04      420.     432.
 #>  4 Medium    Groot             0.999     0.864     369.     380.
 #>  5 TMR       Groot             0.999     0.827     356.     368.
-#>  6 Blank     MichaelisMenten   0.379     8.82     1050.    1062.
+#>  6 Blank     MichaelisMenten   0.991     1.03      428.     440.
 #>  7 High      MichaelisMenten   0.998     1.18      460.     471.
 #>  8 Low       MichaelisMenten   0.998     1.04      422.     433.
 #>  9 Medium    MichaelisMenten   0.999     0.861     370.     382.
@@ -449,15 +449,15 @@ ranked_treatments
 #> # A tibble: 30 × 10
 #>    Treatment Model         Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE
 #>    <chr>     <chr>           <dbl>     <dbl>    <dbl>    <dbl>   <int>     <int>
-#>  1 Blank     Groot           0.990     1.04      426.     438.       3         2
-#>  2 High      Groot           0.998     1.19      457.     469.       3         3
+#>  1 Blank     Groot           0.990     1.04      426.     438.       4         3
+#>  2 High      Groot           0.998     1.19      457.     469.       4         4
 #>  3 Low       Groot           0.998     1.04      420.     432.       4         4
-#>  4 Medium    Groot           0.999     0.864     369.     380.       2         2
+#>  4 Medium    Groot           0.999     0.864     369.     380.       3         3
 #>  5 TMR       Groot           0.999     0.827     356.     368.       4         4
-#>  6 Blank     MichaelisMen…   0.379     8.82     1050.    1062.       6         6
-#>  7 High      MichaelisMen…   0.998     1.18      460.     471.       2         2
+#>  6 Blank     MichaelisMen…   0.991     1.03      428.     440.       2         2
+#>  7 High      MichaelisMen…   0.998     1.18      460.     471.       3         3
 #>  8 Low       MichaelisMen…   0.998     1.04      422.     433.       2         3
-#>  9 Medium    MichaelisMen…   0.999     0.861     370.     382.       1         1
+#>  9 Medium    MichaelisMen…   0.999     0.861     370.     382.       2         2
 #> 10 TMR       MichaelisMen…   0.999     0.824     357.     369.       3         3
 #> # ℹ 20 more rows
 #> # ℹ 2 more variables: Rank_AIC <int>, Rank_BIC <int>
@@ -473,15 +473,14 @@ best_models <-
   )
 
 best_models
-#> # A tibble: 6 × 12
+#> # A tibble: 5 × 12
 #>   Treatment Model Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE Rank_AIC
 #>   <chr>     <chr>   <dbl>     <dbl>    <dbl>    <dbl>   <int>     <int>    <int>
-#> 1 Blank     Burr…   0.992     0.997     420.     435.       1         1        1
-#> 2 High      Brody   0.998     1.17      457.     469.       1         1        1
-#> 3 Low       Burr…   0.999     0.790     348.     363.       1         1        2
-#> 4 Medium    Groot   0.999     0.864     369.     380.       2         2        1
-#> 5 Medium    Mich…   0.999     0.861     370.     382.       1         1        2
-#> 6 TMR       Burr…   1.000     0.510     219.     234.       1         1        1
+#> 1 Blank     Burr…   0.993     0.917     396.     411.       1         1        1
+#> 2 High      Burr…   0.998     1.16      453.     468.       2         1        1
+#> 3 Low       Burr…   0.999     0.749     331.     346.       1         1        1
+#> 4 Medium    Burr…   0.999     0.850     367.     382.       1         1        1
+#> 5 TMR       Burr…   1.000     0.500     214.     229.       1         1        1
 #> # ℹ 3 more variables: Rank_BIC <int>, Total_Rank <int>, Overall_Rank <int>
 ```
 
@@ -492,13 +491,10 @@ best_models
 model_win_frequency(
   best_models
 )
-#> # A tibble: 4 × 2
-#>   Model           Treatments_Won
-#>   <chr>                    <int>
-#> 1 BurrXII                      3
-#> 2 Brody                        1
-#> 3 Groot                        1
-#> 4 MichaelisMenten              1
+#> # A tibble: 1 × 2
+#>   Model   Treatments_Won
+#>   <chr>            <int>
+#> 1 BurrXII              5
 ```
 
 ## Quality Control Workflow

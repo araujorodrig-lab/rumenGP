@@ -101,7 +101,7 @@ b
 
 ------------------------------------------------------------------------
 
-### EXP0
+### EXP0 (Exponential Without Lag Phase)
 
 #### Equation
 
@@ -133,7 +133,7 @@ V_f
 
 ------------------------------------------------------------------------
 
-### EXPL
+### EXPL (Exponential With Lag Phase)
 
 #### Equation
 
@@ -170,20 +170,7 @@ V_f
 #### Equation
 
 ``` math
-V(t)
-=
-A
-\exp
-\left[
--
-\exp
-\left(
-\frac{\mu e}{A}
-(\lambda-t)
-+
-1
-\right)
-\right]
+ V(t) = A e^{ - e^{ \left( \frac{\mu e}{A} (\lambda-t) + 1 \right) } } 
 ```
 
 #### Parameters
@@ -215,7 +202,7 @@ V(t)
 =
 \frac{A}
 {
-1+\exp
+1+e^
 \left[
 2+
 4k(\lambda-t)
@@ -253,7 +240,7 @@ A
 \left[
 1
 -
-\exp
+e^
 \left(
 -k(t-\lambda)
 -
@@ -302,7 +289,7 @@ A
 \right)
 }
 {
-1+\exp
+1+e^
 \left[
 \ln\left(\frac{1}{d}\right)-kt
 \right]
@@ -342,7 +329,7 @@ A
 \right)
 }
 {
-1+\exp
+1+e^
 \left[
 \ln\left(\frac{1}{d}\right)
 -
@@ -434,6 +421,43 @@ V(t)
 #### Limitations
 
 - Requires positive incubation times
+
+------------------------------------------------------------------------
+
+### Log-Logistic
+
+#### Equation
+
+``` math
+V(t)
+=
+A
+\frac{(rt)^{a}}
+{
+1+(rt)^{a}
+}
+```
+
+#### Parameters
+
+| Parameter | Description                  |
+|-----------|------------------------------|
+| A         | Asymptotic gas production    |
+| r         | Rate parameter (1/half-time) |
+| a         | Shape parameter              |
+
+#### Advantages
+
+- Flexible sigmoidal behavior
+- Parameters have straightforward interpretation
+- Mathematically equivalent to the generalized Michaelis-Menten and
+  Groot models under reparameterization
+- Can accommodate a wide range of fermentation profiles
+
+#### Limitations
+
+- Shape parameter may be difficult to interpret biologically
+- No explicit lag-time parameter
 
 ------------------------------------------------------------------------
 
@@ -581,7 +605,7 @@ V(t)
 =
 \frac{V_{1F}}
 {
-1+\exp
+1+e^
 \left[
 2-4k_1(t-\lambda)
 \right]
@@ -589,7 +613,7 @@ V(t)
 +
 \frac{V_{2F}}
 {
-1+\exp
+1+e^
 \left[
 2-4k_2(t-\lambda)
 \right]

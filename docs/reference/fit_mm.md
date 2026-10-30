@@ -153,7 +153,7 @@ summary(fit_default)
 #> Total bottles: 21
 #> Successful fits: 21
 #> Failed fits: 0
-#> Low R-squared (< 0.90): 4
+#> Low R-squared (< 0.90): 0
 #> 
 
 # Fit using custom starting values

@@ -327,20 +327,21 @@ Once imported, manually collected datasets can be
 analyzed exactly like ANKOM datasets.
 
 ```{r}
-groot_fit <- fit_groot(gp)
-
 mm_fit <- fit_mm(gp)
 
 burr_fit <- fit_burr_xii(gp)
 
-inverse_paralogistic_fit <-
-  fit_inverse_paralogistic(gp)
+gompertz_fit <- fit_gompertz(gp)
+
 ```
 
 Inspect one fitted model:
 
 ```{r}
-summary(groot_fit)
+summary(mm_fit)
+summary(burr_fit)
+summary(gompertz_fit)
+
 ```
 
 # Comparing Models
@@ -351,14 +352,9 @@ goodness-of-fit statistics.
 ```{r}
 comparison <- compare_models(
 
-  Groot = fit_groot(gp),
-
   MichaelisMenten = fit_mm(gp),
 
   BurrXII = fit_burr_xii(gp),
-
-  InverseParalogistic =
-    fit_inverse_paralogistic(gp),
 
   Gompertz = fit_gompertz(gp)
 

@@ -201,7 +201,7 @@ objects.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_gp.html">plot_gp</a></span><span class="op">(</span></span>
 <span>  <span class="va">gp</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="700"></p>
+<p><img src="getting-started_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" width="700"></p>
 <p>Remove Abnormal heads</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gp_clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/exclude_heads.html">exclude_heads</a></span><span class="op">(</span></span>
@@ -213,14 +213,14 @@ objects.</p>
 <span><span class="fu"><a href="../reference/plot_gp.html">plot_gp</a></span><span class="op">(</span></span>
 <span>  <span class="va">gp_clean</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="700"></p>
+<p><img src="getting-started_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" width="700"></p>
 <p>Treatment-level observations can also be visualized.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_gp.html">plot_gp</a></span><span class="op">(</span></span>
 <span>  <span class="va">gp_clean</span>,</span>
 <span>  treatment <span class="op">=</span> <span class="st">"TMR"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="700"></p>
+<p><img src="getting-started_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" width="700"></p>
 <p>Mean treatment profiles can be displayed using:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_gp.html">plot_gp</a></span><span class="op">(</span></span>
@@ -228,7 +228,7 @@ objects.</p>
 <span>  treatment <span class="op">=</span> <span class="st">"TMR"</span>,</span>
 <span>  mean_treatment <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="getting-started_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="700"></p>
+<p><img src="getting-started_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" width="700"></p>
 <div class="section level3">
 <h3 id="note-on-blank-correction">Note on Blank Correction<a class="anchor" aria-label="anchor" href="#note-on-blank-correction"></a>
 </h3>
@@ -371,17 +371,17 @@ statistics.</p>
 <span><span class="va">comparison</span></span>
 <span><span class="co">#&gt;                 Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE</span></span>
 <span><span class="co">#&gt; 1               Groot      21              21           0 0.9967371 0.9955345</span></span>
-<span><span class="co">#&gt; 2     MichaelisMenten      21              21           0 0.8804937 2.4761155</span></span>
-<span><span class="co">#&gt; 3             BurrXII      21              21           0 0.9966061 1.1008029</span></span>
-<span><span class="co">#&gt; 4 InverseParalogistic      21              21           0 0.9565272 3.2532678</span></span>
-<span><span class="co">#&gt; 5            Gompertz      21              21           0 0.9722322 3.4802686</span></span>
+<span><span class="co">#&gt; 2     MichaelisMenten      21              21           0 0.9970271 0.9922540</span></span>
+<span><span class="co">#&gt; 3             BurrXII      21              21           0 0.9977366 0.8477629</span></span>
+<span><span class="co">#&gt; 4 InverseParalogistic      21              21           0 0.9965796 1.0215285</span></span>
+<span><span class="co">#&gt; 5            Gompertz      21              21           0 0.9725272 3.4607979</span></span>
 <span><span class="co">#&gt; 6               Brody      21              21           0 0.9969746 0.9479644</span></span>
 <span><span class="co">#&gt;    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary</span></span>
 <span><span class="co">#&gt; 1  150.1038 406.9209 418.7920               0</span></span>
-<span><span class="co">#&gt; 2 2285.4631 527.0733 538.9708               0</span></span>
-<span><span class="co">#&gt; 3  209.4051 421.5674 436.4393               0</span></span>
-<span><span class="co">#&gt; 4 3549.5272 589.5483 601.4195               0</span></span>
-<span><span class="co">#&gt; 5 1868.7759 769.2312 781.1287              21</span></span>
+<span><span class="co">#&gt; 2  150.1038 408.6095 420.5070               0</span></span>
+<span><span class="co">#&gt; 3  114.4515 358.4086 373.2805               0</span></span>
+<span><span class="co">#&gt; 4  158.2528 414.1464 426.0175               0</span></span>
+<span><span class="co">#&gt; 5 1848.1946 767.6180 779.5156              21</span></span>
 <span><span class="co">#&gt; 6  144.1933 386.1759 398.0734               0</span></span></code></pre></div>
 <p>The comparison table includes:</p>
 <ul>
@@ -402,25 +402,25 @@ statistics.</p>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;                 Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE</span></span>
 <span><span class="co">#&gt; 1               Groot      21              21           0 0.9967371 0.9955345</span></span>
-<span><span class="co">#&gt; 2     MichaelisMenten      21              21           0 0.8804937 2.4761155</span></span>
-<span><span class="co">#&gt; 3             BurrXII      21              21           0 0.9966061 1.1008029</span></span>
-<span><span class="co">#&gt; 4 InverseParalogistic      21              21           0 0.9565272 3.2532678</span></span>
-<span><span class="co">#&gt; 5            Gompertz      21              21           0 0.9722322 3.4802686</span></span>
+<span><span class="co">#&gt; 2     MichaelisMenten      21              21           0 0.9970271 0.9922540</span></span>
+<span><span class="co">#&gt; 3             BurrXII      21              21           0 0.9977366 0.8477629</span></span>
+<span><span class="co">#&gt; 4 InverseParalogistic      21              21           0 0.9965796 1.0215285</span></span>
+<span><span class="co">#&gt; 5            Gompertz      21              21           0 0.9725272 3.4607979</span></span>
 <span><span class="co">#&gt; 6               Brody      21              21           0 0.9969746 0.9479644</span></span>
 <span><span class="co">#&gt;    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC</span></span>
-<span><span class="co">#&gt; 1  150.1038 406.9209 418.7920               0       2         2        2</span></span>
-<span><span class="co">#&gt; 2 2285.4631 527.0733 538.9708               0       6         4        4</span></span>
-<span><span class="co">#&gt; 3  209.4051 421.5674 436.4393               0       3         3        3</span></span>
-<span><span class="co">#&gt; 4 3549.5272 589.5483 601.4195               0       5         5        5</span></span>
-<span><span class="co">#&gt; 5 1868.7759 769.2312 781.1287              21       4         6        6</span></span>
-<span><span class="co">#&gt; 6  144.1933 386.1759 398.0734               0       1         1        1</span></span>
+<span><span class="co">#&gt; 1  150.1038 406.9209 418.7920               0       4         4        3</span></span>
+<span><span class="co">#&gt; 2  150.1038 408.6095 420.5070               0       2         3        4</span></span>
+<span><span class="co">#&gt; 3  114.4515 358.4086 373.2805               0       1         1        1</span></span>
+<span><span class="co">#&gt; 4  158.2528 414.1464 426.0175               0       5         5        5</span></span>
+<span><span class="co">#&gt; 5 1848.1946 767.6180 779.5156              21       6         6        6</span></span>
+<span><span class="co">#&gt; 6  144.1933 386.1759 398.0734               0       3         2        2</span></span>
 <span><span class="co">#&gt;   Rank_BIC</span></span>
-<span><span class="co">#&gt; 1        2</span></span>
+<span><span class="co">#&gt; 1        3</span></span>
 <span><span class="co">#&gt; 2        4</span></span>
-<span><span class="co">#&gt; 3        3</span></span>
+<span><span class="co">#&gt; 3        1</span></span>
 <span><span class="co">#&gt; 4        5</span></span>
 <span><span class="co">#&gt; 5        6</span></span>
-<span><span class="co">#&gt; 6        1</span></span></code></pre></div>
+<span><span class="co">#&gt; 6        2</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="compare-models-by-treatment">Compare Models by Treatment<a class="anchor" aria-label="anchor" href="#compare-models-by-treatment"></a>
@@ -452,7 +452,7 @@ statistics.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Low       Groot             0.998     1.04      420.     432.</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Medium    Groot             0.999     0.864     369.     380.</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> TMR       Groot             0.999     0.827     356.     368.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Blank     MichaelisMenten   0.379     8.82     <span style="text-decoration: underline;">1</span>050.    <span style="text-decoration: underline;">1</span>062.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Blank     MichaelisMenten   0.991     1.03      428.     440.</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> High      MichaelisMenten   0.998     1.18      460.     471.</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Low       MichaelisMenten   0.998     1.04      422.     433.</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Medium    MichaelisMenten   0.999     0.861     370.     382.</span></span>
@@ -472,15 +472,15 @@ statistics.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 30 × 10</span></span></span>
 <span><span class="co">#&gt;    Treatment Model         Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Blank     Groot           0.990     1.04      426.     438.       3         2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> High      Groot           0.998     1.19      457.     469.       3         3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Blank     Groot           0.990     1.04      426.     438.       4         3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> High      Groot           0.998     1.19      457.     469.       4         4</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Low       Groot           0.998     1.04      420.     432.       4         4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Medium    Groot           0.999     0.864     369.     380.       2         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Medium    Groot           0.999     0.864     369.     380.       3         3</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> TMR       Groot           0.999     0.827     356.     368.       4         4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Blank     MichaelisMen…   0.379     8.82     <span style="text-decoration: underline;">1</span>050.    <span style="text-decoration: underline;">1</span>062.       6         6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> High      MichaelisMen…   0.998     1.18      460.     471.       2         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Blank     MichaelisMen…   0.991     1.03      428.     440.       2         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> High      MichaelisMen…   0.998     1.18      460.     471.       3         3</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Low       MichaelisMen…   0.998     1.04      422.     433.       2         3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Medium    MichaelisMen…   0.999     0.861     370.     382.       1         1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Medium    MichaelisMen…   0.999     0.861     370.     382.       2         2</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> TMR       MichaelisMen…   0.999     0.824     357.     369.       3         3</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 20 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: Rank_AIC &lt;int&gt;, Rank_BIC &lt;int&gt;</span></span></span></code></pre></div>
@@ -495,15 +495,14 @@ statistics.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">best_models</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 12</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 12</span></span></span>
 <span><span class="co">#&gt;   Treatment Model Mean_R2 Mean_RMSE Mean_AIC Mean_BIC Rank_R2 Rank_RMSE Rank_AIC</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Blank     Burr…   0.992     0.997     420.     435.       1         1        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> High      Brody   0.998     1.17      457.     469.       1         1        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Low       Burr…   0.999     0.790     348.     363.       1         1        2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Medium    Groot   0.999     0.864     369.     380.       2         2        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Medium    Mich…   0.999     0.861     370.     382.       1         1        2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> TMR       Burr…   1.000     0.510     219.     234.       1         1        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Blank     Burr…   0.993     0.917     396.     411.       1         1        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> High      Burr…   0.998     1.16      453.     468.       2         1        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Low       Burr…   0.999     0.749     331.     346.       1         1        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Medium    Burr…   0.999     0.850     367.     382.       1         1        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> TMR       Burr…   1.000     0.500     214.     229.       1         1        1</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: Rank_BIC &lt;int&gt;, Total_Rank &lt;int&gt;, Overall_Rank &lt;int&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -513,13 +512,10 @@ statistics.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_win_frequency.html">model_win_frequency</a></span><span class="op">(</span></span>
 <span>  <span class="va">best_models</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 2</span></span></span>
-<span><span class="co">#&gt;   Model           Treatments_Won</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> BurrXII                      3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Brody                        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Groot                        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> MichaelisMenten              1</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 2</span></span></span>
+<span><span class="co">#&gt;   Model   Treatments_Won</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> BurrXII              5</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="quality-control-workflow">Quality Control Workflow<a class="anchor" aria-label="anchor" href="#quality-control-workflow"></a>

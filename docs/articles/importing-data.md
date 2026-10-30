@@ -350,14 +350,6 @@ ANKOM datasets.
 
 ``` r
 
-groot_fit <- fit_groot(gp)
-#> rumenGP data validation passed.
-#> Observations: 6
-#> Heads: 2
-#> Treatments: 2
-#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
-#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
-
 mm_fit <- fit_mm(gp)
 #> rumenGP data validation passed.
 #> Observations: 6
@@ -369,31 +361,43 @@ burr_fit <- fit_burr_xii(gp)
 #> Observations: 6
 #> Heads: 2
 #> Treatments: 2
-#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
-#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
 
-inverse_paralogistic_fit <-
-  fit_inverse_paralogistic(gp)
+gompertz_fit <- fit_gompertz(gp)
 #> rumenGP data validation passed.
 #> Observations: 6
 #> Heads: 2
 #> Treatments: 2
-#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
-#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
 ```
 
 Inspect one fitted model:
 
 ``` r
 
-summary(groot_fit)
+summary(mm_fit)
 #> 
-#> Groot model summary
-#> -------------------
+#> Michaelis-Menten model summary
+#> ------------------------------
+#> Total bottles: 2
+#> Successful fits: 0
+#> Failed fits: 2
+#> Low R-squared (< 0.90): 0
+summary(burr_fit)
+#> 
+#> Burr XII model summary
+#> ----------------------
+#> Total bottles: 2
+#> Successful fits: 0
+#> Failed fits: 2
+#> Low R-squared (< 0.90): 0
+summary(gompertz_fit)
+#> 
+#> Gompertz model summary
+#> ----------------------
 #> Total bottles: 2
 #> Successful fits: 2
 #> Failed fits: 0
-#> Low R-squared (< 0.90): 2
+#> Low R-squared (< 0.90): 0
+#> Lambda at boundary: 0
 ```
 
 ## Comparing Models
@@ -405,14 +409,9 @@ statistics.
 
 comparison <- compare_models(
 
-  Groot = fit_groot(gp),
-
   MichaelisMenten = fit_mm(gp),
 
   BurrXII = fit_burr_xii(gp),
-
-  InverseParalogistic =
-    fit_inverse_paralogistic(gp),
 
   Gompertz = fit_gompertz(gp)
 
@@ -421,42 +420,24 @@ comparison <- compare_models(
 #> Observations: 6
 #> Heads: 2
 #> Treatments: 2
-#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
-#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
 #> rumenGP data validation passed.
 #> Observations: 6
 #> Heads: 2
 #> Treatments: 2
-#> rumenGP data validation passed.
-#> Observations: 6
-#> Heads: 2
-#> Treatments: 2
-#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
-#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
-#> rumenGP data validation passed.
-#> Observations: 6
-#> Heads: 2
-#> Treatments: 2
-#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
-#> Warning in nls.lm(par = start, fn = FCT, jac = jac, control = control, lower = lower, : lmdif: info = 0. Improper input parameters.
 #> rumenGP data validation passed.
 #> Observations: 6
 #> Heads: 2
 #> Treatments: 2
 
 comparison
-#>                 Model Bottles Successful_Fits Failed_Fits    Mean_R2 Mean_RMSE
-#> 1               Groot       2               2           0 -0.8504581  15.39026
-#> 2     MichaelisMenten       2               0           2        NaN       NaN
-#> 3             BurrXII       2               0           2        NaN       NaN
-#> 4 InverseParalogistic       2               2           0 -8.6379664  35.14058
-#> 5            Gompertz       2               0           2        NaN       NaN
-#>    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary
-#> 1  503.3062 24.48171 19.25430               0
-#> 2       NaN      NaN      NaN               0
-#> 3       NaN      NaN      NaN               0
-#> 4 2590.5823 27.81283 22.58542               0
-#> 5       NaN      NaN      NaN               0
+#>             Model Bottles Successful_Fits Failed_Fits Mean_R2    Mean_RMSE
+#> 1 MichaelisMenten       2               0           2     NaN          NaN
+#> 2         BurrXII       2               0           2     NaN          NaN
+#> 3        Gompertz       2               2           0       1 4.951966e-15
+#>       Mean_RSS Mean_AIC  Mean_BIC Lambda_Boundary
+#> 1          NaN      NaN       NaN               0
+#> 2          NaN      NaN       NaN               0
+#> 3 7.573139e-29  -181.21 -184.8155               0
 ```
 
 The comparison table includes:
@@ -475,24 +456,18 @@ The comparison table includes:
 rank_models(
   comparison
 )
-#>                 Model Bottles Successful_Fits Failed_Fits    Mean_R2 Mean_RMSE
-#> 1               Groot       2               2           0 -0.8504581  15.39026
-#> 2     MichaelisMenten       2               0           2        NaN       NaN
-#> 3             BurrXII       2               0           2        NaN       NaN
-#> 4 InverseParalogistic       2               2           0 -8.6379664  35.14058
-#> 5            Gompertz       2               0           2        NaN       NaN
-#>    Mean_RSS Mean_AIC Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC
-#> 1  503.3062 24.48171 19.25430               0       1         1        1
-#> 2       NaN      NaN      NaN               0       3         3        3
-#> 3       NaN      NaN      NaN               0       4         4        4
-#> 4 2590.5823 27.81283 22.58542               0       2         2        2
-#> 5       NaN      NaN      NaN               0       5         5        5
+#>             Model Bottles Successful_Fits Failed_Fits Mean_R2    Mean_RMSE
+#> 1 MichaelisMenten       2               0           2     NaN          NaN
+#> 2         BurrXII       2               0           2     NaN          NaN
+#> 3        Gompertz       2               2           0       1 4.951966e-15
+#>       Mean_RSS Mean_AIC  Mean_BIC Lambda_Boundary Rank_R2 Rank_RMSE Rank_AIC
+#> 1          NaN      NaN       NaN               0       2         2        2
+#> 2          NaN      NaN       NaN               0       3         3        3
+#> 3 7.573139e-29  -181.21 -184.8155               0       1         1        1
 #>   Rank_BIC
-#> 1        1
+#> 1        2
 #> 2        3
-#> 3        4
-#> 4        2
-#> 5        5
+#> 3        1
 ```
 
 ## Available Models

@@ -510,11 +510,26 @@ prefer different parameterizations.
 
 The Groot model
 
-V(t) = VF / [1 + (b/t)^k]
+\[
+V(t)
+=
+\frac{VF}
+{
+1+\left(\frac{b}{t}\right)^k
+}
+\]
 
 is mathematically equivalent to the generalized Michaelis-Menten model
 
-V(t) = A t^c / (t^c + K^c)
+\[
+V(t)
+=
+A
+\frac{t^{c}}
+{
+t^{c}+K^{c}
+}
+\]
 
 for positive values of time.
 
@@ -538,11 +553,27 @@ commonly used in their field.
 
 The Log-logistic model
 
-V(t) = VF(rt)^a / [1 + (rt)^a]
+$$
+V(t)
+=
+VF
+\frac{(rt)^a}
+{
+1 + (rt)^a
+}
+$$
 
 can be rewritten as
 
-V(t) = VF t^a / [t^a + (1/r)^a]
+$$
+V(t)
+=
+VF
+\frac{t^a}
+{
+t^a + (1/r)^a
+}
+$$
 
 which is mathematically equivalent to both the Groot and generalized
 Michaelis-Menten formulations for positive values of time.
@@ -575,7 +606,18 @@ recognizing their underlying mathematical equivalence.
 
 Equation:
 
-V(t) = VF [1 - (1 + (rt)^a)^(-p)]
+\[
+V(t)
+=
+VF
+\left[
+1
+-
+\left(
+1+(rt)^a
+\right)^{-p}
+\right]
+\]
 
 Parameters:
 
@@ -601,7 +643,16 @@ Limitations:
 
 Equation:
 
-V(t) = VF [1 + (rt)^(-a)]^(-a)
+\[
+V(t)
+=
+VF
+\left[
+1
++
+(rt)^{-a}
+\right]^{-a}
+\]
 
 Parameters:
 

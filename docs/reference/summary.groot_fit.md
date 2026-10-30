@@ -111,8 +111,8 @@ summary(
 #> Groot model summary
 #> -------------------
 #> Total bottles: 25
-#> Successful fits: 24
-#> Failed fits: 1
-#> Low R-squared (< 0.90): 3
+#> Successful fits: 25
+#> Failed fits: 0
+#> Low R-squared (< 0.90): 4
 #> 
 ```

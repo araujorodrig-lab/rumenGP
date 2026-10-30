@@ -291,11 +291,11 @@ compare_models(
 #> Heads: 21
 #> Treatments: 5
 #>        Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE Mean_RSS
-#> 1      Groot      21              21           0 0.9967168  1.003186 152.2996
-#> 2    BurrXII      21              21           0 0.9965901  1.107550 211.2021
-#> 3 Hyperbolic      21              21           0 0.9950576  1.271883 264.6107
+#> 1      Groot      21              21           0 0.9967168 1.0031864 152.2996
+#> 2    BurrXII      21              21           0 0.9977206 0.8545103 116.2486
+#> 3 Hyperbolic      21              21           0 0.9950576 1.2718832 264.6107
 #>   Mean_AIC Mean_BIC Lambda_Boundary
 #> 1 409.1374 421.0085               0
-#> 2 423.7023 438.5742               0
+#> 2 360.5435 375.4154               0
 #> 3 468.4219 477.3450               0
 ```

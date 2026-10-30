@@ -114,9 +114,9 @@ compare_models_by_treatment(
 #>  3 Low       Groot      0.998     1.04      420.     432.
 #>  4 Medium    Groot      0.999     0.864     369.     380.
 #>  5 TMR       Groot      0.999     0.827     356.     368.
-#>  6 Blank     Gompertz   0.948     2.55      690.     701.
-#>  7 High      Gompertz   0.977     4.00      817.     828.
-#>  8 Low       Gompertz   0.984     3.02      721.     733.
-#>  9 Medium    Gompertz   0.970     4.42      850.     862.
-#> 10 TMR       Gompertz   0.981     3.28      762.     774.
+#>  6 Blank     Gompertz   0.949     2.54      688.     700.
+#>  7 High      Gompertz   0.977     3.98      815.     827.
+#>  8 Low       Gompertz   0.984     2.99      719.     731.
+#>  9 Medium    Gompertz   0.971     4.41      850.     862.
+#> 10 TMR       Gompertz   0.982     3.24      759.     771.
 ```

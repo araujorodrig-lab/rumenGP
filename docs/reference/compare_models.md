@@ -114,8 +114,8 @@ comparison <- compare_models(
 comparison
 #>      Model Bottles Successful_Fits Failed_Fits   Mean_R2 Mean_RMSE  Mean_RSS
 #> 1    Groot      21              21           0 0.9967168  1.003186  152.2996
-#> 2 Gompertz      21              21           0 0.9721855  3.487037 1874.2911
+#> 2 Gompertz      21              21           0 0.9724798  3.467676 1853.7958
 #>   Mean_AIC Mean_BIC Lambda_Boundary
 #> 1 409.1374 421.0085               0
-#> 2 769.9299 781.8275              21
+#> 2 768.3285 780.2261              21
 ```
